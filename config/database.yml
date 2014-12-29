@@ -11,7 +11,7 @@ default: &default
 
 development:
   <<: *default
-  database: house
+  database: house_p
   encoding: utf8
   host: localhost
   username: root
