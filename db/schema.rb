@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141229091249) do
+ActiveRecord::Schema.define(version: 20141229195605) do
 
   create_table "adgroups", force: true do |t|
     t.integer  "organization_id"
@@ -685,6 +685,24 @@ ActiveRecord::Schema.define(version: 20141229091249) do
   add_index "module_sets", ["hidden"], name: "hidden", using: :btree
   add_index "module_sets", ["organization_id"], name: "organization_id", using: :btree
   add_index "module_sets", ["parent_id"], name: "parent_id", using: :btree
+
+  create_table "new_users", force: true do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "new_users", ["email"], name: "index_new_users_on_email", unique: true, using: :btree
+  add_index "new_users", ["reset_password_token"], name: "index_new_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "order_groups", force: true do |t|
     t.string   "name",                            null: false
