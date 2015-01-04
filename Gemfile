@@ -45,6 +45,7 @@ gem 'spring',        group: :development
 
 #social login
 gem 'devise'
+gem 'devise-encryptable'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-gplus'

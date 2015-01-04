@@ -1,4 +1,13 @@
 this is home
+<br>
+<%= link_to '舊會員登入', new_user_session_path %>
+<br>
+<% if user_signed_in? %>
+	<span><%= current_user.login %></span>
+	<br>
+	<%= link_to "登出", destroy_user_session_path, data:{method: :delete} %>
+<% end -%>
+<br>
 <%= link_to "Sign in with Facebook", new_user_omniauth_authorize_path(:facebook) %>
 <br>
 <%= link_to "Sign in with Google+", new_user_omniauth_authorize_path(:gplus) %>

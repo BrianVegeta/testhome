@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150103092714) do
+ActiveRecord::Schema.define(version: 20150104175341) do
 
   create_table "adgroups", force: true do |t|
     t.integer  "organization_id"
@@ -1239,12 +1239,12 @@ ActiveRecord::Schema.define(version: 20150103092714) do
     t.string   "login",                     limit: 40
     t.string   "name",                      limit: 100, default: ""
     t.string   "email",                     limit: 100
-    t.string   "crypted_password",          limit: 40
-    t.string   "salt",                      limit: 40
+    t.string   "encrypted_password",        limit: 128, default: "",           null: false
+    t.string   "password_salt",                         default: "",           null: false
     t.string   "remember_token",            limit: 40
     t.datetime "remember_token_expires_at"
-    t.string   "activation_code",           limit: 40
-    t.datetime "activated_at"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "info",                      limit: 512, default: "--- {}\n\n"
@@ -1256,6 +1256,13 @@ ActiveRecord::Schema.define(version: 20150103092714) do
     t.boolean  "allow_ad",                              default: false,        null: false
     t.string   "serial"
     t.boolean  "is_normal",                             default: false,        null: false
+    t.datetime "confirmation_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                         default: 0,            null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
   end
 
   add_index "users", ["email"], name: "email", using: :btree

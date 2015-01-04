@@ -94,10 +94,12 @@ Devise.setup do |config|
   # a value less than 10 in other environments. Note that, for bcrypt (the default
   # encryptor), the cost increases exponentially with the number of stretches (e.g.
   # a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).
-  config.stretches = Rails.env.test? ? 1 : 10
+  # config.stretches = Rails.env.test? ? 1 : 10
+  config.stretches = 10
 
   # Setup a pepper to generate the encrypted password.
   # config.pepper = 'f9a61f68690a3c0b56b0b2f378ac3381e84535bb075c276f4e028de891bf47844ba262f038eb051626b9f4c1f45a49d1190668eb8f1f7902e6e90e7088574bda'
+  config.pepper = '1fc033b43ce417f1825051ff94e4519b3415e85a'
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -140,7 +142,8 @@ Devise.setup do |config|
 
   # ==> Configuration for :validatable
   # Range for password length.
-  config.password_length = 8..128
+  # config.password_length = 8..128
+  config.password_length = 6..128
 
   # Email regex used to validate email formats. It simply asserts that
   # one (and only one) @ exists in the given string. This is mainly
@@ -199,7 +202,7 @@ Devise.setup do |config|
   # REST_AUTH_SITE_KEY to pepper).
   #
   # Require the `devise-encryptable` gem when using anything other than bcrypt
-  # config.encryptor = :sha512
+  # config.encryptor = :sha1
 
   # ==> Scopes configuration
   # Turn scoped views on. Before rendering "sessions/new", it will first check for
