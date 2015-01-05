@@ -18,4 +18,8 @@ class User < ActiveRecord::Base
   def new_user
   	NewUser.where(user_id: self.id).first
   end
+
+  def is_admin?
+  	self.level === 3
+  end
 end

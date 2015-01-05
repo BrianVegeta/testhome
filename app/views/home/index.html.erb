@@ -10,6 +10,9 @@
 <% else %>
 	<% if user_signed_in? %>
 		<p>目前登入的使用者： <%= current_user.login %></p>
+		<% if current_user.is_admin? %>
+			<p>目前的使用者擁有管理員權限，<%= link_to '進入管理員介面', admin_root_path %></p>
+		<% end %>
 		<% if current_user.new_user_linked? %>
 			<p>已連結到 <%= current_user.new_user.provider %> : <%= current_user.new_user.name %></p>
 			<%= link_to "使用#{current_user.new_user.provider}登入", transfer_social_login_path(current_user.new_user.provider) %>
@@ -23,6 +26,9 @@
 		<%= link_to "登出", destroy_user_session_path, data:{method: :delete} %>
 	<% elsif new_user_signed_in? %>
 		<p>現在使用  <%= current_new_user.provider %> 登入</p>
+		<% if current_new_user.is_global_admin? %>
+			<p>目前的使用者擁有管理員權限，<%= link_to '進入管理員介面', admin_root_path %></p>
+		<% end %>
 		<img src="<%= current_new_user.image %>" alt="..." class="<%= current_new_user.is_facebook? ? 'img-rounded' : 'img-circle' %>">
 		<p><%= current_new_user.name %></p>
 		<% if current_new_user.link_to_social? %>

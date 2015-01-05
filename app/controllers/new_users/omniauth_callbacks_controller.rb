@@ -2,7 +2,6 @@ class NewUsers::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
 	def facebook
     # You need to implement the method below in your model (e.g. app/models/user.rb)
     @user = NewUser.from_omniauth(request.env["omniauth.auth"])
-
     if @user.persisted?
       sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
       set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
@@ -14,13 +13,10 @@ class NewUsers::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
 
   def gplus
   	@user = NewUser.from_omniauth(request.env["omniauth.auth"])
-  	
     if @user.persisted?
-    	
       sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
       set_flash_message(:notice, :success, :kind => "Google+") if is_navigational_format?
     else
-    	raise session.inspect
       session["devise.facebook_data"] = request.env["omniauth.auth"]
       redirect_to new_user_registration_url
     end

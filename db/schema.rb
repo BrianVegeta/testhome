@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150105080605) do
+ActiveRecord::Schema.define(version: 20150105102922) do
 
   create_table "adgroups", force: true do |t|
     t.integer  "organization_id"
@@ -722,9 +722,9 @@ ActiveRecord::Schema.define(version: 20150105080605) do
     t.integer  "user_id"
     t.string   "name"
     t.string   "image"
+    t.integer  "admin_level"
   end
 
-  add_index "new_users", ["email"], name: "index_new_users_on_email", unique: true, using: :btree
   add_index "new_users", ["reset_password_token"], name: "index_new_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "order_groups", force: true do |t|

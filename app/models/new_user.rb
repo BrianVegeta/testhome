@@ -16,11 +16,23 @@ class NewUser < ActiveRecord::Base
 	  end
 	end
 
+	def email_required?
+	  false
+	end
+
+	def email_changed?
+	  false
+	end
+
 	def is_facebook?
 		return true if self.provider === 'facebook'
 	end
 
 	def link_to_social?
 		return true unless self.user_id.nil?
+	end
+
+	def is_global_admin?
+		self.admin_level === 1
 	end
 end

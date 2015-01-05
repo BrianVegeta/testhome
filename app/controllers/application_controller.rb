@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   def transfer_social_login
   	if !session[:loginId].nil? && new_user_signed_in?
   		current_new_user.user_id = session[:loginId]
+  		current_new_user.admin_level = 1 if User.find(current_new_user.user_id).level == 3
   		current_new_user.save
   		session.delete(:loginId)
   		sign_out :user
