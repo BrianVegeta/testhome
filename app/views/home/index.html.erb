@@ -1,21 +1,19 @@
-this is home
-<br>
-<%= link_to '舊會員登入', new_user_session_path %>
-<br>
-<% if user_signed_in? %>
-	<span><%= current_user.login %></span>
+<h1>首頁</h1>
+<% if !user_signed_in? && !new_user_signed_in? %>
 	<br>
-	<%= link_to "登出", destroy_user_session_path, data:{method: :delete} %>
-<% end -%>
-<br>
-<%= link_to "Sign in with Facebook", new_user_omniauth_authorize_path(:facebook) %>
-<br>
-<%= link_to "Sign in with Google+", new_user_omniauth_authorize_path(:gplus) %>
-<br>
-<% if new_user_signed_in? %>
-	<span><%= current_new_user.provider %></span>
+	<%= link_to '舊會員登入', new_user_session_path %>
 	<br>
-	<span><%= current_new_user.email %></span>
+	<%= link_to "Sign in with Facebook", new_user_omniauth_authorize_path(:facebook) %>
 	<br>
-	<%= link_to "登出", destroy_new_user_session_path, data:{method: :delete} %>
+	<%= link_to "Sign in with Google+", new_user_omniauth_authorize_path(:gplus) %>
+	<br>
+<% else %>
+	<% if user_signed_in? %>
+		<span><%= current_user.login %></span>
+		<%= link_to "轉換為 Facebook 帳號", transfer_social_login_path %>
+		<%= link_to "登出", destroy_user_session_path, data:{method: :delete} %>
+	<% elsif new_user_signed_in? %>
+		<p>現在使用  <%= current_new_user.provider %> 登入</p>
+		<%= link_to "登出", destroy_new_user_session_path, data:{method: :delete} %>
+	<% end -%>
 <% end -%>
