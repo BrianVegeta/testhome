@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+	has_one :new_user
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -8,5 +9,13 @@ class User < ActiveRecord::Base
 
   def email_required?
     false
+  end
+
+  def new_user_linked?
+  	return true unless NewUser.where(user_id: self.id).count == 0
+  end
+
+  def new_user
+  	NewUser.where(user_id: self.id).first
   end
 end

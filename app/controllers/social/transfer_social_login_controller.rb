@@ -3,8 +3,6 @@ class Social::TransferSocialLoginController < ApplicationController
 
 	def do_transfer
 		session[:loginId] = current_user.id
-		# raise user_session[:loginId].inspect
-
-		redirect_to new_user_omniauth_authorize_path(:facebook)
+		redirect_to new_user_omniauth_authorize_path(params[:provider])
 	end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150104211440) do
+ActiveRecord::Schema.define(version: 20150105080605) do
 
   create_table "adgroups", force: true do |t|
     t.integer  "organization_id"
@@ -720,6 +720,8 @@ ActiveRecord::Schema.define(version: 20150104211440) do
     t.string   "provider"
     t.string   "uid"
     t.integer  "user_id"
+    t.string   "name"
+    t.string   "image"
   end
 
   add_index "new_users", ["email"], name: "index_new_users_on_email", unique: true, using: :btree

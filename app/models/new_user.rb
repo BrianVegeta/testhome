@@ -1,4 +1,6 @@
 class NewUser < ActiveRecord::Base
+	belongs_to :user
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -9,8 +11,16 @@ class NewUser < ActiveRecord::Base
 	  where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
 	    user.email = auth.info.email
 	    user.password = Devise.friendly_token[0,20]
-	    # user.name = auth.info.name   # assuming the user model has a name
-	    # user.image = auth.info.image # assuming the user model has an image
+	    user.name = auth.info.name   # assuming the user model has a name
+	    user.image = auth.info.image # assuming the user model has an image
 	  end
+	end
+
+	def is_facebook?
+		return true if self.provider === 'facebook'
+	end
+
+	def link_to_social?
+		return true unless self.user_id.nil?
 	end
 end
