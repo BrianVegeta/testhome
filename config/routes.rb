@@ -68,6 +68,6 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    root "base#index"
+    root "index#index"
   end
 end
