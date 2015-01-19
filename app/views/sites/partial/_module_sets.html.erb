@@ -1,0 +1,20 @@
+<div class="main_sidebar">
+    <ul class="main_sidebar_rap clear">
+      <li class="sub_menu navigation"><span class="navigation_link"></span><ul><li><a href="<%= home_url %>">回首頁</a></li><%= yield :navigation %></ul></li>
+        <% @module_sets_parents.each do |module_set|
+        if module_set.kind == 0 %>
+          <li id="sub_menu_<%= module_set.id %>" class="sub_menu<%= " new_line" if module_set.new_line %>"><%= module_set.name %>
+            <% if @module_sets_children[module_set.id].length > 0 %>
+              <ul>
+                <% @module_sets_children[module_set.id].each do |module_set| %>
+                  <li>test</li>
+                <% end %>
+              </ul>
+            <% end %>
+          </li>
+        <% else %>
+          <li id="sub_menu_<%= module_set.id %>" class="sub<%= " new_line" if module_set.new_line %>"></li>
+        <% end
+      end %>
+    </ul>
+  </div>

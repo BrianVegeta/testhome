@@ -63,6 +63,10 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
+  namespace :sites do
+    get ':id', to: "index#index"
+  end
+
   namespace :admin do
     root "base#index"
   end
