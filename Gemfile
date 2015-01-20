@@ -49,3 +49,6 @@ gem 'devise-encryptable'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-gplus'
+
+gem 'will_paginate'
+gem 'awesome_nested_set'

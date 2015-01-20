@@ -1,4 +1,4 @@
-<%= form_for(@admin_organization) do |f| %>
+<%= form_for [:admin, @admin_organization], :html => { class: 'form-horizontal', :role => "form", autocomplete: 'off' } do |f| %>
   <% if @admin_organization.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@admin_organization.errors.count, "error") %> prohibited this admin_organization from being saved:</h2>
@@ -10,8 +10,29 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-group">
+    <%= f.label :'名稱', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-6">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :'地區', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-6">
+      <select class="form-control" name="organization[area]">
+        <% Area::MAIN_AREA.each_with_index do |main_area, main_area_id| %>
+          <optgroup label="<%= main_area %>">
+            <% Area::SUB_AREA[main_area_id].each_with_index do |sub_area, sub_area_id| %>
+              <option value="<%= main_area_id %>-<%= sub_area_id %>"><%= sub_area %></option>
+            <% end %>
+          </optgroup>
+        <% end %>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-6">
+      <button type="submit" class="btn btn-default">送出</button>
+    </div>
   </div>
 <% end %>

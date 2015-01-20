@@ -4,7 +4,7 @@ class Admin::OrganizationsController < Admin::BaseController
   # GET /admin/organizations
   # GET /admin/organizations.json
   def index
-    @admin_organizations = Organization.all
+    @admin_organizations = Organization.paginate(:page => params[:page], :per_page => 30).order('id DESC')
   end
 
   # GET /admin/organizations/1
@@ -14,7 +14,7 @@ class Admin::OrganizationsController < Admin::BaseController
 
   # GET /admin/organizations/new
   def new
-    @admin_organization = Admin::Organization.new
+    @admin_organization = Organization.new
   end
 
   # GET /admin/organizations/1/edit
@@ -24,6 +24,7 @@ class Admin::OrganizationsController < Admin::BaseController
   # POST /admin/organizations
   # POST /admin/organizations.json
   def create
+    raise admin_organization_params.inspect
     @admin_organization = Admin::Organization.new(admin_organization_params)
 
     respond_to do |format|
@@ -69,6 +70,6 @@ class Admin::OrganizationsController < Admin::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def admin_organization_params
-      params[:admin_organization]
+      params[:organization]
     end
 end

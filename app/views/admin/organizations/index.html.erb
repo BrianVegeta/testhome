@@ -1,22 +1,31 @@
-<h1>Listing admin_organizations</h1>
+<h1>組織列表</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th>id</th>
+      <th>組織名稱</th>
+      <th>
+        <a href="<%= new_admin_organization_path %>" type="button" class="btn btn-default">新增組織</a>
+      </th>
     </tr>
   </thead>
-
   <tbody>
     <% @admin_organizations.each do |admin_organization| %>
       <tr>
-        <td><%= link_to 'Show', admin_organization_path(admin_organization.id) %></td>
-        <td><%= link_to 'Edit', edit_admin_organization_path(admin_organization) %></td>
-        <td><%= link_to 'Destroy', admin_organization_path(admin_organization.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= admin_organization.id %></td>
+        <td><%= admin_organization.name %></td>
+        <td>
+          <%= link_to 'Show', admin_organization_path(admin_organization.id) %>
+          <%= link_to 'Edit', edit_admin_organization_path(admin_organization) %>
+          <%= link_to 'Destroy', admin_organization_path(admin_organization.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<%= will_paginate @admin_organizations %>
 
 <br>
 

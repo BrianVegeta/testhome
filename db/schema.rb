@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150105102922) do
+ActiveRecord::Schema.define(version: 20150120101416) do
 
   create_table "adgroups", force: true do |t|
     t.integer  "organization_id"
@@ -881,6 +881,8 @@ ActiveRecord::Schema.define(version: 20150105102922) do
     t.string   "meta_description"
     t.string   "meta_keywords"
     t.string   "powered_by",          limit: 400
+    t.integer  "depth"
+    t.integer  "children_count"
   end
 
   add_index "organizations", ["end_at"], name: "end_at", using: :btree
