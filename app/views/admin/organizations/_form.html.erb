@@ -17,8 +17,18 @@
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :'地區', class: 'col-sm-2 control-label' %>
+    <%= f.label :'類型', class: 'col-sm-2 control-label' %>
     <div class="col-sm-6">
+      <%= f.select(:type, {}, {}, {class: 'form-control'})  do %>
+        <% Organization::TYPE.each do |type| -%>
+          <%= content_tag(:option, type.first, value: type.last) %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :'地址', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-2">
       <select class="form-control" name="organization[area]">
         <% Area::MAIN_AREA.each_with_index do |main_area, main_area_id| %>
           <optgroup label="<%= main_area %>">
@@ -28,6 +38,33 @@
           </optgroup>
         <% end %>
       </select>
+    </div>
+    <div class="col-sm-4">
+      <%= f.text_field :address, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :'敘述', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-6">
+      <%= f.text_field :descript, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :'電話', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-6">
+      <%= f.text_field :phone, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :'傳真', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-6">
+      <%= f.text_field :fax, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :'email', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-6">
+      <%= f.text_field :email, :class => 'form-control' %>
     </div>
   </div>
   <div class="form-group">

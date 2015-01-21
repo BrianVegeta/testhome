@@ -24,12 +24,12 @@ class Admin::OrganizationsController < Admin::BaseController
   # POST /admin/organizations
   # POST /admin/organizations.json
   def create
-    raise admin_organization_params.inspect
-    @admin_organization = Admin::Organization.new(admin_organization_params)
+    # raise admin_organization_params.inspect
+    @admin_organization = Organization.new(admin_organization_params)
 
     respond_to do |format|
       if @admin_organization.save
-        format.html { redirect_to @admin_organization, notice: 'Organization was successfully created.' }
+        format.html { redirect_to admin_organization_path(@admin_organization.id), notice: 'Organization was successfully created.' }
         format.json { render :show, status: :created, location: @admin_organization }
       else
         format.html { render :new }
@@ -65,11 +65,15 @@ class Admin::OrganizationsController < Admin::BaseController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_admin_organization
-      @admin_organization = Admin::Organization.find(params[:id])
+      @admin_organization = Organization.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def admin_organization_params
-      params[:organization]
+      areas = params[:organization][:area].split('-')
+      
+      params.require(:organization).permit(
+        :name, :type, :address, :descript, :phone, :fax, :email
+        ).merge({main_area: areas.first, sub_area: areas.last})
     end
 end

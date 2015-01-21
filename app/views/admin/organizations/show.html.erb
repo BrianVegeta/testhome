@@ -1,4 +1,44 @@
 <p id="notice"><%= notice %></p>
 
+<table class="table table-bordered">
+	<tr>
+		<th>ID</th>
+		<td><%= @admin_organization.id %></td>
+	</tr>
+	<tr>
+		<th>名稱</th>
+		<td><%= @admin_organization.name %></td>
+	</tr>
+	<tr>
+		<th>類型</th>
+		<td><%= @admin_organization.type %></td>
+	</tr>
+	<tr>
+		<th>地址</th>
+		<td>
+			<%= Area::MAIN_AREA[@admin_organization.main_area] %>
+			<%= Area::SUB_AREA[@admin_organization.main_area][@admin_organization.sub_area] %>
+			<%= @admin_organization.address %>
+		</td>
+	</tr>
+	<tr>
+		<th>敘述</th>
+		<td><%= @admin_organization.descript %></td>
+	</tr>
+	<tr>
+		<th>電話</th>
+		<td><%= @admin_organization.phone %></td>
+	</tr>
+	<tr>
+		<th>傳真</th>
+		<td><%= @admin_organization.fax %></td>
+	</tr>
+	<tr>
+		<th>email</th>
+		<td><%= @admin_organization.email %></td>
+	</tr>
+</table>
+
+
 <%= link_to 'Edit', edit_admin_organization_path(@admin_organization) %> |
 <%= link_to 'Back', admin_organizations_path %>
