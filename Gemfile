@@ -52,3 +52,4 @@ gem 'omniauth-gplus'
 
 gem 'will_paginate'
 gem 'awesome_nested_set'
+gem 'state_machine'

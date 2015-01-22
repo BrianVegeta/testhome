@@ -26,6 +26,7 @@ class Admin::OrganizationsController < Admin::BaseController
   def create
     # raise admin_organization_params.inspect
     @admin_organization = Organization.new(admin_organization_params)
+    @admin_organization.useNew_style
 
     respond_to do |format|
       if @admin_organization.save
@@ -71,7 +72,7 @@ class Admin::OrganizationsController < Admin::BaseController
     # Never trust parameters from the scary internet, only allow the white list through.
     def admin_organization_params
       areas = params[:organization][:area].split('-')
-      
+
       params.require(:organization).permit(
         :name, :type, :address, :descript, :phone, :fax, :email
         ).merge({main_area: areas.first, sub_area: areas.last})

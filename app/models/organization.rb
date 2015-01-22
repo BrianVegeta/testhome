@@ -8,4 +8,30 @@ class Organization < ActiveRecord::Base
   	["團隊", 'Personal'] , 
   	["商城", 'Commerce']
   ]
+
+  state_machine :using_style, namespace: 'style' do
+  	event :useNew do
+      transition all => :new
+    end
+
+    event :useOld do
+      transition all => :old
+    end
+
+    state :new
+    state :old
+    state nil
+
+    state :old, nil do
+      def is_old?
+        true
+      end
+    end
+    state all - [:old, nil] do
+      def is_old?
+        false
+      end
+    end
+
+  end
 end
