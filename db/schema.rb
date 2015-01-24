@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150121100359) do
+ActiveRecord::Schema.define(version: 20150124113716) do
 
   create_table "adgroups", force: true do |t|
     t.integer  "organization_id"
@@ -397,6 +397,15 @@ ActiveRecord::Schema.define(version: 20150121100359) do
     t.integer  "old_year",           limit: 2
     t.integer  "old_month",          limit: 1
     t.boolean  "has_image",                     default: false,        null: false
+  end
+
+  create_table "images", force: true do |t|
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "item_ads", force: true do |t|
@@ -1014,6 +1023,18 @@ ActiveRecord::Schema.define(version: 20150121100359) do
   add_index "sitelog_relations", ["organization_id", "status"], name: "sitelog_relations_organization_id_is_checked", using: :btree
   add_index "sitelog_relations", ["organization_id"], name: "sitelog_relations_organization_id", using: :btree
   add_index "sitelog_relations", ["status"], name: "sitelog_relations_is_checked", using: :btree
+
+  create_table "styles", force: true do |t|
+    t.string   "name",              default: "", null: false
+    t.integer  "organization_id"
+    t.integer  "style_template_id"
+    t.text     "html"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "styles", ["organization_id"], name: "index_styles_on_organization_id", using: :btree
+  add_index "styles", ["style_template_id"], name: "index_styles_on_style_template_id", using: :btree
 
   create_table "taggings", force: true do |t|
     t.integer  "tag_id"

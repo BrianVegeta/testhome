@@ -53,3 +53,9 @@ gem 'omniauth-gplus'
 gem 'will_paginate'
 gem 'awesome_nested_set'
 gem 'state_machine'
+
+gem 'angularjs-rails'
+gem 'jquery-ui-rails'
+gem "jquery-fileupload-rails"
+
+gem 'paperclip'

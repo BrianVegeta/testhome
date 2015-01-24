@@ -2,6 +2,8 @@ class Organization < ActiveRecord::Base
 	self.inheritance_column = :foo #for type subclass
   acts_as_nested_set
 
+  has_many :styles
+
   TYPE = [
   	["公會", 'Guild'] , 
   	["公司", 'Company'] , 

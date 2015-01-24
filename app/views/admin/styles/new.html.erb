@@ -1,0 +1,39 @@
+<div class="control-panel">
+	<input id="fileupload" type="file" name="files[]" data-url="server/php/">
+</div>
+<div style="padding-top: 60px;"></div>
+
+<style type="text/css">
+.control-panel {
+	background-color: #FFF000;
+	position: fixed; 
+	min-height: 60px; 
+	z-index: 2000; 
+	display: block; 
+	top: 0;
+	left: 0;
+	right: 0;
+}
+</style>
+
+<div ng-app="style" ng-controller="newController">
+	<div style-editor></div>
+	<div id="context-menu">
+	  <ul class="dropdown-menu" role="menu">
+	    <li><a tabindex="-1" href="#" action="resizeable-nav-header">resize</a></li>
+	    <li><a tabindex="-1" href="#" action="cancel">cancel</a></li>
+	    <li><a tabindex="-1" href="#" action="test">test</a></li>
+	  </ul>
+	</div>
+</div>
+
+
+<%= link_to 'Back', admin_styles_path %>
+
+<script type="text/javascript">
+var auth_token = '<%= form_authenticity_token %>';
+</script>
+
+<%= javascript_include_tag "bootstrap-contextmenu" %>
+<%= javascript_include_tag "angular-file-upload-all" %>
+<%= javascript_include_tag "style" %>
