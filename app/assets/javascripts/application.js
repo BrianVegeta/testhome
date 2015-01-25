@@ -11,10 +11,13 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery-ui
 //= require jquery-fileupload/basic
+//= require tinymce
 //= require angular
+//= require site-admin-app
 
 //= require bootstrap-sprockets
 //= require turbolinks

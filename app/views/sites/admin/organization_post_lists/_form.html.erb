@@ -1,0 +1,45 @@
+<% 
+  
+  if @organization_post_list.new_record?
+    formUrl = sites_admin_organization_post_lists_path(@organization.id)
+  else
+    formUrl = sites_admin_organization_post_list_path(@organization.id, @organization_post_list.id)
+  end
+  
+%>
+
+<%= form_for @organization_post_list, url: formUrl, :html => { class: 'form-horizontal', :role => "form", autocomplete: 'off' } do |f| %>
+  <% if @organization_post_list.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@organization_post_list.errors.count, "error") %> prohibited this organization_post_list from being saved:</h2>
+
+      <ul>
+      <% @organization_post_list.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :'名稱', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-6">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-6">
+      <div class="checkbox">
+        <label>
+          <%= f.check_box :with_cover %>
+          擁有封面功能？
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-6">
+      <button type="submit" class="btn btn-default">送出</button>
+    </div>
+  </div>
+<% end %>

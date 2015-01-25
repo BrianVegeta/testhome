@@ -1,0 +1,6 @@
+<ol class="breadcrumb">
+  <li><a href="<%= sites_admin_organization_post_lists_path(organization_id: @organization.id) %>">文章列表</a></li>
+  <li class="active">編輯 "<%= @organization_post_list.name %>"</li>
+</ol>
+
+<%= render 'form' %>

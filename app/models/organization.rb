@@ -3,6 +3,7 @@ class Organization < ActiveRecord::Base
   acts_as_nested_set
 
   has_many :styles
+  has_many :organization_post_lists
 
   TYPE = [
   	["公會", 'Guild'] , 

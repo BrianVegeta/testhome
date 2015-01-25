@@ -1,0 +1,38 @@
+<ol class="breadcrumb">
+  <li><a href="<%= sites_admin_organization_post_lists_path(organization_id: @organization.id) %>">文章列表</a></li>
+  <li class="active">"<%= @postList.name %>"</li>
+</ol>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>封面</th>
+      <th>標題</th>
+      <th>
+        <a href="<%= new_sites_admin_organization_post_list_organization_post_path %>" type="button" class="btn btn-default">新增文章</a>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @organization_posts.each do |organization_post| %>
+      <tr>
+        <td><%= organization_post.id %></td>
+        <td>
+          <% if organization_post.cover_id.nil? %>
+            <img src="http://img3.wikia.nocookie.net/__cb20090227194712/java/images/0/0e/Camera_icon.gif" width="100">
+          <% else %>
+            <img src="<%= Image.find(organization_post.cover_id).avatar(:thumb) %>">
+          <% end %>
+        </td>
+        <td><%= organization_post.title %></td>
+        <td>
+          <%= link_to 'Show', sites_admin_organization_post_list_organization_post_path(@organization.id, @postList.id, organization_post.id) %>
+          <%= link_to 'Edit', edit_sites_admin_organization_post_list_organization_post_path(@organization.id, @postList.id, organization_post.id) %>
+          <%= link_to 'Destroy', '', method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

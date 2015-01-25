@@ -4,7 +4,37 @@ var templateUrl = '<%= url_helper.ng_view_path(:test_style) %>';
 var styleApp = angular.module('style', ['angularFileUpload']);
 
 styleApp.controller('newController', ['$scope', '$http', function($scope, $http) {
-		
+	$scope.test = 0;
+}]);
+
+styleApp.controller('controlPanelController', ['$scope', function($scope) {
+		this.showForm = function() {
+			$('#save_dialog').modal({
+			  keyboard: false
+			})
+		};
+}]);
+
+styleApp.controller('styleFormController', ['$scope', '$http', function($scope, $http) {
+		this.save = function() {
+			$textarea = $('<textarea name="style[html]" hidden></textarea>').append($('.style-editor-content').html());
+			// console.log($('#new_style').append($textarea).html());
+			// return;
+			$('#new_style').append($textarea).submit();
+			// console.log($scope);
+			// $http.post('', {
+			// 	test: {
+			// 		test: 'asd'
+			// 	}
+			// }).success(function(data, status, headers, config) {
+			// 	console.log(data, status, headers, config);
+			// }).error(function(data, status, headers, config) {
+			// 	console.log(data, status, headers, config);
+			// });
+			// console.log($scope.name);
+			// console.log($scope.description);
+			// console.log($('.style-editor-content').html());
+		};
 }]);
 
 styleApp.directive('styleEditor', function($http) {

@@ -65,7 +65,17 @@ Rails.application.routes.draw do
   #   end
 
   namespace :sites do
-    get ':id', to: "index#index"
+    get ':organization_id', to: "index#index", as: :root
+
+    namespace :admin do
+      get ':organization_id', to: "index#index", as: :root
+
+      resources :styles, path: ':organization_id/styles'
+
+      resources :organization_post_lists, path: ':organization_id/post_list' do
+        resources :organization_posts, path: 'post'
+      end
+    end
   end
 
   namespace :admin do

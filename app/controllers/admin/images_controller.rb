@@ -29,6 +29,7 @@ class Admin::ImagesController < ApplicationController
     if @admin_image.save
       render json: {
         success: true, 
+        imageId: @admin_image.id,
         imageUrl: {
           original: @admin_image.avatar.url,
           thumb: @admin_image.avatar.url(:thumb),

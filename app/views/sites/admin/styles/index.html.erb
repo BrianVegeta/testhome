@@ -1,0 +1,39 @@
+<ol class="breadcrumb">
+  <li><a href="<%= sites_admin_styles_path %>">客製化網頁</a></li>
+  <li class="active">樣式列表</li>
+</ol>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>名稱</th>
+      <th>附註</th>
+      <th>修改日期</th>
+      <th>
+        <a href="<%= new_sites_admin_style_path %>" type="button" class="btn btn-default">新增樣式</a>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sites_admin_styles.each do |sites_admin_style| %>
+      <tr>
+        <td><%= sites_admin_style.id %></td>
+        <td><%= sites_admin_style.name %></td>
+        <td><%= sites_admin_style.description %></td>
+        <td><%= sites_admin_style.updated_at.strftime("%m /%d /%Y") %></td>
+        <td>
+          <%= link_to 'Show', '' %>
+          <%= link_to 'Edit', '' %>
+          <%= link_to 'Destroy', '', method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<br>
+
+<%= link_to 'New Style', new_sites_admin_style_path %>

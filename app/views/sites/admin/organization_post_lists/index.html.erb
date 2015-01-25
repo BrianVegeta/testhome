@@ -1,0 +1,36 @@
+<ol class="breadcrumb">
+  <li class="active">文章列表</li>
+</ol>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>列表名稱</th>
+      <th>封面</th>
+      <th>
+        <a href="<%= new_sites_admin_organization_post_list_path %>" type="button" class="btn btn-default">新增文章列表</a>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @organization_post_lists.each do |organization_post_list| %>
+      <tr>
+        <td><%= organization_post_list.id %></td>
+        <td><%= organization_post_list.name %></td>
+        <td>
+          <% if organization_post_list.with_cover %>
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+          <% else %>
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to '列表', sites_admin_organization_post_list_organization_posts_path(@organization.id, organization_post_list.id) %>
+          <%= link_to 'Edit', edit_sites_admin_organization_post_list_path(@organization.id, organization_post_list.id) %>
+          <%= link_to 'Destroy', sites_admin_organization_post_list_path(@organization.id, organization_post_list.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

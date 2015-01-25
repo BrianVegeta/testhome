@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+<ol class="breadcrumb">
+  <li><a href="<%= sites_admin_organization_post_lists_path(organization_id: @organization.id) %>">文章列表</a></li>
+  <li><a href="<%= sites_admin_organization_post_list_organization_posts_path(@organization.id, @postList.id) %>"><%= @postList.name %></a></li>
+  <li class="active">文章 "<%= @organization_post.title %>"</li>
+</ol>
+
+<table class="table">
+	<tr>
+		<th>ID</th>
+		<td><%= @organization_post.id %></td>
+	</tr>
+	<tr>
+		<th>封面</th>
+		<td>
+			<% if @organization_post.cover_id.nil? %>
+        <img src="http://img3.wikia.nocookie.net/__cb20090227194712/java/images/0/0e/Camera_icon.gif" width="200">
+      <% else %>
+        <img src="<%= Image.find(@organization_post.cover_id).avatar(:small) %>">
+      <% end %>
+		</td>
+	</tr>
+	<tr>
+		<th>標題</th>
+		<td><%= @organization_post.title %></td>
+	</tr>
+	<tr>
+		<th>敘述</th>
+		<td><%= @organization_post.description %></td>
+	</tr>
+	<tr>
+		<th>內容</th>
+		<td><%=raw @organization_post.content %></td>
+	</tr>
+</table>

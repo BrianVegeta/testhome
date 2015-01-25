@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150124113716) do
+ActiveRecord::Schema.define(version: 20150125170214) do
 
   create_table "adgroups", force: true do |t|
     t.integer  "organization_id"
@@ -851,6 +851,28 @@ ActiveRecord::Schema.define(version: 20150124113716) do
   add_index "organization_members", ["organization_id"], name: "organization_id", using: :btree
   add_index "organization_members", ["user_id"], name: "user_id", using: :btree
 
+  create_table "organization_post_lists", force: true do |t|
+    t.integer  "organization_id"
+    t.string   "name"
+    t.boolean  "with_cover",      default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "organization_post_lists", ["organization_id"], name: "index_organization_post_lists_on_organization_id", using: :btree
+
+  create_table "organization_posts", force: true do |t|
+    t.integer  "organization_post_list_id"
+    t.integer  "cover_id"
+    t.string   "title"
+    t.text     "description"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "organization_posts", ["organization_post_list_id"], name: "index_organization_posts_on_organization_post_list_id", using: :btree
+
   create_table "organizations", force: true do |t|
     t.string   "type",                limit: 30,                  null: false
     t.integer  "cover_id"
@@ -1031,6 +1053,7 @@ ActiveRecord::Schema.define(version: 20150124113716) do
     t.text     "html"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "description"
   end
 
   add_index "styles", ["organization_id"], name: "index_styles_on_organization_id", using: :btree

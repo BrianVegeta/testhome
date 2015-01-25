@@ -1,0 +1,54 @@
+<% url_helper = Rails.application.routes.url_helpers %>
+
+;(function($) {
+	'use strict';
+
+	var siteAdminApp = angular.module('siteAdmin', ['textAngular', 'angularFileUpload']);
+	siteAdminApp.controller('editorCtrl', ['$scope', function($scope) {
+		
+	}]);
+
+	siteAdminApp.directive('coverUpload', function($upload) {
+		return {
+			restrict: 'A',
+			controller: function($scope, $upload) {
+				this.upload = function($files) {
+					$upload.upload({
+	          url: '<%= url_helper.admin_images_path %>',
+	          method: 'post',
+	          file: $files[0],
+	          fileFormDataName: 'image[avatar]'
+	        }).progress(function(event) {
+
+	        }).success(function(response) {
+	        	var imageUrl = response.imageUrl.small; 
+	        	$scope.imageSrc = imageUrl;
+	        	$scope.imageId = response.imageId;
+	        });
+				};
+
+			},
+			link: function(scope, element, attrs) {
+				element.parent().css({
+					'position': 'relative'
+				});
+				element.css({
+					'position': 'absolute',
+					'top': '0',
+					'left': '0'
+				});
+				scope.$watch('imageSrc', function(newValue, oldValue) {
+					element.parent().find('img').attr('src', newValue);
+				});
+				scope.$watch('imageId', function(newValue, oldValue) {
+					if (newValue !== undefined) {
+						element.parent().find('input:hidden').val(newValue);
+					}
+				});
+			},
+			controllerAs: 'imageUpload',
+			template: '<div class="btn btn-default" ng-file-select ng-file-change="imageUpload.upload($files)">upload</div>'
+		};
+	});
+
+}(jQuery, angular));

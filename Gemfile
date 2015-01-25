@@ -59,3 +59,7 @@ gem 'jquery-ui-rails'
 gem "jquery-fileupload-rails"
 
 gem 'paperclip'
+gem 'tinymce-rails'
+gem "font-awesome-rails"
+
+gem 'jquery-turbolinks'

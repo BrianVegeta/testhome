@@ -1,0 +1,33 @@
+<%= form_for [:sites, :admin, @sites_admin_style], :html => { class: 'form-horizontal', :role => "form", autocomplete: 'off' } do |f| %>
+  <% if @sites_admin_style.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sites_admin_style.errors.count, "error") %> prohibited this sites_admin_style from being saved:</h2>
+
+      <ul>
+      <% @sites_admin_style.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :'名稱', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-6">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :'附註', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-6">
+      <%= f.text_field :description, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-6">
+      <button type="submit" class="btn btn-default">送出</button>
+    </div>
+  </div>
+<% end %>

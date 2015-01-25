@@ -1,0 +1,60 @@
+<% 
+  
+  if @organization_post.new_record?
+    formUrl = sites_admin_organization_post_list_organization_posts_path(@organization.id, @postList.id)
+  else
+    formUrl = sites_admin_organization_post_list_organization_post_path(@organization.id, @postList.id, @organization_post.id)
+  end
+  
+%>
+<%= form_for @organization_post, url: formUrl, :html => { class: 'form-horizontal', :role => "form", autocomplete: 'off' } do |f| %>
+  <% if @organization_post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@organization_post.errors.count, "error") %> prohibited this sites_admin_organization_post from being saved:</h2>
+
+      <ul>
+      <% @organization_post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="form-group">
+    <%= f.label :'封面', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-6">
+      <div cover-upload></div>
+      <% if @organization_post.cover_id.nil? %>
+        <img src="http://img3.wikia.nocookie.net/__cb20090227194712/java/images/0/0e/Camera_icon.gif" width="200">
+      <% else %>
+        <img src="<%= Image.find(@organization_post.cover_id).avatar(:small) %>">
+      <% end %>
+      <%= f.hidden_field :cover_id %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :'標題', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-6">
+      <%= f.text_field :title, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :'敘述', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-6">
+      <%= f.text_field :description, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :'內容', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-6" ng-controller="editorCtrl">
+      <div text-angular ng-model="html"><%=raw @organization_post.content %></div>
+      <textarea class="ornagization-post-editor" id="organization_post_content" name="organization_post[content]" hidden>{{html}}</textarea>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-6">
+      <button type="submit" class="btn btn-default">送出</button>
+    </div>
+  </div>
+<% end %>

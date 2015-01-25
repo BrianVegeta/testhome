@@ -8,3 +8,4 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( style.js )
 Rails.application.config.assets.precompile += %w( bootstrap-contextmenu.js )
 Rails.application.config.assets.precompile += %w( angular-file-upload-all.js )
+Rails.application.config.assets.precompile += %w( textAngular.css )
