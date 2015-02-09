@@ -5,6 +5,8 @@
     <tr>
       <th>id</th>
       <th>組織名稱</th>
+      <th>level</th>
+      <th>root?</th>
       <th>
         <a href="<%= new_admin_organization_path %>" type="button" class="btn btn-default">新增組織</a>
       </th>
@@ -15,6 +17,12 @@
       <tr>
         <td><%= admin_organization.id %></td>
         <td><%= admin_organization.name %></td>
+        <td><%= admin_organization.level_count %></td>
+        <td>
+          <% if admin_organization.is_root %>
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+          <% end %>
+        </td>
         <td>
           <%= link_to '前台', sites_root_path(admin_organization.id) %>
           <%= link_to '後台', sites_admin_root_path(admin_organization.id) %>

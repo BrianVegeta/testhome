@@ -26,10 +26,14 @@ class Admin::OrganizationsController < Admin::BaseController
   def create
     # raise admin_organization_params.inspect
     @admin_organization = Organization.new(admin_organization_params)
+    
     @admin_organization.useNew_style
+    @admin_organization.is_root = true
 
     respond_to do |format|
       if @admin_organization.save
+        @organization_auth = @admin_organization.organization_auths.new({name: :admin})
+        @organization_auth.save
         format.html { redirect_to admin_organization_path(@admin_organization.id), notice: 'Organization was successfully created.' }
         format.json { render :show, status: :created, location: @admin_organization }
       else
@@ -74,7 +78,7 @@ class Admin::OrganizationsController < Admin::BaseController
       areas = params[:organization][:area].split('-')
 
       params.require(:organization).permit(
-        :name, :type, :address, :descript, :phone, :fax, :email
+        :name, :level_count, :type, :address, :descript, :phone, :fax, :email
         ).merge({main_area: areas.first, sub_area: areas.last})
     end
 end

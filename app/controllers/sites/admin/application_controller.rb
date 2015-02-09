@@ -7,4 +7,5 @@ class Sites::Admin::ApplicationController < ApplicationController
   def set_organization
     @organization = Organization.find(params[:organization_id])
   end
+
 end

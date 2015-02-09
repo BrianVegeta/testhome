@@ -1,0 +1,17 @@
+<%= form_for(@sites_admin_auth) do |f| %>
+  <% if @sites_admin_auth.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sites_admin_auth.errors.count, "error") %> prohibited this sites_admin_auth from being saved:</h2>
+
+      <ul>
+      <% @sites_admin_auth.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

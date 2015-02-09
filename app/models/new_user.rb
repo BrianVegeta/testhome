@@ -1,5 +1,6 @@
 class NewUser < ActiveRecord::Base
 	belongs_to :user
+	has_many :organization_auths
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

@@ -1,0 +1,6 @@
+<% if new_user_signed_in? %>
+	登入中
+	<%= link_to '登出', destroy_new_user_session_path, method: :delete %>
+<% else %>
+	<%= link_to '測試用登入', new_new_user_session_path %>
+<% end %>

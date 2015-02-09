@@ -4,8 +4,13 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
   
-  devise_for :new_admins, :controllers => { sessions: 'new_admins/sessions' }
-  devise_for :new_users, :controllers => { :omniauth_callbacks => "new_users/omniauth_callbacks" }
+  devise_for :new_admins, :controllers => { 
+    sessions: 'new_admins/sessions' 
+  }
+  devise_for :new_users, :controllers => { 
+    :omniauth_callbacks => "new_users/omniauth_callbacks",
+    sessions: 'new_users/sessions'
+  }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -71,6 +76,8 @@ Rails.application.routes.draw do
       get ':organization_id', to: "index#index", as: :root
 
       resources :styles, path: ':organization_id/styles'
+      resources :auths, path: ':organization_id/auths'
+      resources :organsubs, path: ':organization_id/organsubs'
 
       resources :organization_post_lists, path: ':organization_id/post_list' do
         resources :organization_posts, path: 'post'

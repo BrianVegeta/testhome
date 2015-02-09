@@ -1,48 +1,5 @@
 <h1>首頁</h1>
-<% if !user_signed_in? && !new_user_signed_in? %>
-	<br>
-	<%= link_to '舊會員登入', new_user_session_path %>
-	<br>
-	<%= link_to "Facebook 登入", new_user_omniauth_authorize_path(:facebook) %>
-	<br>
-	<%= link_to "Google+ 登入", new_user_omniauth_authorize_path(:gplus) %>
-	<br>
-<% else %>
-	<% if user_signed_in? %>
-		<p>目前登入的使用者： <%= current_user.login %></p>
-		<% if current_user.is_admin? %>
-			<p>目前的使用者擁有管理員權限，<%= link_to '進入管理員介面', admin_root_path %></p>
-		<% end %>
-		<% if current_user.new_user_linked? %>
-			<p>已連結到 <%= current_user.new_user.provider %> : <%= current_user.new_user.name %></p>
-			<%= link_to "使用#{current_user.new_user.provider}登入", transfer_social_login_path(current_user.new_user.provider) %>
-			<br>
-		<% else %>
-			<%= link_to "轉換為 Facebook 帳號", transfer_social_login_path(:facebook) %>
-			<br>
-			<%= link_to "轉換為 Google+ 帳號", transfer_social_login_path(:gplus) %>
-			<br>
-		<% end %>
-		<%= link_to "登出", destroy_user_session_path, data:{method: :delete} %>
-	<% elsif new_user_signed_in? %>
-		<p>現在使用  <%= current_new_user.provider %> 登入</p>
-		<% if current_new_user.is_global_admin? %>
-			<p>目前的使用者擁有管理員權限，<%= link_to '進入管理員介面', admin_root_path %></p>
-		<% end %>
-		<img src="<%= current_new_user.image %>" alt="..." class="<%= current_new_user.is_facebook? ? 'img-rounded' : 'img-circle' %>">
-		<p><%= current_new_user.name %></p>
-		<% if current_new_user.link_to_social? %>
-			<table>
-				<tr>
-					<th style="text-align: right;">舊帳號:</th>
-					<td>&nbsp;<%= current_new_user.user.login %></td>
-				</tr>
-				<tr>
-					<th style="text-align: right;">舊email:</th>
-					<td>&nbsp;<%= current_new_user.user.email %></td>
-				</tr>
-			</table>
-		<% end -%>
-		<%= link_to "登出", destroy_new_user_session_path, data:{method: :delete} %>
-	<% end -%>
-<% end -%>
+<!-- 
+<%= render 'login' %>
+-->
+<%= render 'login_test' %>

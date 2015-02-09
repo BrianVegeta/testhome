@@ -1,10 +1,17 @@
-<%= form_for [:admin, @admin_organization], :html => { class: 'form-horizontal', :role => "form", autocomplete: 'off' } do |f| %>
-  <% if @admin_organization.errors.any? %>
+<%
+ if @sites_admin_organsub.new_record?
+  formUrl = sites_admin_organsubs_path(@organization.id)
+ else
+  formUrl = sites_admin_organsub_path(@organization.id)
+ end
+%>
+<%= form_for @sites_admin_organsub, url: formUrl, :html => { class: 'form-horizontal', :role => "form", autocomplete: 'off' } do |f| %>
+  <% if @sites_admin_organsub.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@admin_organization.errors.count, "error") %> prohibited this admin_organization from being saved:</h2>
+      <h2><%= pluralize(@sites_admin_organsub.errors.count, "error") %> prohibited this sites_admin_organsub from being saved:</h2>
 
       <ul>
-      <% @admin_organization.errors.full_messages.each do |message| %>
+      <% @sites_admin_organsub.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -17,9 +24,15 @@
     </div>
   </div>
   <div class="form-group">
+    <%= f.label :'擁有者會員ID', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-6">
+      <input type="text" name="new_user_id" class="form-control">
+    </div>
+  </div>
+  <div class="form-group">
     <%= f.label :'層數', class: 'col-sm-2 control-label' %>
     <div class="col-sm-6">
-      <%= f.text_field :level_count, :class => 'form-control' %>
+      <%= f.text_field :level_count, :class => 'form-control', readonly: true %>
     </div>
   </div>
   <div class="form-group">

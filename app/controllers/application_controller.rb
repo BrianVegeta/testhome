@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :transfer_social_login
+  before_action :set_current_organization, unless: :devise_controller?
 
   protected
 
@@ -21,5 +22,11 @@ class ApplicationController < ActionController::Base
   		session.delete(:loginId)
   		sign_out :user
   	end
+  end
+
+  def set_current_organization
+    # raise 'session'.inspect
+    session[:organization_id] = params[:organization_id]
+    # raise session[:organization_id].inspect
   end
 end

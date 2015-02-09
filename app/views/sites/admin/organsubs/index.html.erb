@@ -1,0 +1,25 @@
+<h1>組織列表</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>組織名稱</th>
+      <th>
+        <a href="<%= new_sites_admin_organsub_path %>" type="button" class="btn btn-default">新增組織</a>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @sites_admin_organsubs.each do |sites_admin_organsub| %>
+      <tr>
+        <td><%= sites_admin_organsub.id %></td>
+        <td><%= sites_admin_organsub.name %></td>
+        <td>
+          <%= link_to '前台', sites_root_path(sites_admin_organsub.id) %>
+          <%= link_to '後台', sites_admin_root_path(sites_admin_organsub.id) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

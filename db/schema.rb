@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150125170214) do
+ActiveRecord::Schema.define(version: 20150126043419) do
 
   create_table "adgroups", force: true do |t|
     t.integer  "organization_id"
@@ -815,6 +815,22 @@ ActiveRecord::Schema.define(version: 20150125170214) do
   add_index "organization_authorizations", ["sub_area"], name: "sub_area", using: :btree
   add_index "organization_authorizations", ["user_id"], name: "user_id", using: :btree
 
+  create_table "organization_auths", force: true do |t|
+    t.integer  "organization_id", null: false
+    t.integer  "new_user_id"
+    t.string   "name"
+    t.integer  "parent_id"
+    t.integer  "lft",             null: false
+    t.integer  "rgt",             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "depth"
+    t.integer  "children_count"
+  end
+
+  add_index "organization_auths", ["new_user_id"], name: "index_organization_auths_on_new_user_id", using: :btree
+  add_index "organization_auths", ["organization_id"], name: "index_organization_auths_on_organization_id", using: :btree
+
   create_table "organization_joint_groups", force: true do |t|
     t.string   "name",                           null: false
     t.text     "descript"
@@ -915,6 +931,8 @@ ActiveRecord::Schema.define(version: 20150125170214) do
     t.integer  "depth"
     t.integer  "children_count"
     t.string   "using_style"
+    t.integer  "level_count"
+    t.boolean  "is_root"
   end
 
   add_index "organizations", ["end_at"], name: "end_at", using: :btree

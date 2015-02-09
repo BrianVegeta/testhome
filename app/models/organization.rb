@@ -4,6 +4,7 @@ class Organization < ActiveRecord::Base
 
   has_many :styles
   has_many :organization_post_lists
+  has_many :organization_auths
 
   TYPE = [
   	["公會", 'Guild'] , 
@@ -36,5 +37,9 @@ class Organization < ActiveRecord::Base
       end
     end
 
+  end
+
+  def is_last_level?
+    self.level_count <= 1
   end
 end
