@@ -1,42 +1,146 @@
-<h1>組織列表</h1>
+<style type="text/css">
+  .organ-list-header {
+    cursor: pointer;
+  }
+  .organ-list-header.selected {
+    background-color: #97BDD6;
+    background: -webkit-gradient(linear, left top, left bottom, from(#bee0f5), to(#89afca));
+    background: -moz-linear-gradient(top, #bee0f5, #89afca);
+    background: -ms-linear-gradient(top, #bee0f5, #89afca);
+    background: -o-linear-gradient(top, #bee0f5, #89afca);
+  }
+  #tree {
+    /*width: 500px;*/
+  }
+  #tree_frame {
+    width: 270px;
+    position: fixed;
+    height:500px;
+    overflow:auto;
+    border: 1px solid #cccccc;
+  }
+  body {
+    font-size: 15px;
+  }
+</style>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>id</th>
-      <th>組織名稱</th>
-      <th>level</th>
-      <th>root?</th>
-      <th>
-        <a href="<%= new_admin_organization_path %>" type="button" class="btn btn-default">新增組織</a>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @admin_organizations.each do |admin_organization| %>
-      <tr>
-        <td><%= admin_organization.id %></td>
-        <td><%= admin_organization.name %></td>
-        <td><%= admin_organization.level_count %></td>
-        <td>
-          <% if admin_organization.is_root %>
-            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-          <% end %>
-        </td>
-        <td>
-          <%= link_to '前台', sites_root_path(admin_organization.id) %>
-          <%= link_to '後台', sites_admin_root_path(admin_organization.id) %>
-          <%= link_to 'Show', admin_organization_path(admin_organization.id) %>
-          <%= link_to 'Edit', edit_admin_organization_path(admin_organization) %>
-          <%= link_to 'Destroy', admin_organization_path(admin_organization.id), method: :delete, data: { confirm: 'Are you sure?' } %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<%= will_paginate @admin_organizations %>
-
-<br>
-
-<%= link_to 'New Organization', new_admin_organization_path %>
+<div class="row" ng-app="organ" style="padding-top: 10px;" ng-controller="tableCtrl">
+  <div class="col-sm-12" ng-controller="alertCtrl" ng-switch="isShow">
+    <div ng-switch-when="true" class="alert alert-info" role="alert">
+      <p>
+        <span ng-bind="message"></span>
+        <button ng-click="cancel()" class="btn btn-default btn-sm">取消轉移</button>
+      </p>
+    </div>
+  <div>
+  <div class="col-sm-3">
+    <div id="tree_frame">
+      <div id="tree" style="font-size: 16px;"></div>
+    </div>
+  </div>
+  <div class="col-sm-9" ng-switch="resultType">
+    <div class="row">
+      <div class="col-sm-3" ng-switch="currentOrgan.id">
+        <a ng-switch-when="#" href="<%= new_admin_organization_path %>" type="button" class="btn btn-default" ng-disabled="currentOrgan.level_count <= 1">新增組織</a>
+        <a ng-switch-default ng-href="/admin/organizations/new?parent={{currentOrgan.id}}" type="button" class="btn btn-default" ng-disabled="currentOrgan.level_count <= 1">新增子組織</a>
+      </div>
+      <div class="col-sm-9">
+        <div class="input-group" ng-controller="searchCtrl">
+          <input type="text" class="form-control" placeholder="ex: ID:123, 公司名稱, 0972312866" ng-model="$parent.$parent.query">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-click="search()">搜尋</button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <table class="table" ng-switch-when="search">
+      <thead>
+        <tr>
+          <th>
+            搜尋結果: <span ng-if="results.length == 0">無結果</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="result in results">
+          <td>ID:<span ng-bind="result.id"></span></td>
+          <td>
+            <span ng-repeat="parent in result.parents">
+              <span ng-bind="parent.name"></span> / 
+            </span>
+            <a href="" ng-bind="result.name" ng-click="getSubOrgans(result)"></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div ng-switch-when="default">
+      <ol class="breadcrumb">
+        <li ng-switch="currentOrgan.id">
+          <span ng-switch-when="#">組織列表</span>
+          <a href="#" ng-switch-default ng-click="getRootOrgans()">組織列表</a>
+        </li>
+        <li ng-repeat="path in folderPaths">
+          <a href="#" ng-bind="path.name" ng-click="getSubOrgans(path)"></a>
+        </li>
+        <li ng-if="currentOrgan.id != '#'">
+          <span ng-bind="currentOrgan.label"></span>
+        </li>
+      </ol>
+      <table class="table">
+        <thead ng-switch="currentOrgan.id">
+          <tr ng-switch-when="#">
+            <th>ID</th>
+            <th>組織名稱</th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr ng-switch-default>
+            <th>ID:<span ng-bind="currentOrgan.id"></span></th>
+            <th ng-bind="currentOrgan.label">組織名稱</th>
+            <!--
+            <th>可擁有<span ng-bind="currentOrgan.level_count"></span>層下線</th>
+            -->
+            <th>
+              <a ng-href="#">前台</a>
+              <a ng-href="#">後台</a>
+              <a ng-href="/admin/organizations/{{currentOrgan.id}}/edit">編輯</a>
+            </th>
+            <th ng-switch="currentOrgan.canTransLevel">
+              <button ng-switch-when="true" ng-click="transLevel(currentOrgan)" class="btn btn-default">轉移</button>
+              <button ng-switch-when="false" class="btn btn-default" disabled>轉移</button>
+              <button ng-switch-when="prepareToTrans" class="btn btn-default" disabled>預備轉移中</button>
+              <button ng-switch-when="transIn" ng-click="transLevelIn(currentOrgan)" class="btn btn-default">轉入</button>
+              <button ng-switch-when="notTransIn" class="btn btn-default" disabled>轉入</button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="organ in organs">
+            <td>ID:<span ng-bind="organ.id"></span></td>
+            <td>
+              <a href="" ng-bind="organ.label" ng-click="getSubOrgans(organ)"></a>
+            </td>
+            <!--
+            <td>可擁有<span ng-bind="organ.level_count"></span>層下線</td>
+            -->
+            <td>
+              <a ng-href="#">前台</a>
+              <a ng-href="#">後台</a>
+              <a ng-href="/admin/organizations/{{organ.id}}/edit">編輯</a>
+              <!--
+              <a ng-href="/sites/admin/{{organ.id}}" target="_blank">後台</a>
+              -->
+            </td>
+            <td ng-switch="organ.canTransLevel">
+              <button ng-switch-when="true" ng-click="transLevel(organ)" class="btn btn-default">轉移</button>
+              <button ng-switch-when="false" class="btn btn-default" disabled>轉移</button>
+              <button ng-switch-when="prepareToTrans" class="btn btn-default" disabled>預備轉移中</button>
+              <button ng-switch-when="transIn" ng-click="transLevelIn(organ)" class="btn btn-default">轉入</button>
+              <button ng-switch-when="notTransIn" class="btn btn-default" disabled>轉入</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>  
+  </div>
+</div>

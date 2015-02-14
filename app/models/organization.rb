@@ -1,6 +1,6 @@
 class Organization < ActiveRecord::Base
 	self.inheritance_column = :foo #for type subclass
-  acts_as_nested_set
+  acts_as_nested_set :counter_cache => :children_count
 
   has_many :styles
   has_many :organization_post_lists

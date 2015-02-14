@@ -18,6 +18,9 @@
 //= require tinymce
 //= require angular
 //= require site-admin-app
+//= require admin-organ-app
+
+//= require tree.jquery
 
 //= require bootstrap-sprockets
 //= require turbolinks

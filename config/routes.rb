@@ -87,7 +87,12 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root "index#index"
-    resources :organizations
+
+    get 'organizations/search/:query', to:'organizations#search', as: :organizations_search
+    resources :organizations do
+      get 'trans_level/:trans_id', to: 'organizations#trans_level'
+    end
+
     resources :styles
     resources :images
   end

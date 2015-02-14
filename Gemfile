@@ -63,3 +63,5 @@ gem 'tinymce-rails'
 gem "font-awesome-rails"
 
 gem 'jquery-turbolinks'
+
+gem 'jqtree-rails'
