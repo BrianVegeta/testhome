@@ -1,4 +1,5 @@
-class Sites::IndexController < ApplicationController
+class Sites::IndexController < Sites::ApplicationController
+	layout 'sites/application'
 	# def index
 		
 	# 	@organization_id = params[:id].to_i
@@ -15,20 +16,20 @@ class Sites::IndexController < ApplicationController
 	# 	end
 	# end
 	def index
-		set_organization_auth
+		# set_organization_auth
 	end
 
 	protected
 
-	def set_organization_auth
-    @organizationAuth =  OrganizationAuth.where(organization_id: params[:organization_id]).first
-    return if @organizationAuth.nil?
-    return if !new_user_signed_in?
-    return if OrganizationAuth.where(organization_id: params[:organization_id], new_user_id: current_new_user.id).length != 0
+	# def set_organization_auth
+ #    @organizationAuth =  OrganizationAuth.where(organization_id: params[:organization_id]).first
+ #    return if @organizationAuth.nil?
+ #    return if !new_user_signed_in?
+ #    return if OrganizationAuth.where(organization_id: params[:organization_id], new_user_id: current_new_user.id).length != 0
 
-    @childAuth = OrganizationAuth.new({name: :user, organization_id: params[:organization_id], new_user_id: current_new_user.id})
-    @childAuth.save
-    @childAuth.move_to_child_of(@organizationAuth)
+ #    @childAuth = OrganizationAuth.new({name: :user, organization_id: params[:organization_id], new_user_id: current_new_user.id})
+ #    @childAuth.save
+ #    @childAuth.move_to_child_of(@organizationAuth)
     
-  end
+ #  end
 end

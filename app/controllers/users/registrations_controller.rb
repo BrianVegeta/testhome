@@ -1,6 +1,9 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-# before_filter :configure_sign_up_params, only: [:create]
+  before_filter :configure_sign_up_params, only: [:create]
 # before_filter :configure_account_update_params, only: [:update]
+  before_filter :set_organization, if: :is_organization?
+  before_filter :set_site_layout
+  # layout 'sites/application', if: :is_organization?
 
   # GET /resource/sign_up
   # def new
@@ -42,6 +45,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def configure_sign_up_params
   #   devise_parameter_sanitizer.for(:sign_up) << :attribute
   # end
+  def configure_sign_up_params
+    devise_parameter_sanitizer.for(:sign_up) do |u|
+      u.permit(:email, :password, :password_confirmation)
+    end
+  end
+
 
   # You can put the params you want to permit in the empty array.
   # def configure_account_update_params
@@ -54,7 +63,31 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up for inactive accounts.
-  # def after_inactive_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  def after_inactive_sign_up_path_for(resource)
+    if is_organization?
+      sites_root_path(params[:organization_id])
+    else
+      root_path
+    end
+    # super(resource)
+  end
+
+  protected
+
+  def set_organization
+    @organization = Organization.find(params[:organization_id])
+  end
+
+  def is_organization?
+    return true if params[:organization_id]
+    return false
+  end
+
+  def set_site_layout
+    if is_organization?
+      self.class.layout 'sites/application'
+    else
+      self.class.layout 'application'
+    end
+  end
 end

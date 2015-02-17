@@ -1,16 +1,27 @@
-<h2>Resend confirmation instructions</h2>
+<div class="row">
+	<div class="col-sm-6 col-sm-offset-3">
+		<h2>重發驗證信</h2>
+		<p>請填入您所註冊的電子信箱並送出，我們將寄發驗證連結到您的信箱。</p>
 
-<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
+		<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name, (@organization ? {organization_id: @organization.id} : {})), html: { class: '', :role => "form", autocomplete: 'off', method: 'post' }) do |f| %>
+		  
+		  <% unless resource.errors.empty? %>
+		    <div class="alert alert-danger" role="alert">
+		      <% resource.errors.full_messages.each do |message| %>
+		        <li><%= message %></li>
+		      <% end %>
+		    </div>
+		  <% end %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
+		  <div class="form-group">
+		    <%= f.label :'電子信箱' %>
+		    <%= f.text_field :email, autofocus: true, :class => 'form-control' %>
+		  </div>
 
-  <div class="actions">
-    <%= f.submit "Resend confirmation instructions" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+		  <button type="submit" class="btn btn-success">
+		  	發送
+		  </button>
+		  
+		<% end %>
+	</div>	
+</div>

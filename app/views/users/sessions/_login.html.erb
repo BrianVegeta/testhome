@@ -1,0 +1,32 @@
+<%= form_for(resource, as: resource_name, url: session_path(resource_name, (@organization ? {organization_id: @organization.id} : {})), :html => { class: '', :role => "form", autocomplete: 'off', style: "border: 1px solid #CAC7C7; padding: 10px;border-radius: 3px;" }) do |f| %>
+  
+  <% if flash[:alert] -%>
+    <div class="alert alert-danger" role="alert">
+      <%= flash[:alert] %>
+    </div>
+  <% end -%>
+
+  <div class="form-group">
+    <%= f.label :'帳號或電子信箱' %>
+    <%= f.text_field :login_or_email, :class => 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :'密碼' %>
+    <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+  </div>
+
+  <% if devise_mapping.rememberable? -%>
+    <div class="checkbox">
+      <label>
+        <%= f.check_box :remember_me %> 記住我
+      </label>
+    </div>
+  <% end -%>
+
+  <div class="form-group">
+    <%= link_to "忘記密碼？", new_password_path(resource_name, (@organization ? {organization_id: @organization.id} : {})) %>/
+    <%= link_to "重發驗證信", new_user_confirmation_path(@organization ? {organization_id: @organization.id} : {}) %>
+  </div>
+
+  <button type="submit" class="btn btn-success" style="width: 100%">登入</button>
+<% end %>

@@ -1,5 +1,13 @@
 <h1>首頁</h1>
-<!-- 
-<%= render 'login' %>
--->
-<%= render 'login_test' %>
+<%= debug session['custom.devise.recall'] %>
+<%= debug session['test.test'] %>
+<%= user_signed_in? %>
+<%= warden.authenticate?(scope: :g1234) %>
+<% test = warden.authenticate(scope: :g1234) %>
+<%= debug test %>
+<%= debug @current_g1234 %>
+
+<% user = warden.authenticate(scope: :user) %>
+<%= debug user %>
+
+<%= link_to "登出", destroy_user_session_path, data:{method: :delete} %>

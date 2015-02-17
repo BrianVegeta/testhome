@@ -1,14 +1,54 @@
 class User < ActiveRecord::Base
 	has_one :new_user
+
+  # attr_accessor :email_confirmation
+  attr_accessor :login_or_email
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, 
+         :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable, 
-         :encryptable, :encryptor => :restful_authentication_sha1, 
-         authentication_keys: [:login]
+         :encryptable, 
+         :omniauthable,
+         :encryptor => :restful_authentication_sha1,
+         :omniauth_providers => [:facebook, :gplus],
+         authentication_keys: [:login_or_email]
+
+  # validates_presence_of :login
+
+  # validates
+  # validates :login, uniqueness: true
+  # validates :email, confirmation: true, on: :create
+
+  # callback
+  before_create :set_last_login_at
+
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    matchEmail = Devise.email_regexp.match(conditions[:login_or_email])
+    
+    if matchEmail
+      where(email: conditions[:login_or_email]).first
+    else
+      where(login: conditions[:login_or_email]).first
+    end
+    
+  end
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0,20]
+      user.name = auth.info.name   # assuming the user model has a name
+      user.image = auth.info.image # assuming the user model has an image
+      user.skip_confirmation!
+    end
+
+  end
 
   def email_required?
-    false
+    true
   end
 
   def new_user_linked?
@@ -22,4 +62,13 @@ class User < ActiveRecord::Base
   def is_admin?
   	self.level === 3
   end
+
+  def is_global_admin?
+    self.level === 3
+  end
+
+  private
+    def set_last_login_at
+      self.last_login_at = Time.now
+    end
 end

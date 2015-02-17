@@ -1,0 +1,15 @@
+<form class="navbar-form navbar-right">
+  <div class="form-group">
+    <a href="<%= new_session_path(:user, organization_id: @organization.id) %>" class="btn btn-sm btn-success">登入/註冊</a>
+  </div>
+  <div class="form-group">
+    <a href="<%= user_omniauth_authorize_path(:facebook) %>" style="font-size: 32px;">
+      <i class="fa fa-facebook-square fa-5" style="color: #3a5795;"></i>
+    </a>
+  </div>
+  <div class="form-group">
+    <a href="<%= user_omniauth_authorize_path(:gplus) %>" style="color: red;font-size: 32px;">
+      <i class="fa fa-google-plus-square fa-5"></i>
+    </a>
+  </div>
+</form>

@@ -1,11 +1,6 @@
-class Sites::Admin::ApplicationController < ApplicationController
-  before_action :set_organization
+class Sites::Admin::ApplicationController < Sites::ApplicationController
   layout 'sites/admin'
 
   protected
-
-  def set_organization
-    @organization = Organization.find(params[:organization_id])
-  end
 
 end
