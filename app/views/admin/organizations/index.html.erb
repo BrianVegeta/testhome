@@ -100,9 +100,9 @@
             <!--
             <th>可擁有<span ng-bind="currentOrgan.level_count"></span>層下線</th>
             -->
-            <th>
-              <a ng-href="/sites/{{currentOrgan.id}}">前台</a>
-              <a ng-href="/sites/admin/{{currentOrgan.id}}">後台</a>
+            <th width="200">
+              <a ng-href="/sites/{{currentOrgan.id}}">前台</a> /
+              <a ng-href="#">後台(施工中)</a> /
               <a ng-href="/admin/organizations/{{currentOrgan.id}}/edit">編輯</a>
             </th>
             <th ng-switch="currentOrgan.canTransLevel">
@@ -123,9 +123,9 @@
             <!--
             <td>可擁有<span ng-bind="organ.level_count"></span>層下線</td>
             -->
-            <td>
-              <a ng-href="/sites/{{organ.id}}">前台</a>
-              <a ng-href="/sites/admin/{{organ.id}}">後台</a>
+            <td width="200">
+              <a ng-href="/sites/{{organ.id}}">前台</a> /
+              <a ng-href="#">後台(施工中)</a> /
               <a ng-href="/admin/organizations/{{organ.id}}/edit">編輯</a>
               <!--
               <a ng-href="/sites/admin/{{organ.id}}" target="_blank">後台</a>
