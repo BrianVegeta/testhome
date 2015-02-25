@@ -1,0 +1,161 @@
+
+
+<div class="row">
+	<div class="col-sm-8 col-sm-offset-2">
+		<table class="table table-bordered">
+			<tr>
+				<th>ID</th>
+				<td><%= @admin_user.id %></td>
+			</tr>
+			<tr>
+				<th>舊會員帳號</th>
+				<td>
+					<%= @admin_user.login %>
+				</td>
+			</tr>
+			<tr>
+				<th>電子信箱</th>
+				<td>
+					<%= @admin_user.email %>
+				</td>
+			</tr>
+			<tr>
+				<th>名字</th>
+				<td>
+					<% if @admin_user.name.present? %>
+						<%= @admin_user.name %>
+					<% else %>
+						<span class="label label-warning">未填</span>
+					<% end %>
+				</td>
+			</tr>
+			<tr>
+				<th>暱稱</th>
+				<td>
+					<% if @admin_user.nick_name.present? %>
+						<%= @admin_user.nick_name %>
+					<% else %>
+						<span class="label label-warning">未填</span>
+					<% end %>
+				</td>
+			</tr>
+			<tr>
+				<th>稱謂</th>
+				<td>
+					<% if @admin_user.sex.nil? %>
+						<span class="label label-warning">未填</span>
+					<% elsif @admin_user.sex %>
+						先生
+					<% else %>
+						女士
+					<% end %>
+				</td>
+			</tr>
+			<tr>
+				<th>電話</th>
+				<td>
+					<% if !@admin_user.phone.present? && !@admin_user.phone2.present? %>
+						<span class="label label-warning">未填</span>
+					<% else %>
+						<%= @admin_user.phone %>
+						<br>
+						<%= @admin_user.phone2 %>
+					<% end %>
+				</td>
+			</tr>
+			<tr>
+				<th>地址</th>
+				<td>
+					<% if @admin_user.main_area %>
+						<span class="label label-info">
+							<%= Area::MAIN_AREA[@admin_user.main_area] %>
+						</span>&nbsp;
+					<% end %>
+					<% if @admin_user.main_area && @admin_user.sub_area %>
+						<span class="label label-info">
+							<%= Area::SUB_AREA[@admin_user.main_area][@admin_user.sub_area] %>
+						</span>&nbsp;
+					<% end %>
+					<% if !@admin_user.address.present? && !@admin_user.main_area.present? && !@admin_user.sub_area.present? %>
+						<span class="label label-warning">未填</span>
+					<% else %>
+						<%= @admin_user.address %>
+					<% end %>
+				</td>
+			</tr>
+			<tr>
+				<th>驗證狀態</th>
+				<td>
+					<% if @admin_user.confirmed_at.present? %>
+						<%= @admin_user.confirmed_at.strftime("%Y/%m/%d %H:%M:%S") %> 通過驗證
+					<% else %>
+						<span class="label label-warning">未通過</span>
+					<% end %>
+				</td>
+			</tr>
+			<tr>
+				<th>建立於</th>
+				<td>
+					<%= @admin_user.created_at.strftime("%Y/%m/%d %H:%M:%S") %>
+				</td>
+			</tr>
+			<tr>
+				<th>更新於</th>
+				<td>
+					<%= @admin_user.updated_at.strftime("%Y/%m/%d %H:%M:%S") %>
+				</td>
+			</tr>
+			<tr>
+				<th>最後登入</th>
+				<td>
+					<% if @admin_user.last_sign_in_at %>
+						<%= @admin_user.last_sign_in_ip %>
+						--
+						<%= @admin_user.last_sign_in_at.strftime("%Y/%m/%d %H:%M:%S") %>
+					<% else %>
+						<span class="label label-warning">尚未登入</span>
+					<% end %>
+				</td>
+			</tr>
+			<tr>
+				<th>登入次數</th>
+				<td>
+					<%= @admin_user.sign_in_count %>
+				</td>
+			</tr>
+		</table>
+		<a href="<%= params[:recall] || admin_users_path %>" class="btn btn-info">返回</a>
+		<div style="border: 1px solid #dddddd; margin-top: 10px; margin-bottom: 40px; padding-top: 10px; padding-bottom: 30px;">
+			<div class="row">
+				<div class="col-sm-10 col-sm-offset-1">
+					<h3>重設會員密碼</h3>
+
+					<%= form_for(@admin_user, url: admin_user_path(@admin_user), :html => { class: '', :role => "form", autocomplete: 'off', method: 'put' }) do |f| %>
+      
+			      <% unless @admin_user.errors.empty? %>
+			        <div class="alert alert-danger" role="alert">
+			          <% @admin_user.errors.full_messages.each do |message| %>
+			            <li><%= message %></li>
+			          <% end %>
+			        </div>
+			      <% end %>
+
+			      <div class="form-group">
+			        <%= f.label :'新密碼' %>
+			        <%= f.password_field :password, autofocus: (@admin_user.errors.empty? ? false:true ), autocomplete: "off", class: 'form-control' %>
+			      </div>
+
+			      <div class="form-group">
+			        <%= f.label :'再次輸入新密碼' %>
+			        <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
+			      </div>
+
+			      <button type="submit" class="btn btn-success">變更密碼</button>
+			      
+			    <% end %>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

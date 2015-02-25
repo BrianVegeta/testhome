@@ -1,0 +1,48 @@
+<div style="margin-top: 10px;"></div>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="btn-group" role="group" aria-label="...">
+      <a href="<%= admin_users_path %>" 
+         class="btn <%= params[:filter] || params[:search] ? 'btn-default': 'btn-success' %>">所有會員</a>
+      <a href="<%= admin_users_path(filter: :nm) %>" 
+         class="btn <%= params[:filter] == 'nm' ? 'btn-success': 'btn-default' %>">
+        一般
+      </a>
+      <a href="<%= admin_users_path(filter: :fb) %>" 
+         class="btn <%= params[:filter] == 'fb' ? 'btn-success': 'btn-default' %>">
+        Facebook
+      </a>
+      <a href="<%= admin_users_path(filter: :gp) %>" 
+         class="btn <%= params[:filter] == 'gp' ? 'btn-success': 'btn-default' %>">
+        Google+
+      </a>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="input-group" ng-controller="searchCtrl">
+      <input id="search_users_input" type="text" class="form-control" placeholder="ex: ID:123, 名字, 稱謂, email@gmail.com, 0972xxxxxx">
+      <span class="input-group-btn">
+        <button id="search_users" class="btn btn-default" type="button">搜尋</button>
+      </span>
+    </div> 
+  </div>
+</div>
+<div style="margin-top: 30px;"></div>
+<script type="text/javascript">
+  $('#search_users').click(function() {
+    var url = '/admin/users?search=' + $('#search_users_input').val();
+    window.location.href = url;
+  });
+  $('#search_users_input').keypress(function(e) {
+    if (e.which == 13) {
+      var url = '/admin/users?search=' + $('#search_users_input').val();
+      window.location.href = url; 
+    }
+  });
+</script>
+
+<% if params[:search] %>
+  <%= render 'search' %>
+<% else %>
+  <%= render 'list' %>
+<% end %>

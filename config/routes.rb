@@ -107,5 +107,6 @@ Rails.application.routes.draw do
 
     resources :styles
     resources :images
+    resources :users, except: [:new, :create, :edit]
   end
 end
