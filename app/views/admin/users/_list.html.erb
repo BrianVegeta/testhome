@@ -1,32 +1,4 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>名字</th>
-      <th>暱稱</th>
-      <th>email</th>
-      <th>電話</th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @admin_users.each do |admin_user| %>
-      <tr>
-        <td><%= admin_user.id %></td>
-        <td><%= admin_user.name %></td>
-        <td><%= admin_user.nick_name %></td>
-        <td><%= admin_user.email %></td>
-        <td><%= admin_user.phone %></td>
-        <td>
-          <a href="<%= admin_user_path(admin_user.id, recall: request.original_url) %>">
-            <span class="glyphicon glyphicon-list-alt"></span>
-          </a>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render 'table_list' %>
 
 <% 
   pages = []
