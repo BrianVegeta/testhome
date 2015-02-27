@@ -21,6 +21,7 @@
 //= require admin-organ-app
 
 //= require tree.jquery
+//= require select2
 
 //= require bootstrap-sprockets
 //= require turbolinks

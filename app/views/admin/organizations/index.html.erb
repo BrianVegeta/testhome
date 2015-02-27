@@ -46,7 +46,7 @@
       </div>
       <div class="col-sm-9">
         <div class="input-group" ng-controller="searchCtrl">
-          <input type="text" class="form-control" placeholder="ex: ID:123, 公司名稱, 0972xxxxxx" ng-model="$parent.$parent.query">
+          <input type="text" class="form-control" placeholder="ex: ID:123, 公司名稱, 0972xxxxxx" ng-model="$parent.$parent.query" ng-keypress="auto_search($event)">
           <span class="input-group-btn">
             <button class="btn btn-default" type="button" ng-click="search()">搜尋</button>
           </span>
@@ -103,7 +103,7 @@
             <th width="200">
               <a ng-href="/sites/{{currentOrgan.id}}">前台</a> /
               <a ng-href="#">後台(施工中)</a> /
-              <a ng-href="/admin/organizations/{{currentOrgan.id}}/edit">編輯</a>
+              <a ng-href="/admin/organizations/{{currentOrgan.id}}">內容</a>
             </th>
             <th ng-switch="currentOrgan.canTransLevel">
               <button ng-switch-when="true" ng-click="transLevel(currentOrgan)" class="btn btn-default">轉移</button>
@@ -126,7 +126,7 @@
             <td width="200">
               <a ng-href="/sites/{{organ.id}}">前台</a> /
               <a ng-href="#">後台(施工中)</a> /
-              <a ng-href="/admin/organizations/{{organ.id}}/edit">編輯</a>
+              <a ng-href="/admin/organizations/{{organ.id}}">內容</a>
               <!--
               <a ng-href="/sites/admin/{{organ.id}}" target="_blank">後台</a>
               -->

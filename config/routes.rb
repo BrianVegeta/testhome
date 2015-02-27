@@ -108,5 +108,9 @@ Rails.application.routes.draw do
     resources :styles
     resources :images
     resources :users, except: [:new, :create, :edit]
+
+    get 'organization_authorizations/search_users', to: 'organization_authorizations#search_users', as: :organization_authorizations_users_search
+    get 'organization_authorizations/search_user_init', to: 'organization_authorizations#search_user_init', as: :organization_authorizations_user_search_init
+    resources :organization_authorizations
   end
 end

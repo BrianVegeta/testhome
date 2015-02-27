@@ -1,5 +1,4 @@
-<p id="notice"><%= notice %></p>
-
+<h1>組織</h1>
 <table class="table table-bordered">
 	<tr>
 		<th>ID</th>
@@ -15,7 +14,7 @@
 	</tr>
 	<tr>
 		<th>類型</th>
-		<td><%= @admin_organization.type %></td>
+		<td><%= Hash[Organization::TYPE].invert[@admin_organization.type] %></td>
 	</tr>
 	<tr>
 		<th>地址</th>
@@ -45,8 +44,47 @@
 		<th>樣式版本</th>
 		<td><%= @admin_organization.is_old? %></td>
 	</tr>
+	<tr>
+		<th>管理員</th>
+		<td>
+			<% if @organ_admins.length > 0 %>
+				<table class="table table-bordered">
+					<tr>
+						<th>管理員名稱</th>
+						<th>會員 email</th>
+						<th>會員名字/暱稱</th>
+						<th>新增於</th>
+						<th>更新於</th>
+						<th></th>
+					</tr>
+					<% @organ_admins.each do |organ_admin| %>
+						<tr>
+							<td><%= organ_admin.name %></td>
+							<td><%= organ_admin.user.email %></td>
+							<td>
+								<% if organ_admin.user.name %>
+									<%= organ_admin.user.name %>
+									<% if organ_admin.user.nick_name %>
+										(<%= organ_admin.user.nick_name %>)	
+									<% end %>
+								<% elsif organ_admin.user.nick_name %>
+									<%= organ_admin.user.nick_name %>
+								<% end %>
+							</td>
+							<td><%= organ_admin.user.created_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+							<td><%= organ_admin.user.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+							<td>
+								<%= link_to '前往會員', admin_user_path(organ_admin.user.id) %> |
+								<%= link_to '編輯', edit_admin_organization_authorization_path(organ_admin) %>
+							</td>
+						</tr>
+					<% end %>
+				</table>
+			<% end %>
+			<%= link_to '新增管理員', new_admin_organization_authorization_path(organ: @admin_organization.id) %>
+		</td>
+	</tr>
 </table>
-
-<%= link_to '新增樣式', admin_styles_path(organization_id: @admin_organization.id) %> |
-<%= link_to 'Edit', edit_admin_organization_path(@admin_organization) %> |
-<%= link_to 'Back', admin_organizations_path %>
+<%= link_to '編輯', edit_admin_organization_path(@admin_organization) %> |
+<%= link_to '新增子組織', new_admin_organization_path(parent: @admin_organization.id) %> |
+<%= link_to '返回列表', admin_organizations_path %>

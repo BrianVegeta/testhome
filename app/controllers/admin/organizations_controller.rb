@@ -171,6 +171,7 @@ class Admin::OrganizationsController < Admin::BaseController
   # GET /admin/organizations/1
   # GET /admin/organizations/1.json
   def show
+    @organ_admins = @admin_organization.organization_authorizations
   end
 
   # GET /admin/organizations/new
@@ -178,12 +179,14 @@ class Admin::OrganizationsController < Admin::BaseController
     @admin_organization = Organization.new
     if params[:parent]
       @parent = Organization.find(params[:parent])
+      @admin_organization.parent_id = @parent.id
       @admin_organization.level_count = @parent.level_count - 1
     end
   end
 
   # GET /admin/organizations/1/edit
   def edit
+    @parent = Organization.find(@admin_organization.parent_id) unless @admin_organization.parent_id.nil?
   end
 
   # POST /admin/organizations
@@ -193,25 +196,23 @@ class Admin::OrganizationsController < Admin::BaseController
     @admin_organization = Organization.new(admin_organization_params)
     
     @admin_organization.useNew_style
-    unless params[:parent_id]
-      @admin_organization.is_root = true
-    end
+    @admin_organization.is_root = true if @admin_organization.parent_id.nil?
 
     respond_to do |format|
       if @admin_organization.save
 
-        if params[:parent_id]
-          @parent = Organization.find(params[:parent_id])
+        unless @admin_organization.parent_id.nil?
+          @parent = Organization.find(@admin_organization.parent_id)
           @admin_organization.move_to_child_of(@parent)
 
-          @root_auth = @parent.organization_auths.first
-          @organization_auth = @admin_organization.organization_auths.new({name: :admin, new_user_id: params[:new_user_id]})
-          @organization_auth.save
+          # @root_auth = @parent.organization_auths.first
+          # @organization_auth = @admin_organization.organization_auths.new({name: :admin, new_user_id: params[:new_user_id]})
+          # @organization_auth.save
 
-          @organization_auth.move_to_child_of(@root_auth)
+          # @organization_auth.move_to_child_of(@root_auth)
         else
-          @organization_auth = @admin_organization.organization_auths.new({name: :admin})
-          @organization_auth.save          
+          # @organization_auth = @admin_organization.organization_auths.new({name: :admin})
+          # @organization_auth.save          
         end
 
         format.html { redirect_to admin_organization_path(@admin_organization.id), notice: 'Organization was successfully created.' }
@@ -258,7 +259,7 @@ class Admin::OrganizationsController < Admin::BaseController
       areas = params[:organization][:area].split('-')
 
       params.require(:organization).permit(
-        :name, :level_count, :type, :address, :descript, :phone, :fax, :email
+        :parent_id, :name, :level_count, :type, :address, :descript, :phone, :fax, :email
         ).merge({main_area: areas.first, sub_area: areas.last})
     end
 

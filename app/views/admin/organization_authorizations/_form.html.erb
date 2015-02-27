@@ -1,0 +1,88 @@
+<%= form_for [:admin, @organ_admin], :html => { class: 'form-horizontal', :role => "form", autocomplete: 'off' } do |f| %>
+  <% if @organ_admin.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@organ_admin.errors.count, "error") %> prohibited this admin_organization from being saved:</h2>
+
+      <ul>
+      <% @organ_admin.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.hidden_field :organization_id %>
+  <div class="form-group">
+    <%= f.label :'管理員名稱', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-6">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :'選擇會員', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-6">
+      <%= f.text_field :user_id, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :'權限', class: 'col-sm-2 control-label' %>
+    <div class="col-sm-6">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"> 目前無法測試
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"> 目前無法測試
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"> 目前無法測試
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"> 目前無法測試
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-6">
+      <button type="submit" class="btn btn-default">送出</button>
+    </div>
+  </div>
+<% end %>
+<script type="text/javascript">
+  $('#organization_authorization_user_id').select2({
+    placeholder: "ex: ID:123, 名字, 稱謂, email@gmail.com, 0972xxxxxx",
+    minimumInputLength: 1,
+    ajax: {
+        url: "/admin/organization_authorizations/search_users.json",
+        dataType: 'json',
+        quietMillis: 1000,
+        data: function (term, page) { // page is the one-based page number tracked by Select2
+            return {
+                q: term
+            };
+        },
+        results: function (data, page) {
+            return { results: data.items };
+        }
+    },
+    initSelection: function(element, callback) {
+        var id = $(element).val();
+
+        $.get('/admin/organization_authorizations/search_user_init.json', 
+          { id: id }, 
+          function(response) {
+            callback(response);
+          });
+    },
+    // formatResult: repoFormatResult, // omitted for brevity, see the source of this page
+    // formatSelection: repoFormatSelection, // omitted for brevity, see the source of this page
+    // dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+    escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
+  });
+</script>

@@ -65,3 +65,5 @@ gem "font-awesome-rails"
 gem 'jquery-turbolinks'
 
 gem 'jqtree-rails'
+
+gem "select2-rails"

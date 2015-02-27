@@ -1,6 +1,13 @@
-<h1>Editing admin_organization</h1>
+<% if @parent %>
+  <h1>編輯子組織 <small>上層：<%= @parent.name %></small></h1>
+<% else %>
+  <h1>編輯組織</h1>
+<% end %>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', admin_organization_path %> |
-<%= link_to 'Back', admin_organizations_path %>
+<%= link_to '內容', admin_organization_path(@admin_organization) %> | 
+<%= link_to '返回列表', admin_organizations_path %>
+<% if @parent %>
+ | <%= link_to '返回上層組織', admin_organization_path(@parent) %>
+<% end %>

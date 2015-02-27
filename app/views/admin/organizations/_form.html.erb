@@ -10,21 +10,13 @@
       </ul>
     </div>
   <% end %>
+  <%= f.hidden_field :parent_id %>
   <div class="form-group">
     <%= f.label :'名稱', class: 'col-sm-2 control-label' %>
     <div class="col-sm-6">
       <%= f.text_field :name, :class => 'form-control' %>
     </div>
   </div>
-  <% if @parent %>
-    <div class="form-group">
-      <%= f.label :'擁有者會員ID', class: 'col-sm-2 control-label' %>
-      <div class="col-sm-6">
-        <input type="hidden" name="parent_id" value="<%= @parent.id %>">
-        <input type="text" name="new_user_id" class="form-control">
-      </div>
-    </div>
-  <% end %>
   <div class="form-group">
     <%= f.label :'層數', class: 'col-sm-2 control-label' %>
     <div class="col-sm-6">

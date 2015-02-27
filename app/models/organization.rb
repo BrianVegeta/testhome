@@ -5,6 +5,7 @@ class Organization < ActiveRecord::Base
   has_many :styles
   has_many :organization_post_lists
   has_many :organization_auths
+  has_many :organization_authorizations
 
   TYPE = [
   	["公會", 'Guild'] , 
@@ -13,6 +14,10 @@ class Organization < ActiveRecord::Base
   	["商城", 'Commerce']
   ]
 
+  #callback
+  after_update :check_and_set_level
+
+  #state
   state_machine :using_style, namespace: 'style' do
   	event :useNew do
       transition all => :new
@@ -42,4 +47,18 @@ class Organization < ActiveRecord::Base
   def is_last_level?
     self.level_count <= 1
   end
+
+  private
+    def check_and_set_level
+      return unless self.level_count_changed?
+      return if self.children.count == 0
+      orgin_level_count = self.children.first.level_count + 1
+      level_increment = self.level_count - orgin_level_count
+
+      self.descendants.each do |organ|
+        organ.level_count = organ.level_count + level_increment
+        organ.save
+      end
+      
+    end
 end

@@ -1,0 +1,23 @@
+<h1>Listing admin_organization_authorizations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @admin_organization_authorizations.each do |admin_organization_authorization| %>
+      <tr>
+        <td><%= link_to 'Show', admin_organization_authorization %></td>
+        <td><%= link_to 'Edit', edit_admin_organization_authorization_path(admin_organization_authorization) %></td>
+        <td><%= link_to 'Destroy', admin_organization_authorization, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Organization authorization', new_admin_organization_authorization_path %>

@@ -4,7 +4,7 @@
 	var organApp = angular.module('organ', []);
 
   organApp.controller('searchCtrl', ['$scope', '$http', function($scope, $http) {
-    var queryLengthRequire = 4;
+    var queryLengthRequire = 2;
     
     $scope.test = function() {
       console.log($scope.$parent.$parent);
@@ -24,6 +24,12 @@
       }).error(function(data, status, headers, config) {
 
       });;
+    };
+
+    $scope.auto_search = function(e) {
+      if (e.keyCode == 13) {
+        $scope.search();
+      }
     };
   }]);
 
