@@ -1,6 +1,13 @@
-<h1>Editing sites_admin_organsub</h1>
+<% if @parent %>
+  <h1>編輯子組織 <small>上層：<%= @parent.name %></small></h1>
+<% else %>
+  <h1>編輯組織</h1>
+<% end %>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @sites_admin_organsub %> |
-<%= link_to 'Back', sites_admin_organsubs_path %>
+<%= link_to '內容', sites_admin_organsub_path(@organization.id, @sites_admin_organsub.id) %> | 
+<%= link_to '返回列表', sites_admin_organsubs_path %>
+<% if @parent %>
+ | <%= link_to '返回上層組織', sites_admin_organsub_path(@organization.id, @parent) %>
+<% end %>

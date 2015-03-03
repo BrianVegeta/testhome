@@ -88,8 +88,12 @@ Rails.application.routes.draw do
       get ':organization_id', to: "index#index", as: :root
 
       resources :styles, path: ':organization_id/styles'
+      get ':organization_id/auths/search_users', to: 'auths#search_users', as: :auths_users_search
+      get ':organization_id/auths/search_user_init', to: 'auths#search_user_init', as: :auths_user_search_init
       resources :auths, path: ':organization_id/auths'
+      get ':organization_id/organsubs/search/:query', to:'organsubs#search', as: :organsubs_search
       resources :organsubs, path: ':organization_id/organsubs'
+      resources :members, path: ':organization_id/members'
 
       resources :organization_post_lists, path: ':organization_id/post_list' do
         resources :organization_posts, path: 'post'

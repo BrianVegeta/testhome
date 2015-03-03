@@ -39,8 +39,8 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def after_sign_out_path_for(resource_or_scope)
-    if is_organization?
-      sites_root_path(params[:organization_id])
+    if params[:recall]
+      params[:recall]
     else
       root_path
     end

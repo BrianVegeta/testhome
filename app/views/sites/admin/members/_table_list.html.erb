@@ -1,0 +1,39 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>名字</th>
+      <th>暱稱</th>
+      <th>email</th>
+      <th>電話</th>
+      <th>來源</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sites_admin_members.each do |member| %>
+      <tr>
+        <td><%= member.user.id %></td>
+        <td><%= member.user.name %></td>
+        <td><%= member.user.nick_name %></td>
+        <td><%= member.user.email %></td>
+        <td><%= member.user.phone %></td>
+        <td>
+          <% if member.user.provider == 'facebook' %>
+            <i class="fa fa-facebook-square fa-lg" style="color: #3a5795;"></i>
+          <% elsif member.user.provider == 'gplus' %>
+            <i class="fa fa-google-plus-square fa-lg" style="color: red;"></i>
+          <% else %>
+            本站
+          <% end %>
+        </td>
+        <td>
+          <a href="<%= sites_admin_member_path(member.id, organization_id: @organization.id, recall: request.original_url) %>">
+            <span class="glyphicon glyphicon-list-alt"></span>
+          </a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

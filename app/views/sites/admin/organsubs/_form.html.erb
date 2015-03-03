@@ -2,7 +2,7 @@
  if @sites_admin_organsub.new_record?
   formUrl = sites_admin_organsubs_path(@organization.id)
  else
-  formUrl = sites_admin_organsub_path(@organization.id)
+  formUrl = sites_admin_organsub_path(@organization.id, @sites_admin_organsub.id)
  end
 %>
 <%= form_for @sites_admin_organsub, url: formUrl, :html => { class: 'form-horizontal', :role => "form", autocomplete: 'off' } do |f| %>
@@ -17,16 +17,11 @@
       </ul>
     </div>
   <% end %>
+  <%= f.hidden_field :parent_id %>
   <div class="form-group">
     <%= f.label :'名稱', class: 'col-sm-2 control-label' %>
     <div class="col-sm-6">
       <%= f.text_field :name, :class => 'form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :'擁有者會員ID', class: 'col-sm-2 control-label' %>
-    <div class="col-sm-6">
-      <input type="text" name="new_user_id" class="form-control">
     </div>
   </div>
   <div class="form-group">

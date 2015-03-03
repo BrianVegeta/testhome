@@ -22,13 +22,7 @@
 		    <div id="navbar" class="navbar-collapse collapse">
 		      <ul class="nav navbar-nav">
 		        <li>
-		        	<a href="<%= sites_admin_styles_path %>">客製化網頁</a>
-		        </li>
-		        <li>
-		        	<a href="<%= sites_admin_organization_post_lists_path(organization_id: @organization.id) %>">文章列表</a>
-		        </li>
-		        <li>
-		        	<a href="<%= sites_admin_auths_path(organization_id: @organization.id) %>">會員列表</a>
+		        	<a href="<%= sites_admin_members_path(organization_id: @organization.id) %>">會員列表</a>
 		        </li>
 		        <% if !@organization.is_last_level? %>
 		        	<li>
@@ -48,12 +42,31 @@
 		          </ul>
 		        </li>
 		      </ul>
+		      <ul class="nav navbar-nav navbar-right">
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		            <% if current_user.name && !current_user.name.empty? %>
+		              <%= current_user.name %>
+		            <% elsif current_user.login %>
+		              <%= current_user.login %>
+		            <% else %>
+		              <%= current_user.email %>
+		            <% end %>
+		            <span class="caret"></span>
+		          </a>
+		          <ul class="dropdown-menu" role="menu">
+		            <li><a href="<%= sites_root_path(@organization.id) %>">返回前台</a></li>
+		            <li class="divider"></li>
+		            <li><%= link_to "登出", destroy_user_session_path(recall: sites_root_path(@organization.id)), data:{method: :delete} %></li>
+		          </ul>
+		        </li>
+		      </ul>
 		    </div><!--/.nav-collapse -->
 		  </div>
 		</nav>
 		<div style="padding-top: 50px;"></div>
 
-		<div class="container" ng-app="siteAdmin">
+		<div class="container">
       <div class="row">
         <div class="col-sm-12">
           <%= yield %>

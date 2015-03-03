@@ -1,4 +1,91 @@
-<p id="notice"><%= notice %></p>
-
-<%= link_to 'Edit', edit_sites_admin_organsub_path(@sites_admin_organsub) %> |
-<%= link_to 'Back', sites_admin_organsubs_path %>
+<h1>組織</h1>
+<table class="table table-bordered">
+	<tr>
+		<th>ID</th>
+		<td><%= @sites_admin_organsub.id %></td>
+	</tr>
+	<tr>
+		<th>名稱</th>
+		<td><%= @sites_admin_organsub.name %></td>
+	</tr>
+	<tr>
+		<th>層數</th>
+		<td><%= @sites_admin_organsub.level_count %></td>
+	</tr>
+	<tr>
+		<th>類型</th>
+		<td><%= Hash[Organization::TYPE].invert[@sites_admin_organsub.type] %></td>
+	</tr>
+	<tr>
+		<th>地址</th>
+		<td>
+			<%= Area::MAIN_AREA[@sites_admin_organsub.main_area] %>
+			<%= Area::SUB_AREA[@sites_admin_organsub.main_area][@sites_admin_organsub.sub_area] %>
+			<%= @sites_admin_organsub.address %>
+		</td>
+	</tr>
+	<tr>
+		<th>敘述</th>
+		<td><%= @sites_admin_organsub.descript %></td>
+	</tr>
+	<tr>
+		<th>電話</th>
+		<td><%= @sites_admin_organsub.phone %></td>
+	</tr>
+	<tr>
+		<th>傳真</th>
+		<td><%= @sites_admin_organsub.fax %></td>
+	</tr>
+	<tr>
+		<th>email</th>
+		<td><%= @sites_admin_organsub.email %></td>
+	</tr>
+	<tr>
+		<th>樣式版本</th>
+		<td><%= @sites_admin_organsub.is_old? %></td>
+	</tr>
+	<tr>
+		<th>管理員</th>
+		<td>
+			<% if @organ_admins.length > 0 %>
+				<table class="table table-bordered">
+					<tr>
+						<th>管理員名稱</th>
+						<th>會員 email</th>
+						<th>會員名字/暱稱</th>
+						<th>新增於</th>
+						<th>更新於</th>
+						<th></th>
+					</tr>
+					<% @organ_admins.each do |organ_admin| %>
+						<tr>
+							<td><%= organ_admin.name %></td>
+							<td><%= organ_admin.user.email %></td>
+							<td>
+								<% if organ_admin.user.name %>
+									<%= organ_admin.user.name %>
+									<% if organ_admin.user.nick_name %>
+										(<%= organ_admin.user.nick_name %>)	
+									<% end %>
+								<% elsif organ_admin.user.nick_name %>
+									<%= organ_admin.user.nick_name %>
+								<% end %>
+							</td>
+							<td><%= organ_admin.user.created_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+							<td><%= organ_admin.user.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+							<td>
+								<% member = OrganizationMember.where(user_id: organ_admin.user.id, organization_id: @organization.id).first %>
+								<%= link_to '前往會員', sites_admin_member_path(member.id, organization_id: @organization.id) %> |
+								<%= link_to '編輯', edit_sites_admin_auth_path(@organization.id, organ_admin) %>
+							</td>
+						</tr>
+					<% end %>
+				</table>
+			<% end %>
+			<%= link_to '新增管理員', new_sites_admin_auth_path(organ: @sites_admin_organsub.id) %>
+		</td>
+	</tr>
+</table>
+<%= link_to '編輯', edit_sites_admin_organsub_path(@organization.id, @sites_admin_organsub.id) %> |
+<%= link_to '新增子組織', new_sites_admin_organsub_path(@organization.id, parent: @sites_admin_organsub.id) %> |
+<%= link_to '返回列表', sites_admin_organsubs_path %>

@@ -3,33 +3,37 @@ class Sites::Admin::AuthsController < Sites::Admin::ApplicationController
 
   # GET /sites/admin/auths
   # GET /sites/admin/auths.json
-  def index
-    @root_auth = @organization.organization_auths.first
-    @sites_admin_auths = @root_auth.descendants
-  end
+  # def index
+  # 
+  # end
 
   # GET /sites/admin/auths/1
   # GET /sites/admin/auths/1.json
-  def show
-  end
+  # def show
+  # end
 
   # GET /sites/admin/auths/new
   def new
-    @sites_admin_auth = OrganizationAuth.new
+    @organ = Organization.find(params[:organ])
+    @sites_admin_auth = OrganizationAuthorization.new
+    @sites_admin_auth.organization_id = @organ.id
   end
 
   # GET /sites/admin/auths/1/edit
   def edit
+    @organ = @sites_admin_auth.organization
   end
 
   # POST /sites/admin/auths
   # POST /sites/admin/auths.json
   def create
-    @sites_admin_auth = OrganizationAuth.new(sites_admin_auth_params)
+    @sites_admin_auth = OrganizationAuthorization.new(sites_admin_auth_params)
 
     respond_to do |format|
       if @sites_admin_auth.save
-        format.html { redirect_to @sites_admin_auth, notice: 'Auth was successfully created.' }
+        OrganizationMember.where(user_id: @sites_admin_auth.user.id, organization_id: @organization.id).first_or_create
+
+        format.html { redirect_to sites_admin_organsub_path(@organization.id, @sites_admin_auth.organization_id), notice: 'Auth was successfully created.' }
         format.json { render :show, status: :created, location: @sites_admin_auth }
       else
         format.html { render :new }
@@ -43,7 +47,7 @@ class Sites::Admin::AuthsController < Sites::Admin::ApplicationController
   def update
     respond_to do |format|
       if @sites_admin_auth.update(sites_admin_auth_params)
-        format.html { redirect_to @sites_admin_auth, notice: 'Auth was successfully updated.' }
+        format.html { redirect_to sites_admin_organsub_path(@organization.id, @sites_admin_auth.organization_id), notice: 'Auth was successfully updated.' }
         format.json { render :show, status: :ok, location: @sites_admin_auth }
       else
         format.html { render :edit }
@@ -65,11 +69,11 @@ class Sites::Admin::AuthsController < Sites::Admin::ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_sites_admin_auth
-      @sites_admin_auth = OrganizationAuth.find(params[:id])
+      @sites_admin_auth = OrganizationAuthorization.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sites_admin_auth_params
-      params[:sites_admin_auth]
+      params.require(:organization_authorization).permit(:name, :organization_id, :user_id)
     end
 end

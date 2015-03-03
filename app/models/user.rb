@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
 	has_one :new_user
+  # has_many :organization_member
 
   # attr_accessor :email_confirmation
   attr_accessor :login_or_email
@@ -65,6 +66,10 @@ class User < ActiveRecord::Base
 
   def is_global_admin?
     self.level === 3
+  end
+
+  def is_admin?(organization_id)
+    OrganizationAuthorization.where(user_id: self.id, organization_id: organization_id).first || self.is_global_admin?
   end
 
   private

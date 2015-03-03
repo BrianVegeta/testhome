@@ -65,7 +65,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # The path used after sign up for inactive accounts.
   def after_inactive_sign_up_path_for(resource)
     if is_organization?
-      sites_root_path(params[:organization_id])
+      set_organ_member(resource, params[:organization_id])
+      return sites_root_path(params[:organization_id])
     else
       root_path
     end
@@ -89,5 +90,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       self.class.layout 'application'
     end
+  end
+
+  def set_organ_member(resource, organization_id)
+    member = OrganizationMember.where(user_id: resource.id, organization_id: organization_id).first_or_create
   end
 end

@@ -229,6 +229,11 @@
 	    dragAndDrop: true
 	  });
 
+    $(window).resize(function() {
+      var treeHeight = $(window).height() - 60 - 60;
+      $('#tree_frame').height(treeHeight);
+    });
+
 	  $tree.on('tree.init', function(event) {
 	    console.log('init');
 	  });

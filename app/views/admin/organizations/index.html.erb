@@ -35,7 +35,7 @@
   <div>
   <div class="col-sm-3">
     <div id="tree_frame">
-      <div id="tree" style="font-size: 16px;"></div>
+      <div id="tree" style="font-size: 15px;"></div>
     </div>
   </div>
   <div class="col-sm-9" ng-switch="resultType">
@@ -102,7 +102,7 @@
             -->
             <th width="200">
               <a ng-href="/sites/{{currentOrgan.id}}">前台</a> /
-              <a ng-href="#">後台(施工中)</a> /
+              <a ng-href="/sites/admin/{{currentOrgan.id}}">後台</a> /
               <a ng-href="/admin/organizations/{{currentOrgan.id}}">內容</a>
             </th>
             <th ng-switch="currentOrgan.canTransLevel">
@@ -125,7 +125,7 @@
             -->
             <td width="200">
               <a ng-href="/sites/{{organ.id}}">前台</a> /
-              <a ng-href="#">後台(施工中)</a> /
+              <a ng-href="/sites/admin/{{organ.id}}">後台</a> /
               <a ng-href="/admin/organizations/{{organ.id}}">內容</a>
               <!--
               <a ng-href="/sites/admin/{{organ.id}}" target="_blank">後台</a>

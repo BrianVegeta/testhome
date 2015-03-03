@@ -1,0 +1,240 @@
+;(function($) {
+	'use strict';
+
+	var sitesAdminOrganApp = angular.module('sitesAdminOrgan', []);
+
+  sitesAdminOrganApp.controller('SearchController', ['$scope', '$http', function($scope, $http) {
+    var queryLengthRequire = 2;
+    var organizationId = $scope.$parent.$parent.organizationId;
+
+    $scope.search = function() {
+      if ($scope.$parent.$parent.query.length < queryLengthRequire) {
+        alert('輸入字數太短，至少輸入 ' + queryLengthRequire + ' 個字以上');
+        return false;
+      }
+
+      $http.get('/sites/admin/' + organizationId + '/organsubs/search/' + $scope.$parent.$parent.query + '.json')
+      .success(function(data, status, headers, config) {
+        $scope.$parent.$parent.resultType = 'search';
+        $scope.$parent.$parent.results = data;
+        $('li.jqtree_common').removeClass('jqtree-selected');
+      }).error(function(data, status, headers, config) {
+
+      });;
+    };
+
+    $scope.auto_search = function(e) {
+      if (e.keyCode == 13) {
+        $scope.search();
+      }
+    };
+  }]);
+
+  sitesAdminOrganApp.controller('AlertController', ['$scope', function($scope) {
+    $scope.isShow = false;
+    $scope.message = '...';
+
+    $scope.cancel = function() {
+      $scope.$parent.transOrgan = {};
+    }
+
+    $scope.$parent.$watch('transOrgan', function(organ, oldValue) {
+      console.log('change');
+      if (!jQuery.isEmptyObject(organ)) {
+        $scope.isShow = true;
+        $scope.message = 'ID: ' + organ.id + ' - "' + organ.label + '" 預備轉移中，請選擇上層轉入...';
+        $scope.$parent.setOrgansTransState();
+      } else {
+        if (!jQuery.isEmptyObject(oldValue)) {
+          $scope.isShow = false;
+          $scope.message = '';
+          if ($scope.$parent.currentOrgan.id === '#') {
+            $scope.$parent.getSubOrgans();
+          } else {
+            $scope.$parent.getSubOrgans($scope.$parent.currentOrgan);
+          }
+          $scope.$parent.setOrgansTransState();
+          console.log('reset');
+        }
+      }
+    });
+    
+  }]);
+
+  sitesAdminOrganApp.controller('IndexController', ['$scope', '$http', function($scope, $http) {
+    $scope.organizationId = $('#page_organization_id').val();
+    $scope.resultType = '';
+    $scope.query = '';
+    $scope.organs = [];
+    $scope.currentOrgan = {
+      id: '#',
+      label: '#',
+      level_count: '#',
+      canTransLevel: '#'
+    };
+    $scope.transOrgan = {};
+    $scope.results = [];
+    $scope.folderPaths = [];
+
+    $scope.setOrgans = function(organs) {
+      $scope.resultType = 'default';
+      console.log($scope.resultType);
+      $scope.organs = organs;
+    }
+
+    $scope.setOrgansTransState = function() {
+      console.log('setOrgansTransState');
+      if (jQuery.isEmptyObject($scope.transOrgan)) {
+        return false;
+      }
+
+      if ($scope.currentOrgan.id === $scope.transOrgan.id) {
+        $scope.currentOrgan.canTransLevel = 'prepareToTrans';
+      } else if ($scope.currentOrgan.canTransIn === false) {
+        $scope.currentOrgan.canTransLevel = 'notTransIn';
+      } else {
+        $scope.currentOrgan.canTransLevel = 'transIn';
+      }
+      angular.forEach($scope.organs, function(organ, key) {
+        if (organ.id === $scope.transOrgan.id) {
+          organ.canTransLevel = 'prepareToTrans';
+        } else if (organ.canTransIn === false) {
+          organ.canTransLevel = 'notTransIn';
+        } else {
+          organ.canTransLevel = 'transIn';
+        }
+      });
+    }
+
+    $scope.getSubOrgans = function(organ) {
+      var getUrl = '/sites/admin/' + $scope.organizationId + '/organsubs.json?panel=1';
+
+      if (organ != undefined) {
+        getUrl = getUrl + '&node=' + organ.id;
+      }
+
+      if (!jQuery.isEmptyObject($scope.transOrgan)) {
+        getUrl = getUrl + '&trans=' + $scope.transOrgan.id;
+      }
+
+      $http.get(getUrl)
+      .success(function(data, status, headers, config) {
+        $scope.folderPaths = data.parents;
+        $scope.currentOrgan = data.parent;
+        $scope.setOrgans(data.children);
+        $scope.setOrgansTransState();
+      }).error(function(data, status, headers, config) {
+
+      });
+    };
+
+    $scope.transLevel = function(organ) {
+      $scope.transOrgan = organ;
+      
+      if (organ.id === $scope.currentOrgan.id) {
+        $scope.getSubOrgans(organ);
+      } else {
+        $scope.getSubOrgans($scope.currentOrgan);
+      }
+    };
+
+    $scope.transLevelIn = function(organ) {
+      console.log('transLevelIn');
+      $http.get('/admin/organizations/' + organ.id + '/trans_level/' + $scope.transOrgan.id + '.json')
+      .success(function(data, status, headers, config) {
+        var $tree = $('#tree'),
+            node = $tree.tree('getNodeById', $scope.transOrgan.id),
+            parentNode = $tree.tree('getNodeById', organ.id);
+            console.log('node');
+        console.log(node);
+        if (node !== undefined) {
+          if (node.is_open !== undefined) {
+            node.is_open = false;
+            node.load_on_demand = true;
+          }
+
+          $tree.tree('removeNode', node);
+          
+          $tree.tree(
+              'appendNode',
+              node,
+              parentNode
+          );
+        }
+        
+        $scope.transOrgan = {};
+
+        if ($scope.currentOrgan.id === '#') {
+          $scope.getSubOrgans();
+        } else {
+          $scope.getSubOrgans($scope.currentOrgan);
+        }
+        
+
+
+      }).error(function(data, status, headers, config) {
+
+      });
+    };
+
+
+  }]);
+
+  sitesAdminOrganApp.controller('TreeController', ['$scope', '$http', function($scope, $http) {
+    var $tree = $('#tree'),
+        isTreeFirstLoading = true,
+        organizationId = $scope.$parent.organizationId;
+    $tree.tree({
+      closedIcon: '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>',
+      openedIcon: '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>',
+      dataUrl: '/sites/admin/' + organizationId + '/organsubs.json',
+      dataFilter: function(data) {
+        if (isTreeFirstLoading) {
+          $scope.$apply(function () {
+            $scope.setOrgans(data[0].children);
+          });
+          isTreeFirstLoading = false;
+        }
+        return data;
+      },
+      autoOpen: true,
+      dragAndDrop: true
+    });
+
+    $tree.on('tree.select', function(event) {
+      if (event.node === null) {
+        return false;
+      }
+      console.log('select');
+
+      $('li.jqtree_common').removeClass('jqtree-selected');
+      $(event.node.element).addClass('jqtree-selected');
+
+      $scope.$apply(function () {
+        if (event.node.id) {
+          $scope.getSubOrgans(event.node);
+        } else {
+          $scope.getSubOrgans();
+        }       
+        
+      });
+    });
+
+    $tree.on('tree.dblclick', function(event) {
+      console.log('db click');
+      if (event.node.load_on_demand) {
+        $tree.tree('openNode', event.node);
+        $('li.jqtree_common').removeClass('jqtree-selected');
+        $(event.node.element).addClass('jqtree-selected');
+      }
+    });
+
+    $(window).resize(function() {
+      var treeHeight = $(window).height() - 60 - 60;
+      $('#tree_frame').height(treeHeight);
+    });
+
+
+  }]);
+
+}(jQuery, angular));

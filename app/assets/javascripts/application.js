@@ -20,6 +20,8 @@
 //= require site-admin-app
 //= require admin-organ-app
 
+//= require sites-admin-organ-app
+
 //= require tree.jquery
 //= require select2
 

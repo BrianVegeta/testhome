@@ -1,0 +1,77 @@
+<% 
+  pages = []
+  pageRange = 11
+  helfPageRange = 5
+
+  prev_page = @sites_admin_members.previous_page
+  next_page = @sites_admin_members.next_page
+  current_page = @sites_admin_members.current_page.to_i
+  total_pages = @sites_admin_members.total_pages
+  tip = ''
+
+  if total_pages < pageRange
+    (1..total_pages).each do |page|
+      pages.push page
+    end
+
+  elsif current_page <= helfPageRange
+    tip = 'pre'
+    (1..current_page).each { |page| pages.push page }
+    ((current_page + 1)..(current_page + (pageRange - pages.length))).each { |page| pages.push page }
+    
+  elsif (total_pages - current_page) <= helfPageRange
+    tip = 'next'
+    leftPage = pageRange - (total_pages - current_page + 1)
+    ((current_page - leftPage)..current_page).each { |page| pages.push page }
+    ((current_page + 1)..total_pages).each { |page| pages.push page }
+  else
+    tip = 'mid'
+    ((current_page - helfPageRange)..current_page).each do |page|
+      pages.push page
+    end
+
+    ((current_page + 1)..(current_page + helfPageRange)).each do |page|
+      pages.push page
+    end
+
+  end
+
+%>
+
+<% if total_pages > 1 %>
+  <nav>
+    <ul class="pagination">
+      <li class="<%= (current_page == 1)? 'disabled': '' %>">
+        <a href="<%= sites_admin_members_path(params.merge page: prev_page) %>" aria-label="Previous">
+          上一頁
+        </a>
+      </li>
+      <% unless pages.first == 1 %>
+        <li>
+          <a href="<%= sites_admin_members_path(params.merge page: 1) %>">1</a>
+        </li>
+        <li class="disabled">
+          <a>...</a>
+        </li>
+      <% end %>
+      <% pages.each do |page| %>
+        <li class="<%= (current_page == page) ? 'active': '' %>">
+          <a href="<%= sites_admin_members_path(params.merge page: page) %>"><%= page %></a>
+        </li>
+      <% end %>
+      <% unless pages.last == total_pages %>
+        <li class="disabled">
+          <a>...</a>
+        </li>
+        <li>
+          <a href="<%= sites_admin_members_path(params.merge page: total_pages) %>" aria-label="Previous"><%= total_pages %></a>
+        </li>
+      <% end %>
+      <li class="<%= (current_page == total_pages)? 'disabled': '' %>">
+        <a href="<%= sites_admin_members_path(params.merge page: next_page) %>" aria-label="Next">
+          下一頁
+        </a>
+      </li>
+    </ul>
+  </nav>
+<% end %>  

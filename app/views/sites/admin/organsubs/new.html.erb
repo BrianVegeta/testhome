@@ -1,5 +1,12 @@
-<h1>New sites_admin_organsub</h1>
+<% if @parent %>
+  <h1>新增子組織 <small>上層：<%= @parent.name %></small></h1>
+<% else %>
+  <h1>新增組織</h1>
+<% end %>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', sites_admin_organsubs_path %>
+<%= link_to '返回列表', sites_admin_organsubs_path(@organization.id) %>
+<% if @parent %>
+ | <%= link_to '返回上層組織', sites_admin_organsub_path(@organization.id, @parent) %>
+<% end %>

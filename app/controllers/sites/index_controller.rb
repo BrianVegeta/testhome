@@ -1,4 +1,5 @@
 class Sites::IndexController < Sites::ApplicationController
+	before_action :set_organ_member
 	layout 'sites/application'
 	# def index
 		

@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-6">
+
+  </div>
+</div>
+<p>
+  搜尋 "<%= params[:search] %>":&nbsp;<%= (@sites_admin_members.length <= 0) ? '無結果': "#{@sites_admin_members.total_entries}個結果"%>
+  &nbsp;&nbsp;&nbsp;&nbsp;<a href="<%= sites_admin_members_path %>">返回列表</a>
+</p>
+<% if @sites_admin_members.length > 0 %>
+  <%= render 'table_list' %>
+<% end %>
+
+<%= render 'pagination' %>

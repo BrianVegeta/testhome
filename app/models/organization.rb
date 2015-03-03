@@ -6,6 +6,7 @@ class Organization < ActiveRecord::Base
   has_many :organization_post_lists
   has_many :organization_auths
   has_many :organization_authorizations
+  has_many :organization_members
 
   TYPE = [
   	["公會", 'Guild'] , 

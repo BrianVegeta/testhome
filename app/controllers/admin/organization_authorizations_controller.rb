@@ -94,6 +94,7 @@ class Admin::OrganizationAuthorizationsController < Admin::BaseController
 
     respond_to do |format|
       if @organ_admin.save
+        OrganizationMember.where(user_id: @organ_admin.user.id, organization_id: @organization.id).first_or_create
         format.html { redirect_to admin_organization_path(@organ_admin.organization_id), notice: 'Organization authorization was successfully created.' }
         format.json { render :show, status: :created, location: @organ_admin }
       else

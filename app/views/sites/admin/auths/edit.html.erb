@@ -1,6 +1,5 @@
-<h1>Editing sites_admin_auth</h1>
+<h1>編輯管理員<small><%= @organ.name %></small></h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @sites_admin_auth %> |
-<%= link_to 'Back', sites_admin_auths_path %>
+<%= link_to '返回組織', sites_admin_organsub_path(@organization.id, @organ.id) %>
