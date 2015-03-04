@@ -156,6 +156,7 @@ class Sites::Admin::OrgansubsController < Sites::Admin::ApplicationController
     @sites_admin_organsub = Organization.new
     @sites_admin_organsub.parent_id = @organization.id
     @sites_admin_organsub.level_count = @organization.level_count.to_i - 1
+    @sites_admin_organsub.level_count = 1 if @organization.level_count.nil?
 
     if params[:parent]
       @parent = Organization.find(params[:parent])
