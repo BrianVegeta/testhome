@@ -155,12 +155,12 @@ class Sites::Admin::OrgansubsController < Sites::Admin::ApplicationController
   def new
     @sites_admin_organsub = Organization.new
     @sites_admin_organsub.parent_id = @organization.id
-    @sites_admin_organsub.level_count = @organization.level_count - 1
+    @sites_admin_organsub.level_count = @organization.level_count.to_i - 1
 
     if params[:parent]
       @parent = Organization.find(params[:parent])
       @sites_admin_organsub.parent_id = @parent.id
-      @sites_admin_organsub.level_count = @parent.level_count - 1
+      @sites_admin_organsub.level_count = @parent.level_count.to_i - 1
     end
     redirect_to sites_admin_organsubs_path(@organization.id) if @sites_admin_organsub.level_count <= 0
   end

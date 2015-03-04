@@ -180,7 +180,7 @@ class Admin::OrganizationsController < Admin::BaseController
     if params[:parent]
       @parent = Organization.find(params[:parent])
       @admin_organization.parent_id = @parent.id
-      @admin_organization.level_count = @parent.level_count - 1
+      @admin_organization.level_count = @parent.level_count.to_i - 1
     end
   end
 
