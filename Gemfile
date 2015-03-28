@@ -67,3 +67,5 @@ gem 'jquery-turbolinks'
 gem 'jqtree-rails'
 
 gem "select2-rails"
+
+gem 'ckeditor_rails'

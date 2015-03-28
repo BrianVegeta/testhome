@@ -1,0 +1,72 @@
+<%= render 'step_bar', locals: {step: params[:step]} %>
+<h1>choose type</h1>
+<div class="row">
+	<div class="col-sm-4 main-cate-area">
+		<div class="list-group">
+			<% Item::CATEGORIES.each_with_index do |(main_cate, sub_cates), index| %>
+				<a href="#" class="list-group-item" data-main-cate="<%= index %>">
+					<span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span>
+
+					<%= main_cate %>
+				</a>
+			<% end %>
+		</div>
+	</div>
+	<div class="col-sm-4 sub-cate-area">
+		<% Item::CATEGORIES.each_with_index do |(main_cate, sub_cates), index| %>
+			<div class="list-group sub-cate-group-<%= index %>" style="display: none;">
+				<% sub_cates.each_with_index do |(sub_cates_key, sub_sub_cates), sub_cate_index| %>
+					<% if sub_sub_cates.is_a? Hash %>
+						<a href="#" class="list-group-item" data-main-cate="<%= index %>" data-sub-cate="<%= sub_cate_index %>">
+							<span class="glyphicon glyphicon-menu-right pull-right" aria-hidden="true"></span>
+							<%= sub_cates_key %>
+						</a>
+					<% else %>
+						<a href="<%= new_sites_admin_item_path(step: :fill_form, type: sub_sub_cates) %>" class="list-group-item" data-main-cate="<%= index %>" data-sub-cate="<%= sub_cate_index %>">
+							<%= sub_cates_key %>
+						</a>
+					<% end %>
+				<% end %>
+			</div>
+		<% end %>
+	</div>
+	<div class="col-sm-4 sub-sub-cate-area">
+		<% Item::CATEGORIES.each_with_index do |(main_cate, sub_cates), index| %>
+			<% sub_cates.each_with_index do |(sub_cates_key, sub_sub_cates), sub_cate_index| %>
+				<% if sub_sub_cates.is_a? Hash %>
+					<div class="list-group sub-sub-cate-group-<%= index %>-<%= sub_cate_index %>" style="display: none;">
+						<% sub_sub_cates.each do |sub_sub_cates_key, sub_sub_cate_value| %>
+							<a href="<%= new_sites_admin_item_path(step: :fill_form, type: sub_sub_cate_value) %>" class="list-group-item"><%= sub_sub_cates_key %></a>
+						<% end %>
+					</div>	
+				<% end %>
+			<% end %>
+		<% end %>
+	</div>
+</div>
+<script type="text/javascript">
+	var $main_cates_area = $('.main-cate-area');
+	var $main_cates_lists = $main_cates_area.find('a.list-group-item');
+	var $sub_cates_area = $('.sub-cate-area');
+	var $sub_cates_lists = $sub_cates_area.find('a.list-group-item');
+	var $sub_sub_cates_area = $('.sub-sub-cate-area');
+	var $sub_sub_cates_lists = $sub_sub_cates_area.find('a.list-group-item');
+
+	$main_cates_lists.click(function() {
+		$sub_cates_lists.removeClass('active');
+		$main_cates_lists.removeClass('active');
+		$(this).addClass('active');
+		$sub_cates_area.find('div.list-group').hide();
+		$sub_sub_cates_area.find('div.list-group').hide();
+		$sub_cates_area.find('div.sub-cate-group-' + $(this).data('mainCate')).show();
+	});
+
+	$sub_cates_lists.click(function() {
+		$sub_cates_lists.removeClass('active');
+		$(this).addClass('active');
+		$sub_sub_cates_area.find('div.list-group').hide();
+		$sub_sub_cates_area.find('div.sub-sub-cate-group-' + $(this).data('mainCate') + '-' + $(this).data('subCate')).show();
+	});
+
+</script>
+<%= link_to "next step", new_sites_admin_item_path(step: :fill_form) %>

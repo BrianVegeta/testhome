@@ -1,0 +1,6 @@
+<div class="form-group">
+  <label class="col-sm-2 control-label">朝向</label>
+  <div class="col-sm-2">
+    <%= f.select(:direction, Item::DIRECTION.invert, {}, {class: 'form-control'}) %>
+  </div>
+</div>

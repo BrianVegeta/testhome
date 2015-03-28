@@ -1,0 +1,296 @@
+<%= render 'address_select', {f: f} %>
+
+<%= render 'pattern', {f: f} %>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label">房屋坪數</label>
+  <div class="col-sm-2">
+    <div class="input-group">
+      <input type="text" class="form-control">
+      <span class="input-group-addon">坪</span>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label">總樓層</label>
+  <div class="col-sm-2">
+    <div class="input-group">
+      <input type="text" class="form-control">
+      <span class="input-group-addon">樓</span>
+    </div>
+  </div>
+  <label class="col-sm-2 control-label">出租樓層</label>
+  <div class="col-sm-6">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="input-group">
+          <input type="text" class="form-control">
+          <span class="input-group-addon">樓</span>
+        </div>
+      </div>
+      <div class="text-muted col-sm-8">
+        <p>（0為整棟，-1為地下樓，+1為頂樓加蓋）</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'direction', {f: f} %>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label">提供設備</label>
+  <div class="col-sm-8">
+    <label class="checkbox-inline">
+      <input type="checkbox"> 洗衣機
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 冰箱
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 電視
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 冷氣
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 熱水器
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 網路
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 第四台
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 天然瓦斯
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 全選
+    </label>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label">提供家具</label>
+  <div class="col-sm-8">
+    <label class="checkbox-inline">
+      <input type="checkbox"> 床
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 衣櫃
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 沙發
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 桌子
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 椅子
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 全選
+    </label>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label">車位</label>
+  <div class="col-sm-8">
+    <label class="checkbox-inline">
+      <input type="checkbox"> &nbsp;
+    </label>
+  </div>
+</div>
+
+<%= render 'rent_deposit', {f: f} %>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label">租金包含</label>
+  <div class="col-sm-8">
+    <label class="checkbox-inline">
+      <input type="checkbox"> 管理費
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 清潔費
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 第四台
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 網路
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 水費
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 電費
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 瓦斯費
+    </label>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label">管理費</label>
+  <div class="col-sm-2">
+    <div class="input-group">
+      <input type="text" class="form-control">
+      <span class="input-group-addon">元/月</span>
+    </div>
+  </div>
+</div>
+
+<%= render 'rent_period', {f: f} %>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label">身份要求</label>
+  <div class="col-sm-8">
+    <label class="checkbox-inline">
+      <input type="checkbox"> 學生
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 上班族
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 家庭
+    </label>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label">開伙</label>
+  <div class="col-sm-8">
+    <label class="radio-inline">
+      <input type="radio"> 可
+    </label>
+    <label class="radio-inline">
+      <input type="radio"> 不可
+    </label>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label">養寵物</label>
+  <div class="col-sm-8">
+    <label class="radio-inline">
+      <input type="radio"> 可
+    </label>
+    <label class="radio-inline">
+      <input type="radio"> 不可
+    </label>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label">生活機能</label>
+  <div class="col-sm-8">
+    <label class="checkbox-inline">
+      <input type="checkbox"> 近便利商店
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 近傳統市場
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 近百貨公司
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 近公園綠地
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 近學校
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 近醫療機構
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox"> 近夜市
+    </label>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label">附近交通</label>
+  <div class="col-sm-3">
+    <div class="input-group">
+      <span class="input-group-addon">近</span>
+      <input type="text" class="form-control">
+      <span class="input-group-addon">公車站</span>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="input-group">
+      <span class="input-group-addon">近</span>
+      <input type="text" class="form-control">
+      <span class="input-group-addon">公車站</span>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="input-group">
+      <span class="input-group-addon">近</span>
+      <input type="text" class="form-control">
+      <span class="input-group-addon">公車站</span>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label"></label>
+  <div class="col-sm-3">
+    <div class="input-group">
+      <span class="input-group-addon">近</span>
+      <input type="text" class="form-control">
+      <span class="input-group-addon">捷運站</span>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="input-group">
+      <span class="input-group-addon">近</span>
+      <input type="text" class="form-control">
+      <span class="input-group-addon">捷運站</span>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="input-group">
+      <span class="input-group-addon">近</span>
+      <input type="text" class="form-control">
+      <span class="input-group-addon">捷運站</span>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label"></label>
+  <div class="col-sm-3">
+    <div class="input-group">
+      <span class="input-group-addon">近</span>
+      <input type="text" class="form-control">
+      <span class="input-group-addon">火車站</span>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="input-group">
+      <span class="input-group-addon">近</span>
+      <input type="text" class="form-control">
+      <span class="input-group-addon">火車站</span>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="input-group">
+      <span class="input-group-addon">近</span>
+      <input type="text" class="form-control">
+      <span class="input-group-addon">火車站</span>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label">廣告標題</label>
+  <div class="col-sm-6">
+    <input type="text" class="form-control">
+  </div>
+</div>
+
+<%= render 'description_editor', {f: f} %>

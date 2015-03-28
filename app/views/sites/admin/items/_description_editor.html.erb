@@ -1,0 +1,19 @@
+<div class="form-group">
+  <label class="col-sm-2 control-label">廣告標題</label>
+  <div class="col-sm-7">
+    <%= f.text_area :descript, id: 'descript_editor' %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('#descript_editor').ckeditor({
+    height: 200,
+    toolbar: [
+      { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ] },
+      { name: 'paragraph', items: [ 'NumberedList','BulletedList','-','Outdent','Indent'] },
+      { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+      { name: 'styles', items: ['FontSize' ] },
+      { name: 'links', items: [ 'Link', 'Unlink' ] }
+    ]
+  });
+</script>

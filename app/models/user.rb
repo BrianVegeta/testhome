@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-	has_one :new_user
+  has_many :items, as: :owner
   # has_many :organization_member
 
   # attr_accessor :email_confirmation

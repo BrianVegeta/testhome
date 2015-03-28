@@ -22,10 +22,13 @@
 		    <div id="navbar" class="navbar-collapse collapse">
 		      <ul class="nav navbar-nav">
 		        <li>
-		        	<a href="<%= sites_admin_members_path(organization_id: @organization.id) %>">會員列表</a>
+		        	<a href="<%= sites_admin_members_path(organization_id: @organization.id) %>">會員管理</a>
 		        </li>
 	        	<li>
-		        	<a href="<%= sites_admin_organsubs_path(organization_id: @organization.id) %>">組織列表</a>
+		        	<a href="<%= sites_admin_organsubs_path(organization_id: @organization.id) %>">組織管理</a>
+		        </li>
+		        <li>
+		        	<a href="<%= sites_admin_items_path(organization_id: @organization.id) %>">物件管理</a>
 		        </li>
 		        <li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>

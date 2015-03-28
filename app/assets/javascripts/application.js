@@ -14,6 +14,7 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery-ui
+//= require jquery-ui/datepicker-zh-TW
 //= require jquery-fileupload/basic
 //= require tinymce
 //= require angular
@@ -24,6 +25,8 @@
 
 //= require tree.jquery
 //= require select2
+
+//= require ckeditor-jquery
 
 //= require bootstrap-sprockets
 //= require turbolinks

@@ -1,0 +1,64 @@
+<div class="form-group">
+  <label class="col-sm-2 control-label">最短租期</label>
+  <div class="col-sm-4">
+    <div class="row">
+      <div class="col-sm-4">
+        <select class="form-control" id="rent_period_select">
+          <% Item::RentHomeApartment::RENT_PERIOD.each do |index, value| %>
+            <option value="<%= value %>"><%= index %></option>
+          <% end %>
+        </select>
+      </div>
+      
+      <div class="col-sm-6 rent-period-other-area" style="display: none;">
+
+        <div class="row">
+          <div class="col-sm-6" >
+            <input type="text" class="form-control">
+          </div>
+          <div class="col-sm-6" >
+            <select class="form-control">
+              <option value="years">年</option>
+              <option value="months">月</option>
+              <option value="dates">天</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  
+  <label class="col-sm-2 control-label">可遷入日</label>
+  <div class="col-sm-2">
+    <div class="input-group">
+      <input type="text" class="form-control allow-moved-date-input" >
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+      </span>
+    </div>
+  </div>
+
+
+
+</div>
+
+<script type="text/javascript">
+  var $rent_period_other_area = $('.rent-period-other-area');
+
+  $('#rent_period_select').change(function() {
+    
+    if ($('#rent_period_select option:selected').val() == 'other') {
+      $rent_period_other_area.show();
+    } else {
+      $rent_period_other_area.hide();
+    }
+  });
+
+  var $allowMovedDateInput = $('.allow-moved-date-input');
+  // $allowMovedDateInput.datepicker({
+  //   showOtherMonths: true,
+  //   selectOtherMonths: true
+  // });
+  $allowMovedDateInput.datepicker($.datepicker.regional[ "zh-TW" ]);
+</script>

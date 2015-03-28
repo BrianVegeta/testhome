@@ -1,0 +1,70 @@
+<div class="form-group">
+  <label class="col-sm-2 control-label">出租地址</label>
+  <div class="col-sm-2">
+    <%= f.text_field :main_area, class: 'form-control' %>
+  </div>
+  <div class="col-sm-2">
+    <%= f.text_field :sub_area, class: 'form-control' %>
+  </div>
+  <div class="col-sm-4">
+    <%= f.text_field :road_name, class: 'form-control' %>
+  </div>
+</div>
+
+<% Area::MAIN_AREA.each_with_index do |main_area, index| %>
+  <div class="main-area-data" data-id="<%= index %>" data-value="<%= main_area %>">
+    <% Area::SUB_AREA[index].each_with_index do |sub_area, index| %>
+      <div data-id="<%= index %>" data-value="<%= sub_area %>">
+      </div>
+    <% end %>
+  </div>
+<% end %>
+<script type="text/javascript">
+  var $main_area_input = $('#item_main_area');
+  var $sub_area_input = $('#item_sub_area');
+  var main_area_data = [];
+
+  $('.main-area-data').each(function() {
+    var data = {
+      id: $(this).data('id'), 
+      text: $(this).data('value')
+    };
+    main_area_data.push(data);
+  });
+
+  var getSubArea = function(mainAreaId) {
+    var sub_area_data = [];
+    $('.main-area-data[data-id="' + mainAreaId + '"]').children().each(function() {
+      var data = {
+        id: $(this).data('id'), 
+        text: $(this).data('value')
+      };
+      sub_area_data.push(data);
+    });
+    return sub_area_data;
+  };
+
+  $main_area_input.select2({
+    formatNoMatches: '無結果',
+    placeholder: '選擇縣市',
+    data: main_area_data
+  });
+  $main_area_input.on('select2-selecting', function(e) {
+    
+    $sub_area_input.select2('enable', true);  
+    $sub_area_input.select2({
+      data: getSubArea(e.object.id),
+      formatNoMatches: '無結果',
+      placeholder: '選擇區'
+    });
+    
+  });
+
+
+  $sub_area_input.select2({
+    formatNoMatches: '無結果',
+    placeholder: '選擇區',
+    data: []
+  });
+  $sub_area_input.select2('enable', false);
+</script>

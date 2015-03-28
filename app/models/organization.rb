@@ -7,6 +7,7 @@ class Organization < ActiveRecord::Base
   has_many :organization_auths
   has_many :organization_authorizations
   has_many :organization_members
+  has_many :items, as: :owner
 
   TYPE = [
   	["公會", 'Guild'] , 
