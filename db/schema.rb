@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150217212603) do
+ActiveRecord::Schema.define(version: 20150329093601) do
 
   create_table "adgroups", force: true do |t|
     t.integer  "organization_id"
@@ -466,6 +466,14 @@ ActiveRecord::Schema.define(version: 20150217212603) do
   add_index "item_partakes", ["kind"], name: "kind", using: :btree
   add_index "item_partakes", ["organization_id"], name: "with_id_with_type", using: :btree
   add_index "item_partakes", ["user_id"], name: "target_id_target_type", using: :btree
+
+  create_table "item_streets", force: true do |t|
+    t.string   "name"
+    t.integer  "main_area"
+    t.integer  "sub_area"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "items", force: true do |t|
     t.string   "type",               limit: 30
