@@ -1,13 +1,15 @@
 <div class="form-group">
   <label class="col-sm-2 control-label">出租地址</label>
   <div class="col-sm-2">
-    <%= f.text_field :main_area, class: 'form-control' %>
+    <%= f.hidden_field :main_area, class: 'form-control' %>
+    <input type="text" class="form-control" id="item_main_area_input">
   </div>
   <div class="col-sm-2">
-    <%= f.text_field :sub_area, class: 'form-control' %>
+    <%= f.hidden_field :sub_area, class: 'form-control' %>
+    <input type="text" class="form-control" id="item_sub_area_input">
   </div>
-  <div class="col-sm-4">
-    <%= f.text_field :road_name, class: 'form-control' %>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" id="item_street">
   </div>
 </div>
 
@@ -20,8 +22,12 @@
   </div>
 <% end %>
 <script type="text/javascript">
-  var $main_area_input = $('#item_main_area');
-  var $sub_area_input = $('#item_sub_area');
+  var $main_area        = $('#item_main_area'),
+      $sub_area         = $('#item_sub_area'),
+      $main_area_input  = $('#item_main_area_input'),
+      $sub_area_input   = $('#item_sub_area_input'),
+      $street_input     = $('#item_street');
+  
   var main_area_data = [];
 
   $('.main-area-data').each(function() {
@@ -50,13 +56,15 @@
     data: main_area_data
   });
   $main_area_input.on('select2-selecting', function(e) {
-    
+    $main_area.val(e.object.id);
+
     $sub_area_input.select2('enable', true);  
     $sub_area_input.select2({
       data: getSubArea(e.object.id),
       formatNoMatches: '無結果',
       placeholder: '選擇區'
     });
+    $sub_area_input.select2('val', '');
     
   });
 
@@ -66,5 +74,33 @@
     placeholder: '選擇區',
     data: []
   });
+  $sub_area_input.on('select2-selecting', function(e) {
+    $sub_area.val(e.object.id);
+
+    $.get('/address/item_streets.json', 
+      {
+        ma: $main_area.val(), 
+        sa: $sub_area.val()
+      }, function(data) {
+        $street_input.select2('enable', true);
+        $street_input.select2({
+          data: data,
+          formatNoMatches: '無結果',
+          placeholder: '選擇街道'
+        });
+        $street_input.select2('val', '');
+          
+    })
+    
+  });
   $sub_area_input.select2('enable', false);
+
+  $street_input.select2({
+    data: [],
+    formatNoMatches: '無結果',
+    placeholder: '選擇街道'
+  });
+  $street_input.select2('enable', false);
+
+
 </script>

@@ -74,6 +74,9 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
+  namespace :address do
+    resources :item_streets, only: :index
+  end
 
   namespace :sites do
     get ':organization_id', to: "index#index", as: :root

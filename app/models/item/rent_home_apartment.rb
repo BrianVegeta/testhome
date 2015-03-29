@@ -2,7 +2,7 @@ class Item::RentHomeApartment
 	COLUMNS = [
 		:main_area, #地址
 		:sub_area,	#地址
-		:road_name,	#路名
+    
 		:pattern_room, #房
   	:pattern_living, #聽
   	:pattern_bath,	#衛
