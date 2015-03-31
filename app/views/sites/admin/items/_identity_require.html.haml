@@ -1,0 +1,12 @@
+.form-group
+  %label.col-sm-2.control-label 身份要求
+  .col-sm-8
+    %label.checkbox-inline
+      = f.check_box :is_student_allow
+      學生
+    %label.checkbox-inline      
+      = f.check_box :is_office_allow
+      上班族
+    %label.checkbox-inline
+      = f.check_box :is_family_allow
+      家庭

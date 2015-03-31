@@ -1,92 +1,60 @@
-class Item::RentHomeApartment
-	COLUMNS = [
-		:main_area, #地址
-		:sub_area,	#地址
-    
-		:pattern_room, #房
-  	:pattern_living, #聽
-  	:pattern_bath,	#衛
-  	:pattern_balcony, #陽台(new)
-  	:inner_amount, #市內實際使用坪數
-  	:total_floor, #總樓層(new)
-  	:current_floor, #出租樓層
-  	:direction, #朝向
-  	#new
-  	:has_device_washer,
-  	:has_device_freezer,
-  	:has_device_tv,
-  	:has_device_air_conditioning,
-  	:has_device_water_heater,
-  	:has_device_net,
-  	:has_device_cable_tv,
-  	:has_device_natural_gas,
-  	:has_furniture_bed,
-  	:has_furniture_wardrobe,
-  	:has_furniture_sofa,
-  	:has_furniture_desk,
-  	:has_furniture_chair,
-  	:has_parking,
-  	#new end
-  	:total_price, #租金 元/月
-  	:deposit, #押金(new)
-  	#new
-  	:rent_include_management,
-  	:rent_include_clean,
-  	:rent_include_cable,
-  	:rent_include_net,
-  	:rent_include_water,
-  	:rent_include_electric,
-  	:rent_include_gas,
-  	#new end
-  	:management_fees, #管理費
-  	:rent_period, #最短租期(new)
-  	:allow_moved_date, #可遷入日期 (new)
-  	:is_student_allow, #身份要求 (new)
-  	:is_office_allow, #身份要求 (new)
-  	:is_family_allow, #身份要求 (new)
-  	:is_cooking_allow, #可開伙 (new) 
-  	:is_pet_allow, #可養寵 (new) 
-  	:is_nearby_store, #近便利商店(new)
-  	:is_nearby_market, #近市場(new)
-  	:is_nearby_mall, #近百貨公司(new)
-  	:is_nearby_park, #近公園(new)
-  	:is_nearby_school, #近學校(new)
-  	:is_nearby_hospital, #近醫療機構(new)
-  	:is_nearby_nightmarket, #近夜市(new)
-  	#new
-  	:nearby_station,
-  	:nearby_mrt,
-  	:nearby_bus,
-  	#new end
-  	:name, #廣告標題
-  	:descript, #特色描述
-  	#照片
-	]
+module Item::RentHomeApartment
+  extend ActiveSupport::Concern
 
-  DEPOSIT = {
-    '面議' => :face_to_face,
+  included do
+
+    
+  end
+	
+  private
+  DEPOSIT_TYPES = {
+    '面議'      => :face_to_face,
     '一個月押金' => :one_months,
     '二個月押金' => :two_months,
     '三個月押金' => :three_months,
-    '其他' => :other
+    '其他'      => :other
   }
 
-  RENT_PERIOD = {
-    '三個月'  => '3_months',
-    '半年'    => '6_months',
-    '一年'    => '1_years',
-    '兩年'    => '2_years',
+  RENT_PERIOD_TYPES = {
+    '三個月'   => :three_months,
+    '半年'    => :half_year,
+    '一年'    => :one_year,
+    '兩年'    => :two_years,
     '其他'    => :other
   }
-  
+
+  RENT_PERIOD_UNITS = {
+    '年' => :year,
+    '月' => :month,
+    '日' => :date
+  }
+
   def self.permit_params(required_param)
     required_param.permit(
-      :main_area,
-      :sub_area,
-      :road_name,
-      # address
-
+      :main_area, :sub_area, :addr_street, :addr_alley, :addr_lane, :addr_no, :addr_no_is_hidden,
+      :pattern_room, :pattern_living, :pattern_bath, :pattern_balcony,
+      :inner_amount, #市內實際使用坪數
+      :total_floor, :current_floor,
+      :direction, #朝向
+      :has_device_washer, :has_device_freezer, :has_device_tv, :has_device_air_conditioning, :has_device_water_heater, :has_device_net, :has_device_cable_tv, :has_device_natural_gas,
+      :has_furniture_bed, :has_furniture_wardrobe, :has_furniture_sofa, :has_furniture_desk, :has_furniture_chair,
+      :has_parking,
+      :total_price, :deposit, :deposit_type, #押金(new)
+      :rent_include_management, :rent_include_clean, :rent_include_cable, :rent_include_net, :rent_include_water, :rent_include_electric, :rent_include_gas,
+      :management_fees,
+      :rent_period_number, :rent_period_unit,
+      :allow_moved_date, #可遷入日期 (new)
+      :is_student_allow, :is_office_allow, :is_family_allow, 
+      :is_cooking_allow, 
+      :is_pet_allow,
+      :is_nearby_store, :is_nearby_market, :is_nearby_mall, :is_nearby_park, :is_nearby_school, :is_nearby_hospital, :is_nearby_nightmarket,
+      :nearby_station_1, :nearby_station_2, :nearby_station_3, 
+      :nearby_mrt_1, :nearby_mrt_2, :nearby_mrt_3, 
+      :nearby_bus_1, :nearby_bus_2, :nearby_bus_3,
+      :name,
       :descript
     )
   end
+  
+  
 end

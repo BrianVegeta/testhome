@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150329093601) do
+ActiveRecord::Schema.define(version: 20150329124700) do
 
   create_table "adgroups", force: true do |t|
     t.integer  "organization_id"
@@ -476,42 +476,42 @@ ActiveRecord::Schema.define(version: 20150329093601) do
   end
 
   create_table "items", force: true do |t|
-    t.string   "type",               limit: 30
-    t.integer  "owner_id",                                                                      null: false
-    t.string   "owner_type",                                                                    null: false
+    t.string   "type",                        limit: 30
+    t.integer  "owner_id",                                                                               null: false
+    t.string   "owner_type",                                                                             null: false
     t.integer  "cover_id"
     t.integer  "position"
-    t.integer  "sale_kind",          limit: 1,                           default: 0,            null: false
-    t.integer  "main_area",          limit: 1,                                                  null: false
-    t.integer  "sub_area",           limit: 1,                                                  null: false
-    t.string   "name",                                                                          null: false
+    t.integer  "sale_kind",                   limit: 1,                           default: 0,            null: false
+    t.integer  "main_area",                   limit: 1,                                                  null: false
+    t.integer  "sub_area",                    limit: 1,                                                  null: false
+    t.string   "name",                                                                                   null: false
     t.string   "unique_number"
-    t.integer  "emoticons",          limit: 1
-    t.boolean  "accessories",                                            default: true,         null: false
-    t.integer  "sales_status",       limit: 1,                           default: 0,            null: false
-    t.boolean  "featured",                                               default: false,        null: false
+    t.integer  "emoticons",                   limit: 1
+    t.boolean  "accessories",                                                     default: true,         null: false
+    t.integer  "sales_status",                limit: 1,                           default: 0,            null: false
+    t.boolean  "featured",                                                        default: false,        null: false
     t.string   "road_name"
     t.string   "house_number"
-    t.decimal  "total_price",                   precision: 10, scale: 0, default: 0,            null: false
-    t.decimal  "per_price",                     precision: 10, scale: 0, default: 0,            null: false
-    t.decimal  "addon_price",                   precision: 10, scale: 0, default: 0,            null: false
-    t.integer  "solds",              limit: 1,                           default: 0,            null: false
-    t.integer  "direction",          limit: 1
-    t.integer  "old",                limit: 2
-    t.integer  "upfloor",            limit: 1
-    t.integer  "downfloor",          limit: 1
+    t.decimal  "total_price",                            precision: 10, scale: 0, default: 0,            null: false
+    t.decimal  "per_price",                              precision: 10, scale: 0, default: 0,            null: false
+    t.decimal  "addon_price",                            precision: 10, scale: 0, default: 0,            null: false
+    t.integer  "solds",                       limit: 1,                           default: 0,            null: false
+    t.integer  "direction",                   limit: 1
+    t.integer  "old",                         limit: 2
+    t.integer  "upfloor",                     limit: 1
+    t.integer  "downfloor",                   limit: 1
     t.text     "floor_select"
     t.text     "floor_room_number"
-    t.integer  "pattern_room",       limit: 1,                           default: 0,            null: false
-    t.integer  "pattern_living",     limit: 1,                           default: 0,            null: false
-    t.integer  "pattern_bath",       limit: 1,                           default: 0,            null: false
-    t.float    "amount",             limit: 24
-    t.float    "public_amount",      limit: 24
-    t.float    "inner_amount",       limit: 24
-    t.float    "addon_amount",       limit: 24
-    t.float    "land_amount",        limit: 24
-    t.float    "hold_amount",        limit: 24
-    t.integer  "land_kind",                                              default: 0,            null: false
+    t.integer  "pattern_room",                limit: 1,                           default: 0,            null: false
+    t.integer  "pattern_living",              limit: 1,                           default: 0,            null: false
+    t.integer  "pattern_bath",                limit: 1,                           default: 0,            null: false
+    t.float    "amount",                      limit: 24
+    t.float    "public_amount",               limit: 24
+    t.float    "inner_amount",                limit: 24
+    t.float    "addon_amount",                limit: 24
+    t.float    "land_amount",                 limit: 24
+    t.float    "hold_amount",                 limit: 24
+    t.integer  "land_kind",                                                       default: 0,            null: false
     t.integer  "molecular"
     t.integer  "denominator"
     t.boolean  "is_distribution"
@@ -530,7 +530,7 @@ ActiveRecord::Schema.define(version: 20150329093601) do
     t.integer  "management_fees"
     t.integer  "management_fees_by"
     t.datetime "end_at"
-    t.boolean  "has_addon",                                              default: false,        null: false
+    t.boolean  "has_addon",                                                       default: false,        null: false
     t.string   "depth"
     t.integer  "land_bcr"
     t.integer  "land_far"
@@ -538,34 +538,83 @@ ActiveRecord::Schema.define(version: 20150329093601) do
     t.datetime "updated_at"
     t.integer  "lft"
     t.integer  "recommand_count"
-    t.integer  "share",              limit: 1,                           default: 0,            null: false
-    t.boolean  "share_sales",                                            default: false,        null: false
+    t.integer  "share",                       limit: 1,                           default: 0,            null: false
+    t.boolean  "share_sales",                                                     default: false,        null: false
     t.text     "relation_lft"
     t.text     "search_cache"
     t.string   "build_company"
-    t.float    "another_amount",     limit: 24
-    t.integer  "household",          limit: 1
+    t.float    "another_amount",              limit: 24
+    t.integer  "household",                   limit: 1
     t.integer  "loan_fees"
     t.integer  "another_fees"
     t.datetime "solds_time"
-    t.string   "property",           limit: 70,                          default: "--- []\n\n", null: false
-    t.integer  "management_way",     limit: 1
+    t.string   "property",                    limit: 70,                          default: "--- []\n\n", null: false
+    t.integer  "management_way",              limit: 1
     t.integer  "old_id"
     t.boolean  "old_map_error"
-    t.float    "parking_amount",     limit: 24
-    t.boolean  "old_downloaded",                                         default: false
-    t.boolean  "old_maped",                                              default: false
-    t.boolean  "is_org_close",                                           default: false,        null: false
-    t.integer  "pattern_room_plus",  limit: 1,                           default: 0,            null: false
-    t.float    "lng",                limit: 53
-    t.float    "lat",                limit: 53
-    t.integer  "zoom",               limit: 1
-    t.float    "yaw",                limit: 24
-    t.float    "pitch",              limit: 24
+    t.float    "parking_amount",              limit: 24
+    t.boolean  "old_downloaded",                                                  default: false
+    t.boolean  "old_maped",                                                       default: false
+    t.boolean  "is_org_close",                                                    default: false,        null: false
+    t.integer  "pattern_room_plus",           limit: 1,                           default: 0,            null: false
+    t.float    "lng",                         limit: 53
+    t.float    "lat",                         limit: 53
+    t.integer  "zoom",                        limit: 1
+    t.float    "yaw",                         limit: 24
+    t.float    "pitch",                       limit: 24
     t.boolean  "auto_find"
-    t.integer  "old_year",           limit: 2
-    t.integer  "old_month",          limit: 1
-    t.boolean  "has_image",                                              default: false,        null: false
+    t.integer  "old_year",                    limit: 2
+    t.integer  "old_month",                   limit: 1
+    t.boolean  "has_image",                                                       default: false,        null: false
+    t.string   "addr_street"
+    t.integer  "addr_alley"
+    t.integer  "addr_lane"
+    t.integer  "addr_no"
+    t.boolean  "addr_no_is_hidden"
+    t.integer  "pattern_balcony"
+    t.integer  "total_floor"
+    t.integer  "current_floor"
+    t.boolean  "has_device_washer"
+    t.boolean  "has_device_freezer"
+    t.boolean  "has_device_tv"
+    t.boolean  "has_device_air_conditioning"
+    t.boolean  "has_device_water_heater"
+    t.boolean  "has_device_net"
+    t.boolean  "has_device_cable_tv"
+    t.boolean  "has_device_natural_gas"
+    t.boolean  "has_furniture_bed"
+    t.boolean  "has_furniture_wardrobe"
+    t.boolean  "has_furniture_sofa"
+    t.boolean  "has_furniture_desk"
+    t.boolean  "has_furniture_chair"
+    t.boolean  "has_parking"
+    t.integer  "deposit"
+    t.string   "deposit_type"
+    t.boolean  "rent_include_management"
+    t.boolean  "rent_include_clean"
+    t.boolean  "rent_include_cable"
+    t.boolean  "rent_include_net"
+    t.boolean  "rent_include_water"
+    t.boolean  "rent_include_electric"
+    t.boolean  "rent_include_gas"
+    t.integer  "rent_period_number"
+    t.string   "rent_period_unit"
+    t.date     "allow_moved_date"
+    t.boolean  "is_student_allow"
+    t.boolean  "is_office_allow"
+    t.boolean  "is_family_allow"
+    t.boolean  "is_cooking_allow"
+    t.boolean  "is_pet_allow"
+    t.boolean  "is_nearby_store"
+    t.boolean  "is_nearby_market"
+    t.boolean  "is_nearby_mall"
+    t.boolean  "is_nearby_park"
+    t.boolean  "is_nearby_school"
+    t.boolean  "is_nearby_hospital"
+    t.boolean  "is_nearby_nightmarket"
+    t.text     "nearby_station"
+    t.text     "nearby_mrt"
+    t.text     "nearby_bus"
   end
 
   add_index "items", ["accessories"], name: "accessories", using: :btree

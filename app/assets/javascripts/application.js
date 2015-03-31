@@ -27,6 +27,7 @@
 //= require select2
 
 //= require ckeditor-jquery
+//= require jquery.formatCurrency-1.4.0
 
 //= require bootstrap-sprockets
 //= require turbolinks

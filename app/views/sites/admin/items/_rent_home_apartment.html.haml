@@ -1,0 +1,31 @@
+= render 'address', {f: f}
+= render 'pattern', {f: f}
+= render 'plain', {f: f}
+= render 'floor', {f: f}
+= render 'direction', {f: f}
+= render 'device', {f: f}
+= render 'furniture', {f: f}
+= render 'parking', {f: f}
+= render 'rent_deposit', {f: f}
+= render 'rent_include', {f: f} 
+= render 'management_fees', {f: f}
+= render 'rent_period', {f: f}
+= render 'identity_require', {f: f}
+= render 'cooking_allow', {f: f}
+= render 'pet_allow', {f: f}
+= render 'pet_allow', {f: f}
+= render 'nearby', {f: f}
+= render 'nearby_traffic', {f: f}
+= render 'title', {f: f}
+= render 'description_editor', {f: f}
+
+:javascript
+  var $price_input = $('.price_input');
+  $price_input.keyup(function(e) {
+
+    $price_input.formatCurrency({
+      symbol: '',
+      roundToDecimalPlace: -2
+    });  
+
+  });

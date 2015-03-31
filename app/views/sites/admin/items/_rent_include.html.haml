@@ -1,0 +1,51 @@
+.form-group.include-area
+  %label.col-sm-2.control-label 租金包含
+  .col-sm-8
+    %label.checkbox-inline
+      = f.check_box :rent_include_management
+      管理費
+    %label.checkbox-inline
+      = f.check_box :rent_include_clean
+      清潔費
+    %label.checkbox-inline
+      = f.check_box :rent_include_cable
+      第四台
+    %label.checkbox-inline
+      = f.check_box :rent_include_net
+      網路
+    %label.checkbox-inline
+      = f.check_box :rent_include_water
+      水費
+    %label.checkbox-inline
+      = f.check_box :rent_include_electric
+      電費
+    %label.checkbox-inline
+      = f.check_box :rent_include_gas
+      瓦斯費 
+    %label.checkbox-inline
+      %input{type: :checkbox, id: :include_check_all}  
+      全選
+
+:javascript
+  var $include_area       = $('.include-area');
+  var $include_check_all  = $('#include_check_all');
+  var $include_checkboxes = $include_area.find('input[type="checkbox"]').not($include_check_all);
+  var $include_count      = $include_checkboxes.length;
+
+  var isAllIncludeChecked = function() {
+    var $checked_include = $include_area.find('input[type="checkbox"]:checked').not($include_check_all);
+    
+    return $checked_include.length == $include_count;
+  };
+
+  $include_checkboxes.click(function() {
+    $include_check_all.prop('checked', isAllIncludeChecked());
+
+  });
+
+  $include_check_all.click(function() {
+    $include_checkboxes.prop('checked', $(this).prop('checked'));
+  });
+
+  
+

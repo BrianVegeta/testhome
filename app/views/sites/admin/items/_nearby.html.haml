@@ -1,0 +1,47 @@
+.form-group.nearby-area
+  %label.col-sm-2.control-label 生活機能
+  .col-sm-8
+    %label.checkbox-inline
+      = f.check_box :is_nearby_store
+      近便利商店
+    %label.checkbox-inline
+      = f.check_box :is_nearby_market
+      近傳統市場
+    %label.checkbox-inline
+      = f.check_box :is_nearby_mall
+      近百貨公司
+    %label.checkbox-inline
+      = f.check_box :is_nearby_park
+      近公園綠地
+    %label.checkbox-inline
+      = f.check_box :is_nearby_school
+      近學校
+    %label.checkbox-inline
+      = f.check_box :is_nearby_hospital
+      近醫療機構
+    %label.checkbox-inline
+      = f.check_box :is_nearby_nightmarket
+      近夜市
+    %label.checkbox-inline
+      %input{type: :checkbox, id: :nearby_check_all}  
+      全選
+:javascript
+  var $nearby_area       = $('.nearby-area');
+  var $nearby_check_all  = $('#nearby_check_all');
+  var $nearby_checkboxes = $nearby_area.find('input[type="checkbox"]').not($nearby_check_all);
+  var $nearby_count      = $nearby_checkboxes.length;
+
+  var isAllNearbyChecked = function() {
+    var $checked_nearby = $nearby_area.find('input[type="checkbox"]:checked').not($nearby_check_all);
+    
+    return $checked_nearby.length == $nearby_count;
+  };
+
+  $nearby_checkboxes.click(function() {
+    $nearby_check_all.prop('checked', isAllNearbyChecked());
+
+  });
+
+  $nearby_check_all.click(function() {
+    $nearby_checkboxes.prop('checked', $(this).prop('checked'));
+  });

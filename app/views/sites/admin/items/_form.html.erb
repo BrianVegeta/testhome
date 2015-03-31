@@ -21,8 +21,10 @@
 
   <%= render "#{params[:type]}", {f: f} %>      
 
-
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-group">
+    <label class="col-sm-2 control-label"></label>
+    <div class="col-sm-2">
+      <%= f.submit '送出', class: 'form-control btn-primary' %>
+    </div>
   </div>
 <% end %>

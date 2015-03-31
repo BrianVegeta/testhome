@@ -1,0 +1,29 @@
+.form-group
+  %label.col-sm-2.control-label 租金
+  .col-sm-2
+    .input-group
+      = f.text_field :total_price, class: 'form-control price_input'
+      %span.input-group-addon 元/月
+  %label.col-sm-2.control-label 押金
+  .col-sm-2
+    - deposit_types = Item::RentHomeApartment::DEPOSIT_TYPES.map { |t| t }
+    = f.select :deposit_type, deposit_types, {}, {class: 'form-control'}
+  .col-sm-2.deposit-amount-area{style: "display: none;"}
+    .input-group
+      = f.text_field :deposit, class: 'form-control price_input'
+      %span.input-group-addon 元
+
+:javascript
+  var $deposit_amount_area  = $('.deposit-amount-area');
+  var $deposit_type         = $('#item_deposit_type');
+  var $deposit              = $('#item_deposit');
+
+  $deposit_type.change(function() {
+    if ($deposit_type.find('option:selected').val() == 'other') {
+      $deposit.val('');
+      $deposit_amount_area.show();
+    } else {
+      $deposit_amount_area.hide();
+    }
+  });
+      

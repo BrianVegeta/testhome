@@ -1,32 +1,41 @@
-<div class="form-group">
-  <label class="col-sm-2 control-label">出租地址</label>
-  <div class="col-sm-2">
-    <%= f.hidden_field :main_area, class: 'form-control' %>
-    <input type="text" class="form-control" id="item_main_area_input">
-  </div>
-  <div class="col-sm-2">
-    <%= f.hidden_field :sub_area, class: 'form-control' %>
-    <input type="text" class="form-control" id="item_sub_area_input">
-  </div>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" id="item_street">
-  </div>
-</div>
+.form-group
+  %label.col-sm-2.control-label 出租地址
+  .col-sm-3
+    .row
+      .col-sm-6
+        = f.hidden_field :main_area, class: 'form-control'
+        %input#item_main_area_input.form-control{type: :text}
+      .col-sm-6
+        = f.hidden_field :sub_area, class: 'form-control'
+        %input#item_sub_area_input.form-control{type: :text}
+  .col-sm-2
+    = f.text_field :addr_street, class: 'form-control'
+  .col-sm-5
+    .row
+      .col-sm-9
+        .input-group
+          = f.text_field :addr_alley, class: 'form-control'
+          %span.input-group-addon 巷
+          = f.text_field :addr_lane, class: 'form-control'
+          %span.input-group-addon 弄
+          = f.text_field :addr_no, class: 'form-control'
+          %span.input-group-addon 號
+      .col-sm-3
+        %label.checkbox-inline
+          = f.check_box :addr_no_is_hidden
+          隱藏門號
 
-<% Area::MAIN_AREA.each_with_index do |main_area, index| %>
-  <div class="main-area-data" data-id="<%= index %>" data-value="<%= main_area %>">
-    <% Area::SUB_AREA[index].each_with_index do |sub_area, index| %>
-      <div data-id="<%= index %>" data-value="<%= sub_area %>">
-      </div>
-    <% end %>
-  </div>
-<% end %>
-<script type="text/javascript">
+- Area::MAIN_AREA.each_with_index do |main_area, index|
+  .main-area-data{data: {id: "#{index}", value: "#{main_area}"}}
+    - Area::SUB_AREA[index].each_with_index do |sub_area, index|
+      %div{data: {id: "#{index}", value: "#{sub_area}"}}
+
+:javascript
   var $main_area        = $('#item_main_area'),
       $sub_area         = $('#item_sub_area'),
       $main_area_input  = $('#item_main_area_input'),
       $sub_area_input   = $('#item_sub_area_input'),
-      $street_input     = $('#item_street');
+      $street_input     = $('#item_addr_street');
   
   var main_area_data = [];
 
@@ -101,6 +110,3 @@
     placeholder: '選擇街道'
   });
   $street_input.select2('enable', false);
-
-
-</script>

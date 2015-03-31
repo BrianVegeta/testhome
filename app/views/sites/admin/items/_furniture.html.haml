@@ -1,0 +1,43 @@
+.form-group.furniture-area
+  %label.col-sm-2.control-label 提供家具
+  .col-sm-8
+    %label.checkbox-inline
+      = f.check_box :has_furniture_bed
+      床
+    %label.checkbox-inline
+      = f.check_box :has_furniture_wardrobe
+      衣櫃
+    %label.checkbox-inline
+      = f.check_box :has_furniture_sofa
+      沙發
+    %label.checkbox-inline
+      = f.check_box :has_furniture_desk
+      桌子
+    %label.checkbox-inline
+      = f.check_box :has_furniture_chair
+      椅子
+    %label.checkbox-inline
+      %input{type: :checkbox, id: :furniture_check_all}
+      全選
+:javascript
+  var $furniture_area       = $('.furniture-area');
+  var $furniture_check_all  = $('#furniture_check_all');
+  var $furniture_checkboxes = $furniture_area.find('input[type="checkbox"]').not($furniture_check_all);
+  var $furniture_count      = $furniture_checkboxes.length;
+
+  var isAllChecked = function() {
+    var $checked_furniture = $furniture_area.find('input[type="checkbox"]:checked').not($furniture_check_all);
+    
+    return $checked_furniture.length == $furniture_count;
+  };
+
+  $furniture_checkboxes.click(function() {
+    $furniture_check_all.prop('checked', isAllChecked());
+
+  });
+
+  $furniture_check_all.click(function() {
+    $furniture_checkboxes.prop('checked', $(this).prop('checked'));
+  });
+
+  

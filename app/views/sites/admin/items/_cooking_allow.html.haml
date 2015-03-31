@@ -1,0 +1,9 @@
+.form-group
+  %label.col-sm-2.control-label 開伙
+  .col-sm-8
+    %label.radio-inline
+      = f.radio_button :is_cooking_allow, 1 
+      可
+    %label.radio-inline
+      = f.radio_button :is_cooking_allow, 0 
+      不可

@@ -1,6 +1,34 @@
 class Item < ActiveRecord::Base
+	include Item::RentHomeApartment
+
 	self.inheritance_column = :foo #for type subclass
 	belongs_to :owner, polymorphic: true
+
+	serialize :nearby_station
+	serialize :nearby_mrt
+	serialize :nearby_bus
+
+
+	
+	def self.nearby_virtual_attr(array_collection, *types)
+		
+    types.each do |type|
+    	array_collection.each do |number|
+	      eval "
+	        def nearby_#{type}_#{number}
+	        	(nearby_#{type} || {})[#{number}]
+	        end
+	        def nearby_#{type}_#{number}=(value)
+	        	nearby_#{type} ||= {}
+	          nearby_#{type}[#{number}] = value
+	        end
+	      "
+	    end
+    end
+
+  end
+
+  nearby_virtual_attr [1, 2, 3], :station, :mrt, :bus
 
 	DIRECTION = {
 		nil => '請選擇',
