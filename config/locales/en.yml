@@ -21,3 +21,49 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        item:
+          attributes:
+            main_area:
+              blank: '請選擇縣市。'
+            sub_area:
+              blank: '請選擇鄉鎮。'  
+            addr_street:
+              blank: '請選擇街道。'  
+            addr_no:
+              blank: '請填門號。'
+              not_a_number: '門號請填數字。'
+            pattern_room:
+              blank: '請填房數。'
+              not_a_number: '房數請填數字。'  
+              greater_than_or_equal_to: "房數至少大於%{count}。"
+            pattern_living:
+              not_a_number: '請填數字。'
+            pattern_bath:
+              not_a_number: '請填數字。'
+            pattern_balcony:
+              not_a_number: '請填數字。'  
+            inner_amount:
+              blank: '請填坪數。'
+              not_a_number: '請填數字。'
+              greater_than_or_equal_to: "坪數至少大於%{count}。"
+              less_than_or_equal_to: "坪數不能大於%{count}。"
+            total_floor:
+              blank: '請填總樓層。'
+            current_floor:
+              blank: '請填樓層。'
+            total_price:
+              blank: '請填金額。'
+              greater_than_or_equal_to: "金額至少大於%{count}。"
+            deposit:
+              blank: '請填押金。'
+              greater_than_or_equal_to: "金額至少大於%{count}。"
+            rent_period_number:
+              blank: '請填數字。'
+              not_a_number: '請填數字。'  
+            name: 
+              blank: '請填刊登標題。'
+              too_short: "標題長度最短%{count}個字"
+              too_long: "標題長度最長%{count}個字"

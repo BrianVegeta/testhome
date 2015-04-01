@@ -16,11 +16,11 @@ class Item < ActiveRecord::Base
     	array_collection.each do |number|
 	      eval "
 	        def nearby_#{type}_#{number}
-	        	(nearby_#{type} || {})[#{number}]
+	        	(self.nearby_#{type} || {})[#{number}]
 	        end
 	        def nearby_#{type}_#{number}=(value)
-	        	nearby_#{type} ||= {}
-	          nearby_#{type}[#{number}] = value
+	        	self.nearby_#{type} ||= {}
+	          self.nearby_#{type}[#{number}] = value
 	        end
 	      "
 	    end

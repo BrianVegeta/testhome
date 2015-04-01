@@ -1,0 +1,59 @@
+- if @sites_admin_item.new_record?
+  - formUrl = sites_admin_items_path(@organization.id)
+- unless @sites_admin_item.new_record?
+  - formUrl = sites_admin_item_path(@organization.id, @sites_admin_item.id)
+
+
+= @sites_admin_item.nearby_station.inspect
+
+= form_for(@sites_admin_item, url: formUrl, :html => { class: 'form-horizontal', :role => "form", autocomplete: 'off' }) do |f|
+  - if @sites_admin_item.errors.any?
+    #error_explanation
+      %h2 
+        = pluralize(@sites_admin_item.errors.count, "error")
+        prohibited this sites_admin_item from being saved:
+      %ul
+        - @sites_admin_item.errors.full_messages.each do |message|
+          %li= message
+  = render "#{@post_type}", {f: f}
+  .form-group
+    %label.col-sm-2.control-label
+    .col-sm-2
+      = f.submit '送出', class: 'form-control btn-primary'
+
+:css
+  .tooltip.tooltip-red .tooltip-inner {
+    background-color: red;
+  }
+  .tooltip.tooltip-red .tooltip-arrow {
+    border-top-color: red;
+  }
+  .tooltip.tooltip-red {
+    font-size: 18px;
+  }      
+:javascript
+
+  var bindTootip = function(selector, title) {
+    selector.tooltip({
+      placement: 'top',
+      title: title,
+      template: '<div class="tooltip tooltip-red" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+    });
+  };
+  bindTootip($('.error-tooltip'), function() {
+    return $(this).data('errormessage');
+  });
+
+  var $price_input  = $('.price_input');
+  var setInputPrice = function() {
+    $price_input.formatCurrency({
+      symbol: '',
+      roundToDecimalPlace: -2
+    });
+  };
+  
+  setInputPrice();
+
+  $price_input.keyup(function(e) {
+    setInputPrice();
+  });

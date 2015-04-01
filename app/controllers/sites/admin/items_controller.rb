@@ -19,7 +19,7 @@ class Sites::Admin::ItemsController < Sites::Admin::ApplicationController
       render 'new_confirm'
     when 'fill_form'
       @sites_admin_item = @organization.items.new
-
+      @post_type = params[:type]
       render 'new_fill_form'
     else
       
@@ -34,9 +34,13 @@ class Sites::Admin::ItemsController < Sites::Admin::ApplicationController
   # POST /sites/admin/items
   # POST /sites/admin/items.json
   def create
-    raise sites_admin_item_params.inspect
-    raise params.inspect
-    @sites_admin_item = Sites::Admin::Item.new(sites_admin_item_params)
+    
+    @sites_admin_item = Item.new(sites_admin_item_params)
+    @sites_admin_item.valid?
+    @post_type = @sites_admin_item.post_type
+    
+    render :new_fill_form
+    return
 
     respond_to do |format|
       if @sites_admin_item.save

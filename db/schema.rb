@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150329124700) do
+ActiveRecord::Schema.define(version: 20150401194235) do
 
   create_table "adgroups", force: true do |t|
     t.integer  "organization_id"
@@ -502,9 +502,9 @@ ActiveRecord::Schema.define(version: 20150329124700) do
     t.integer  "downfloor",                   limit: 1
     t.text     "floor_select"
     t.text     "floor_room_number"
-    t.integer  "pattern_room",                limit: 1,                           default: 0,            null: false
-    t.integer  "pattern_living",              limit: 1,                           default: 0,            null: false
-    t.integer  "pattern_bath",                limit: 1,                           default: 0,            null: false
+    t.integer  "pattern_room",                limit: 1
+    t.integer  "pattern_living",              limit: 1
+    t.integer  "pattern_bath",                limit: 1
     t.float    "amount",                      limit: 24
     t.float    "public_amount",               limit: 24
     t.float    "inner_amount",                limit: 24
@@ -566,6 +566,8 @@ ActiveRecord::Schema.define(version: 20150329124700) do
     t.integer  "old_year",                    limit: 2
     t.integer  "old_month",                   limit: 1
     t.boolean  "has_image",                                                       default: false,        null: false
+    t.string   "post_state"
+    t.string   "post_type"
     t.string   "addr_street"
     t.integer  "addr_alley"
     t.integer  "addr_lane"
@@ -573,7 +575,7 @@ ActiveRecord::Schema.define(version: 20150329124700) do
     t.boolean  "addr_no_is_hidden"
     t.integer  "pattern_balcony"
     t.integer  "total_floor"
-    t.integer  "current_floor"
+    t.string   "current_floor"
     t.boolean  "has_device_washer"
     t.boolean  "has_device_freezer"
     t.boolean  "has_device_tv"
@@ -615,6 +617,8 @@ ActiveRecord::Schema.define(version: 20150329124700) do
     t.text     "nearby_station"
     t.text     "nearby_mrt"
     t.text     "nearby_bus"
+    t.datetime "deleted_at"
+    t.string   "rent_period_type"
   end
 
   add_index "items", ["accessories"], name: "accessories", using: :btree

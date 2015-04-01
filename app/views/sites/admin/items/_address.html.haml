@@ -1,24 +1,28 @@
-.form-group
-  %label.col-sm-2.control-label 出租地址
+.form-group.address-area
+  %label.col-sm-2.control-label 
+    %span{style: 'color: red;'} *
+    出租地址
   .col-sm-3
     .row
-      .col-sm-6
+      .col-sm-6{class: "#{f.error_class :main_area}"}
         = f.hidden_field :main_area, class: 'form-control'
-        %input#item_main_area_input.form-control{type: :text}
-      .col-sm-6
+        %input#item_main_area_input.address-select.form-control{data: {errormessage: "#{f.error_message :main_area}"}}
+      .col-sm-6{class: "#{f.error_class :sub_area}"}
         = f.hidden_field :sub_area, class: 'form-control'
-        %input#item_sub_area_input.form-control{type: :text}
-  .col-sm-2
-    = f.text_field :addr_street, class: 'form-control'
+        %input#item_sub_area_input.address-select.form-control{data: {errormessage: "#{f.error_message :sub_area}"}}
+  .col-sm-2{class: "#{f.error_class :addr_street}"}
+    = f.text_field :addr_street, class: 'form-control address-select', data: {errormessage: "#{f.error_message :addr_street}"}
   .col-sm-5
     .row
-      .col-sm-9
+      .col-sm-5
         .input-group
           = f.text_field :addr_alley, class: 'form-control'
           %span.input-group-addon 巷
           = f.text_field :addr_lane, class: 'form-control'
-          %span.input-group-addon 弄
-          = f.text_field :addr_no, class: 'form-control'
+          %span.input-group-addon 弄  
+      .col-sm-4{class: "#{f.error_class :addr_no}"}
+        .input-group
+          = f.text_field :addr_no, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :addr_no}"}
           %span.input-group-addon 號
       .col-sm-3
         %label.checkbox-inline
@@ -31,11 +35,29 @@
       %div{data: {id: "#{index}", value: "#{sub_area}"}}
 
 :javascript
+  
   var $main_area        = $('#item_main_area'),
       $sub_area         = $('#item_sub_area'),
       $main_area_input  = $('#item_main_area_input'),
       $sub_area_input   = $('#item_sub_area_input'),
-      $street_input     = $('#item_addr_street');
+      $street_input     = $('#item_addr_street'),
+      $address_area     = $('.address-area');
+
+  $address_area.on('mouseenter', '.address-select', function() {
+    var select2_id      = $(this).attr('id');
+    var orignal_id      = select2_id.replace('s2id_', '');
+    
+    bindTootip($(this), function() {
+      return $('#' + orignal_id).data('errormessage');
+    });
+    $(this).tooltip('show');
+  });
+  $address_area.on('mouseleave', '.address-select', function() {
+    var select2_id = $(this).attr('id');
+    var orignal_id = select2_id.replace('s2id_', '');
+
+    $(this).tooltip('hide');
+  });
   
   var main_area_data = [];
 
@@ -49,6 +71,9 @@
 
   var getSubArea = function(mainAreaId) {
     var sub_area_data = [];
+    if (mainAreaId == '') {
+      return sub_area_data;
+    }
     $('.main-area-data[data-id="' + mainAreaId + '"]').children().each(function() {
       var data = {
         id: $(this).data('id'), 
@@ -59,33 +84,7 @@
     return sub_area_data;
   };
 
-  $main_area_input.select2({
-    formatNoMatches: '無結果',
-    placeholder: '選擇縣市',
-    data: main_area_data
-  });
-  $main_area_input.on('select2-selecting', function(e) {
-    $main_area.val(e.object.id);
-
-    $sub_area_input.select2('enable', true);  
-    $sub_area_input.select2({
-      data: getSubArea(e.object.id),
-      formatNoMatches: '無結果',
-      placeholder: '選擇區'
-    });
-    $sub_area_input.select2('val', '');
-    
-  });
-
-
-  $sub_area_input.select2({
-    formatNoMatches: '無結果',
-    placeholder: '選擇區',
-    data: []
-  });
-  $sub_area_input.on('select2-selecting', function(e) {
-    $sub_area.val(e.object.id);
-
+  var getStreets = function(street_val) {
     $.get('/address/item_streets.json', 
       {
         ma: $main_area.val(), 
@@ -97,16 +96,60 @@
           formatNoMatches: '無結果',
           placeholder: '選擇街道'
         });
-        $street_input.select2('val', '');
+        $street_input.select2('val', street_val);
           
     })
+  };
+
+  $main_area_input.select2({
+    formatNoMatches: '無結果',
+    placeholder:     '選擇縣市',
+    data:            main_area_data
+  });
+  $main_area_input.select2('val', $main_area.val());
+
+  $sub_area_input.select2({
+    formatNoMatches: '無結果',
+    placeholder:     '選擇鄉鎮',
+    data:            getSubArea($main_area.val())
+  });
+  $sub_area_input.select2('val', $sub_area.val());
+  if ($main_area.val() == '') {
+    $sub_area_input.select2('enable', false);
+  }
+
+
+  if ($sub_area.val() == '') {
+    $street_input.select2({
+      data:             [],
+      formatNoMatches:  '無結果',
+      placeholder:      '選擇街道'
+    });
+    $street_input.select2('enable', false);
+
+  } else {
+    getStreets($street_input.val());
+  }
+
+  $main_area_input.on('select2-selecting', function(e) {
+    $main_area.val(e.object.id);
+
+    $sub_area_input.select2('enable', true);  
+    $sub_area_input.select2({
+      data:             getSubArea(e.object.id),
+      formatNoMatches:  '無結果',
+      placeholder:      '選擇鄉鎮'
+    });
+    $sub_area_input.select2('val', '');
+    $street_input.select2('val', '');
+    $street_input.select2('enable', false);
+  });
+
+  $sub_area_input.on('select2-selecting', function(e) {
+    $sub_area.val(e.object.id);
+
+    getStreets(0);
     
   });
-  $sub_area_input.select2('enable', false);
 
-  $street_input.select2({
-    data: [],
-    formatNoMatches: '無結果',
-    placeholder: '選擇街道'
-  });
-  $street_input.select2('enable', false);
+  

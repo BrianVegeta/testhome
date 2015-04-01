@@ -2,6 +2,8 @@ class AddColsToItemsForNewForm < ActiveRecord::Migration
   def change
 
     change_table(:items) do |t|
+      t.column :post_state, :string
+      t.column :post_type,  :string
       # address
       t.column :addr_street,          :string
       t.column :addr_alley,           :integer
@@ -74,11 +76,8 @@ class AddColsToItemsForNewForm < ActiveRecord::Migration
       t.column :nearby_station, :text
       t.column :nearby_mrt,     :text
       t.column :nearby_bus,     :text
+
+      t.column :deleted_at, :timestamp
     end
-
-    
-
-    
-
   end
 end

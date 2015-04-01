@@ -11,7 +11,7 @@ class Address::ItemStreetsController < ApplicationController
         streets = ItemStreet.where(main_area: params[:ma], sub_area: params[:sa])
         response = streets.map.with_index  do |street, index| 
           { 
-            id: index,
+            id: "#{street.name}",
             text: "#{street.name}" 
           }
         end

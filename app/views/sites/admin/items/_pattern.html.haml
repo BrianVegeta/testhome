@@ -1,0 +1,22 @@
+.form-group
+  %label.col-sm-2.control-label
+    %span{style: 'color: red;'} *
+    格局(現況)
+  .col-sm-8  
+    .row
+      .col-sm-2
+        .input-group{class: "#{f.error_class :pattern_room}"}
+          = f.text_field :pattern_room, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :pattern_room}"}
+          %span.input-group-addon 房
+      .col-sm-2
+        .input-group{class: "#{f.error_class :pattern_living}"}
+          = f.text_field :pattern_living, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :pattern_living}"}
+          %span.input-group-addon 廳
+      .col-sm-2
+        .input-group{class: "#{f.error_class :pattern_bath}"}
+          = f.text_field :pattern_bath, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :pattern_bath}"}
+          %span.input-group-addon 衛    
+      .col-sm-2
+        .input-group{class: "#{f.error_class :pattern_balcony}"}
+          = f.text_field :pattern_balcony, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :pattern_balcony}"}
+          %span.input-group-addon 陽台

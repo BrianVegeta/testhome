@@ -1,4 +1,6 @@
 .form-group
-  %label.col-sm-2.control-label 廣告標題
-  .col-sm-6
-    = f.text_field :name, class: 'form-control'
+  %label.col-sm-2.control-label 
+    %span{style: 'color: red;'} *
+    廣告標題
+  .col-sm-6{class: "#{f.error_class :name}"}
+    = f.text_field :name, class: 'form-control error-tooltip', placeholder: '請用簡單文字描述物件特色，限6~20個字', data: {errormessage: "#{f.error_message :name}"}
