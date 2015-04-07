@@ -1,0 +1,6 @@
+.form-group
+  %label.col-sm-2.control-label 裝潢程度
+  .col-sm-2
+    - levels = Item::RentStore::DECORATING_LEVELS.map {|k, v| [v, k] }
+    = f.select :decorating_level, levels, {}, {class: 'form-control'}
+    

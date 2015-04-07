@@ -18,8 +18,8 @@ class Sites::Admin::ItemsController < Sites::Admin::ApplicationController
     when 'confirm'
       render 'new_confirm'
     when 'fill_form'
-      @sites_admin_item = @organization.items.new
-      @post_type = params[:type]
+      @sites_admin_item = @organization.items.new(post_type: params[:type])
+
       render 'new_fill_form'
     else
       
@@ -34,11 +34,11 @@ class Sites::Admin::ItemsController < Sites::Admin::ApplicationController
   # POST /sites/admin/items
   # POST /sites/admin/items.json
   def create
-    
-    @sites_admin_item = Item.new(sites_admin_item_params)
+    @sites_admin_item = @organization.items.new(sites_admin_item_params)
+
+    # raise @sites_admin_item.inspect
     @sites_admin_item.valid?
-    @post_type = @sites_admin_item.post_type
-    
+        
     render :new_fill_form
     return
 
@@ -77,6 +77,26 @@ class Sites::Admin::ItemsController < Sites::Admin::ApplicationController
     end
   end
 
+  # POST /sites/admin/:organization_id/items/photo_upload.json
+  def photo_upload
+    respond_to do |format|
+      format.json { 
+
+        @photo = UploadAndFolder.new(sites_admin_item_photo_params)
+        if @photo.save
+          render json: {
+            status: true,
+            id: @photo.id,
+            thumb:  @photo.file.url(:thumb),
+            cover:  @photo.file.url(:cover)
+          }
+        else
+          render json: @photo.errors, status: false
+        end  
+      }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_sites_admin_item
@@ -85,6 +105,11 @@ class Sites::Admin::ItemsController < Sites::Admin::ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sites_admin_item_params
-      Item::RentHomeApartment.permit_params(params.require(:item))
+      model_name = Item::TYPE_TO_MATCH[params.require(:item).permit(:post_type)[:post_type].to_sym][:model]
+      Object::qualified_const_get(model_name).permit_params(params.require(:item))
+    end
+
+    def sites_admin_item_photo_params
+      params.require(:photo).permit(:file)
     end
 end

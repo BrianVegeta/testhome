@@ -1,0 +1,11 @@
+.form-group
+  %label.col-sm-2.control-label 
+    場地樓層
+  .col-sm-7
+    .row
+      .col-sm-3
+        .input-group{class: "#{f.error_class :current_floor}"}
+          = f.text_field :current_floor, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :current_floor}"}
+          %span.input-group-addon 樓
+      .text-muted.col-sm-8
+        %p （-1為地下樓）

@@ -14,13 +14,7 @@
     = f.text_field :addr_street, class: 'form-control address-select', data: {errormessage: "#{f.error_message :addr_street}"}
   .col-sm-5
     .row
-      .col-sm-5
-        .input-group
-          = f.text_field :addr_alley, class: 'form-control'
-          %span.input-group-addon 巷
-          = f.text_field :addr_lane, class: 'form-control'
-          %span.input-group-addon 弄  
-      .col-sm-4{class: "#{f.error_class :addr_no}"}
+      .col-sm-6{class: "#{f.error_class :addr_no}"}
         .input-group
           = f.text_field :addr_no, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :addr_no}"}
           %span.input-group-addon 號

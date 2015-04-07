@@ -1,0 +1,10 @@
+.form-group
+  %label.col-sm-2.control-label 
+    %span{style: 'color: red;'} *
+    場地面積
+  .col-sm-2{class: "#{f.error_class :land_area_amount}"}
+    - data = { errormessage: "#{f.error_message :land_area_amount}" }
+    = f.text_field :land_area_amount, class: 'form-control area-input error-tooltip', maxlength: 7, data: data
+  .col-sm-2
+    - types = Item::RentLand::AREA_UNITS.map {|k, v| [v, k]}
+    = f.select :land_area_unit, types, {}, class: 'form-control'

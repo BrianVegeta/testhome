@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150401194235) do
+ActiveRecord::Schema.define(version: 20150407052646) do
 
   create_table "adgroups", force: true do |t|
     t.integer  "organization_id"
@@ -619,6 +619,32 @@ ActiveRecord::Schema.define(version: 20150401194235) do
     t.text     "nearby_bus"
     t.datetime "deleted_at"
     t.string   "rent_period_type"
+    t.text     "photo_ids"
+    t.boolean  "new_photo_pattern"
+    t.boolean  "pattern_entresol_has"
+    t.string   "sexual_require"
+    t.string   "partition_material"
+    t.text     "addition_rooms"
+    t.string   "decorating_level"
+    t.string   "parking_cate"
+    t.string   "parking_type"
+    t.string   "land_type"
+    t.decimal  "land_area_amount",                       precision: 10, scale: 2
+    t.string   "land_area_unit"
+    t.boolean  "is_usage_field"
+    t.boolean  "is_usage_home"
+    t.boolean  "is_usage_processing_factory"
+    t.boolean  "is_usage_company"
+    t.boolean  "is_usage_tech_factory"
+    t.boolean  "is_usage_factory"
+    t.boolean  "is_usage_warehouse"
+    t.boolean  "is_usage_ad_banner"
+    t.boolean  "is_usage_store"
+    t.string   "place_type"
+    t.text     "place_usage"
+    t.string   "place_capacity"
+    t.string   "place_price_type"
+    t.string   "manager_type"
   end
 
   add_index "items", ["accessories"], name: "accessories", using: :btree

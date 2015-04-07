@@ -1,0 +1,56 @@
+.form-group.usage-area
+  %label.col-sm-2.control-label 
+    %span{style: 'color: red;'} *
+    適合用途
+  .col-sm-8
+    %label.checkbox-inline
+      = f.check_box :is_usage_field
+      農作
+    %label.checkbox-inline
+      = f.check_box :is_usage_home
+      住宅
+    %label.checkbox-inline
+      = f.check_box :is_usage_processing_factory
+      加工廠
+    %label.checkbox-inline
+      = f.check_box :is_usage_company
+      中小企業
+    %label.checkbox-inline
+      = f.check_box :is_usage_tech_factory
+      高科技業
+    %label.checkbox-inline
+      = f.check_box :is_usage_factory
+      廠房
+    %label.checkbox-inline
+      = f.check_box :is_usage_warehouse
+      倉庫
+    %label.checkbox-inline
+      = f.check_box :is_usage_ad_banner
+      廣告
+    %label.checkbox-inline
+      = f.check_box :is_usage_store
+      開店
+    %label.checkbox-inline
+      %input{type: :checkbox, id: :usage_check_all}  
+      全選
+
+:javascript
+  var $usage_area       = $('.usage-area');
+  var $usage_check_all  = $('#usage_check_all');
+  var $usage_checkboxes = $usage_area.find('input[type="checkbox"]').not($usage_check_all);
+  var $usage_count      = $usage_checkboxes.length;
+
+  var isAllUsageChecked = function() {
+    var $checked_usage = $usage_area.find('input[type="checkbox"]:checked').not($usage_check_all);
+    
+    return $checked_usage.length == $usage_count;
+  };
+
+  $usage_checkboxes.click(function() {
+    $usage_check_all.prop('checked', isAllUsageChecked());
+
+  });
+
+  $usage_check_all.click(function() {
+    $usage_checkboxes.prop('checked', $(this).prop('checked'));
+  });

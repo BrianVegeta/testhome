@@ -1,0 +1,8 @@
+.form-group
+  %label.col-sm-2.control-label 
+    停車位
+  .col-sm-2
+    .input-group{class: "#{f.error_class :parking_amount}"}
+      - data = { errormessage: "#{f.error_message :parking_amount}" }
+      = f.text_field :parking_amount, class: 'form-control area-input error-tooltip', maxlength: 7, data: data
+      %span.input-group-addon 位

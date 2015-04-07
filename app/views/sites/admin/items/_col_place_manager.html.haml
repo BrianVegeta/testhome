@@ -1,0 +1,7 @@
+.form-group
+  %label.col-sm-2.control-label
+    %span{style: 'color: red;'} *
+    經辦者
+  .col-sm-2
+    - types = Item::RentPlace::MANAGER_TYPES.map {|k, v| [v, k] }
+    = f.select :manager_type, types, {}, {class: 'form-control'}

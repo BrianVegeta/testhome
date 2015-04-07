@@ -5,33 +5,22 @@
   .col-sm-4
     .row
       .col-sm-4
-        - types = Item::RentHomeApartment::RENT_PERIOD_TYPES
+        - types = Item::RentHome::RENT_PERIOD_TYPES
         = f.select :rent_period_type, types, {}, {class: 'form-control'}
       .col-sm-6.rent-period-data-area{style: 'display: none;'}
         .row
           .col-sm-6{class: "#{f.error_class :rent_period_number}"}
             = f.text_field :rent_period_number, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :rent_period_number}"}
           .col-sm-6
-            - units = Item::RentHomeApartment::RENT_PERIOD_UNITS
+            - units = Item::RentHome::RENT_PERIOD_UNITS
             = f.select :rent_period_unit, units, {}, {class: 'form-control'}
-  %label.col-sm-2.control-label 可遷入日
-  .col-sm-2
-    .input-group
-      = f.text_field :allow_moved_date, class: 'form-control datepicker readony', readonly: true
-      %span.input-group-addon
-        %span.glyphicon.glyphicon-calendar{'aria-hidden' => "true"}
-:css
-  input.datepicker.readony {
-    background-color: white;
-    cursor: text;
-  }
 
 :javascript
   var $rent_period_data_area    = $('.rent-period-data-area');
   var $rent_period_type_select  = $('#item_rent_period_type');
   var $rent_period_number       = $('#item_rent_period_number');
   var $rent_period_unit         = $('#item_rent_period_unit');
-  var $allowMovedDateInput      = $('#item_allow_moved_date');
+
   var togglePeriodData          = function() {
     var periodTypeValue = $rent_period_type_select.find('option:selected').val();
 
@@ -47,10 +36,3 @@
   $rent_period_type_select.change(function() {
     togglePeriodData();
   });
-  
-  $allowMovedDateInput.datepicker({
-    dateFormat: "yy-mm-dd"
-  });
-  $allowMovedDateInput.datepicker($.datepicker.regional[ "zh-TW" ]);
-  
-}

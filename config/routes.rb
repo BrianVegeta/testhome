@@ -97,7 +97,10 @@ Rails.application.routes.draw do
       get ':organization_id/organsubs/search/:query', to:'organsubs#search', as: :organsubs_search
       resources :organsubs, path: ':organization_id/organsubs'
       resources :members, path: ':organization_id/members'
+
       resources :items, path: ':organization_id/items'
+      post ':organization_id/items/photo_upload', to: 'items#photo_upload', as: :photo_upload
+        
 
       resources :organization_post_lists, path: ':organization_id/post_list' do
         resources :organization_posts, path: 'post'

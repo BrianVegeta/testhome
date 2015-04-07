@@ -1,0 +1,170 @@
+.form-group.photo-area
+  %label.col-sm-2.control-label 
+    照片上傳
+  .col-sm-7
+    .row
+      .col-sm-12
+        .row
+          .col-sm-3
+            %span.btn.btn-success.fileinput-button
+              %i.glyphicon.glyphicon-plus
+              %span 多張上傳
+              %input#site_admin_item_photo_upload{data:{url: "/sites/admin/#{@organization.id}/items/photo_upload.json"}, type: 'file', name: 'photo[file]', multiple: '', accept: 'image/*'}
+          .col-sm-9
+            .progress.photo-progress{style: 'display: none;'}
+              .progress-bar
+      .col-sm-12
+        %hr          
+      .col-sm-12.img-list
+        .img-placeholer{style: "#{(@sites_admin_item.photo_ids.size > 0) ? 'display: none;': ''}"}
+          .img-frame
+            %img{src: "http://images.591.com.tw/index/build/no_logo.gif"}
+        .img-content-template.temp{style: 'display: none;'}
+          %span.delete
+            %span.glyphicon.glyphicon-remove
+          .img-frame
+            %span.uploading 上傳中...
+            %img{src: "http://images.591.com.tw/index/build/no_logo.gif"}
+        - @sites_admin_item.photo_ids.each do |id|
+          - photo = UploadAndFolder.find(id)
+          .img-content-template.active{data: {id: "#{id}"}}
+            %span.delete
+              %span.glyphicon.glyphicon-remove
+            .img-frame
+              %img{src: "#{photo.file.url(:cover)}"}
+      .col-sm-12
+        %hr
+  - @sites_admin_item.photo_ids.each do |id|
+    %input{id: "item_photo_id_#{id}", type: 'hidden', multiple: 'multiple', name: 'item[photo_ids][]'}
+        
+:javascript
+  var $photoArea        = $('.photo-area');
+  var $photoUpload      = $('#site_admin_item_photo_upload');
+  var $photoProgress    = $photoArea.find('.photo-progress');
+  var $photoList        = $photoArea.find('.img-list');
+  var $photoTemplate    = $photoArea.find('.img-content-template.temp');
+  var inputTemplate     = '<input id="item_photo_id_:id" multiple="multiple" name="item[photo_ids][]" type="hidden">';
+  var setPhotoProgress  = function(rate) {
+    $photoProgress.find('.progress-bar').css('width', rate + '%');
+  };
+  var setPhotoIds       = function(id) {
+    var $photoInput = $(inputTemplate.replace(':id', id));
+    $photoInput.val(id);
+    $photoArea.append($photoInput);
+    handlePlaceholder();
+  };
+  var deletePhoto       = function(id) {
+    var $photoInput = $('#item_photo_id_' + id);
+    $photoInput.remove();
+    handlePlaceholder();
+  };
+  var handlePlaceholder = function(cmd) {
+    var $placeholder = $photoArea.find('.img-list .img-placeholer');
+    if (cmd == 'hide') {
+      $placeholder.hide();
+      return false;
+    }
+    var activedPhoto = $('input[name="item[photo_ids][]"]');
+    
+    if (activedPhoto.length == 0) {
+      $placeholder.show();
+    } else {
+      $placeholder.hide();
+    }
+  };
+
+  $photoList.on('click', '.delete', function(e) {
+    var $imgContentTemplate = $(this).parents('.img-content-template.active').first();
+    deletePhoto($imgContentTemplate.data('id'));
+    $imgContentTemplate.remove();
+
+  });
+
+
+  $photoUpload.fileupload({
+    add: function(e, data) {
+      setPhotoProgress(1);
+      $photoProgress.show();
+      handlePlaceholder('hide');
+
+      $.each(data.files, function (index, file) {
+        var template = $photoTemplate.clone();
+        template.addClass('img-temp-' + file.lastModified);
+        $photoArea.find('.img-list').append(template);
+        template.show();
+      });
+
+      data.submit();
+    },
+    progressall: function(e, data) {
+      var progress = parseInt(data.loaded / data.total * 100, 10);
+      setPhotoProgress(progress);
+    },
+    done: function(e, data) {
+
+      if (data.result.status) {
+        $photoProgress.hide();
+        
+        var imgTemp = $photoArea.find('.img-temp-' + data.files[0].lastModified);
+        imgTemp.addClass('active');
+        imgTemp.find('img').attr('src', data.result.cover);
+        imgTemp.find('.uploading').hide();
+        imgTemp.data('id', data.result.id);
+        setPhotoIds(data.result.id);
+        
+      }
+    }
+  });
+  $photoUpload.bind('fileuploadsubmit', function(e, data) {
+    data.formData = {};
+  })
+
+:css
+  .img-content-template {
+    display: inline-block;
+    width: 140px;
+    height: 150px;
+    padding: 20px 10px 10px 10px;
+    position: relative;
+  }
+  .img-content-template .img-frame {
+    border: 1px solid #25649F;
+    width: 120px;
+    height: 120px;
+    position: relative;
+  }
+  .img-content-template img {
+    width: 100%;
+    height: 100%;
+  }
+  .img-content-template.active:hover {
+    background-color: #25649F;
+  }
+  .img-content-template .uploading {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+  .img-content-template .delete {
+    color: white;
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    cursor: pointer;
+  }
+
+
+  .img-list .img-placeholer {
+    width: 140px;
+    height: 140px;
+    padding: 20px 10px 10px 0px; 
+    display: inline-block;
+  }
+  .img-list .img-placeholer .img-frame {
+    width: 120px;
+    height: 120px;
+  }
+  .img-list .img-placeholer .img-frame img {
+    width: 100%;
+    height: 100%; 
+  }

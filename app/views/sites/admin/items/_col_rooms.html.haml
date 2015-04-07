@@ -1,0 +1,85 @@
+.form-group.addition-rooms-area
+  .col-sm-10.col-sm-offset-1.alert.alert-info
+    %p
+      如您此地址下有多間套雅房需要出租，請點擊
+      %input.btn.btn-primary.new-room-btn{type: :button, value: '新增房間'}
+      （可額外新增10間）  （樓層說明：0為整棟，-1為地下樓，+1為頂樓加蓋）
+  - types = Item::RentStudio::ADDITION_ROOM_USAGES.map {|k, v| [v, k] }
+  .col-sm-10.col-sm-offset-1
+    - (1..10).each do |n|
+      - item = @sites_admin_item
+      - disabled = false
+      - disabled = true if item.addition_rooms.nil? || item.addition_rooms[n].nil?
+      - usage_col_name  = "addition_room_#{n}_usage".to_sym
+      - amount_col_name = "addition_room_#{n}_inner_amount".to_sym
+      - floor_col_name  = "addition_room_#{n}_current_floor".to_sym
+      - price_col_name  = "addition_room_#{n}_total_price".to_sym
+      .addition-row{class: "#{(n.odd?)? 'odd' : 'even'} #{disabled ? 'hide': ''}"}
+        .row
+          %label.col-sm-1.control-label 
+            = "房間#{n}"
+          .col-sm-2{class: "#{f.error_class usage_col_name}"}
+            - message = f.error_message usage_col_name
+            = f.select usage_col_name, types, {}, {class: 'form-control error-tooltip', disabled: disabled, data: {errormessage: message}}
+          .col-sm-2
+            .input-group{class: "#{f.error_class amount_col_name}"}
+              - message = f.error_message amount_col_name
+              = f.text_field amount_col_name, class: 'form-control error-tooltip', disabled: disabled, data: {errormessage: message}
+              %span.input-group-addon 坪
+          .col-sm-3
+            .input-group{class: "#{f.error_class floor_col_name}"}
+              %span.input-group-addon 第
+              - message = f.error_message floor_col_name
+              = f.text_field floor_col_name, class: 'form-control error-tooltip', disabled: disabled, data: {errormessage: message}
+              %span.input-group-addon 樓層
+          .col-sm-3
+            .input-group{class: "#{f.error_class price_col_name}"}
+              %span.input-group-addon 租金
+              - message = f.error_message price_col_name
+              = f.text_field price_col_name, class: 'form-control price_input error-tooltip', disabled: disabled, data: {errormessage: message}
+              %span.input-group-addon 元/月
+          .col-sm-1
+            %span.glyphicon.glyphicon-remove-circle.remove-btn
+:javascript
+  var $additionRoomsArea = $('.addition-rooms-area');
+  var $newRoomBtn = $additionRoomsArea.find('.new-room-btn');
+  var $additionRows = $additionRoomsArea.find('.addition-row');
+  var $deleteBtn = $additionRoomsArea.find('.remove-btn');
+  var createRoom = function() {
+    var $firstHideRow = $additionRows.filter('.hide').first();
+    $firstHideRow.removeClass('hide');
+    $firstHideRow.find('[name^="item[addition_room_"]').prop('disabled', false);
+    
+  };
+  var deleteRoom = function($trigger) {
+    var $target = $trigger.parents('.addition-row').first();
+    $target.addClass('hide');
+    $target.find('[name^="item[addition_room_"]').prop('disabled', true);
+  };
+  $newRoomBtn.click(function() {
+    createRoom();
+  });
+  $deleteBtn.click(function() {
+    deleteRoom($(this));
+  });
+:css
+  .addition-rooms-area .addition-row {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  .addition-rooms-area .addition-row.even {
+    background-color: #f7f7f9;
+  }
+  .addition-rooms-area .addition-row.odd {
+    background-color: #fff;
+  }
+
+  .addition-rooms-area .remove-btn {
+    cursor: pointer;
+    font-size: 24px;
+    
+    color: #E4A5A0;
+  }
+  .addition-rooms-area .remove-btn:hover {
+    color: #D3483C;
+  }

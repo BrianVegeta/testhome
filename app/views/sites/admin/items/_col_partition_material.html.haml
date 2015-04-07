@@ -1,0 +1,33 @@
+.form-group.col-partition-material
+  %label.col-sm-2.control-label 
+    隔間材料
+  .col-sm-2
+    - materials = Item::RentStudio::MATERIALS.map { |t| t }
+    = f.select :partition_material_types, materials, {}, {class: 'form-control'}
+  .col-sm-2{class: "#{f.error_class :partition_material}"}
+    = f.text_field :partition_material, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :partition_material}"}
+
+:javascript
+  var $colPartitionMaterial = $('.col-partition-material');
+  var $materialTypesSelect = $('#item_partition_material_types');
+  var $materialInput = $('#item_partition_material');
+  var handlePatitionMaterialInput = function(init) {
+    var selectedValue = $materialTypesSelect.find('option:selected').val();
+    
+    if (selectedValue == 'other') {
+      if (!init) {
+        $materialInput.val('');
+      }
+
+      $materialInput.show();
+      return;
+    }
+    $materialInput.val(selectedValue);
+    $materialInput.hide();
+  };
+
+  handlePatitionMaterialInput(true);
+
+  $materialTypesSelect.change(function() {
+    handlePatitionMaterialInput();    
+  });

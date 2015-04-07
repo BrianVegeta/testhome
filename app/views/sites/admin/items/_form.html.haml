@@ -4,8 +4,7 @@
   - formUrl = sites_admin_item_path(@organization.id, @sites_admin_item.id)
 
 
-= @sites_admin_item.nearby_station.inspect
-
+= render "form_title"
 = form_for(@sites_admin_item, url: formUrl, :html => { class: 'form-horizontal', :role => "form", autocomplete: 'off' }) do |f|
   - if @sites_admin_item.errors.any?
     #error_explanation
@@ -15,11 +14,14 @@
       %ul
         - @sites_admin_item.errors.full_messages.each do |message|
           %li= message
-  = render "#{@post_type}", {f: f}
+  = f.hidden_field :post_type
+  = render "form_#{Item::TYPE_TO_MATCH[@sites_admin_item.post_type.to_sym][:form].to_s}", {f: f}
   .form-group
     %label.col-sm-2.control-label
     .col-sm-2
       = f.submit '送出', class: 'form-control btn-primary'
+
+
 
 :css
   .tooltip.tooltip-red .tooltip-inner {

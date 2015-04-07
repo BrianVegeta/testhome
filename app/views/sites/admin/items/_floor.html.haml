@@ -3,16 +3,16 @@
     %span{style: 'color: red;'} *
     總樓層
   .col-sm-2
-    .input-group{class: "#{f.error_class :inner_amount}"}
+    .input-group{class: "#{f.error_class :total_floor}"}
       = f.text_field :total_floor, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :total_floor}"}
       %span.input-group-addon 樓
-  %label.col-sm-2.control-label 
+  %label.col-sm-1.control-label 
     %span{style: 'color: red;'} *
     出租樓層
-  .col-sm-6
+  .col-sm-7
     .row
       .col-sm-3
-        .input-group{class: "#{f.error_class :inner_amount}"}
+        .input-group{class: "#{f.error_class :current_floor}"}
           = f.text_field :current_floor, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :current_floor}"}
           %span.input-group-addon 樓
       .text-muted.col-sm-8

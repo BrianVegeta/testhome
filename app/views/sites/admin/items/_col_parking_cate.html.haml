@@ -1,0 +1,8 @@
+.form-group
+  %label.col-sm-2.control-label
+    %span{style: 'color: red;'} *
+    車位種類
+  .col-sm-2
+    - cates = Item::RentParking::CATES.map {|k, v| [v, k] }
+    = f.select :parking_cate, cates, {}, {class: 'form-control'}
+    

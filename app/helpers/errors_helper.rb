@@ -5,6 +5,7 @@ module ErrorsHelper
     include ActionView::Helpers::FormOptionsHelper
 
     def error_class column
+      column = column.to_sym
       return '' if @object.errors.messages[column].nil?
       if @object.errors.messages[column].length > 0
         return 'has-error'
@@ -12,6 +13,7 @@ module ErrorsHelper
     end
 
     def error_message column
+      column = column.to_sym
       return '' if @object.errors.messages[column].nil?
       return @object.errors.messages[column].first
     end

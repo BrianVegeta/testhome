@@ -1,0 +1,21 @@
+.form-group
+  %label.col-sm-2.control-label 可遷入日
+  .col-sm-2
+    .input-group
+      = f.text_field :allow_moved_date, class: 'form-control datepicker readony', readonly: true
+      %span.input-group-addon
+        %span.glyphicon.glyphicon-calendar{'aria-hidden' => "true"}
+:css
+  input.datepicker.readony {
+    background-color: white;
+    cursor: text;
+  }
+
+:javascript
+  var $allowMovedDateInput = $('#item_allow_moved_date');
+
+  $allowMovedDateInput.datepicker({
+    dateFormat: "yy-mm-dd"
+  });
+  $allowMovedDateInput.datepicker($.datepicker.regional[ "zh-TW" ]);
+  
