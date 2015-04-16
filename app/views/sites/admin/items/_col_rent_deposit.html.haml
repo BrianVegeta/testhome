@@ -1,19 +1,20 @@
 .form-group
-  %label.col-sm-2.control-label 
+  %label.control-label 
     %span{style: 'color: red;'} *
     租金
-  .col-sm-2
+  .col.rent-price
     .input-group{class: "#{f.error_class :total_price}"}
       = f.text_field :total_price, class: 'form-control price_input error-tooltip', data: {errormessage: "#{f.error_message :total_price}"}
       %span.input-group-addon 元/月
-  %label.col-sm-1.control-label 押金
-  .col-sm-2
+  %label.control-label 押金
+  .col.deposit
     - deposit_types = Item::RentHome::DEPOSIT_TYPES.map { |t| t }
     = f.select :deposit_type, deposit_types, {}, {class: 'form-control'}
-  .col-sm-2.deposit-amount-area{style: "display: none;"}
+  .col.deposit-amount.deposit-amount-area{style: "display: none;"}
     .input-group{class: "#{f.error_class :deposit}"}
       = f.text_field :deposit, class: 'form-control price_input error-tooltip', data: {errormessage: "#{f.error_message :deposit}"}
       %span.input-group-addon 元
+.form-group.group-lg-hr
 
 :javascript
   var $deposit_amount_area  = $('.deposit-amount-area');

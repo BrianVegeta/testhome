@@ -1,0 +1,34 @@
+.form-group
+  .col.full
+    %h4.over-write 聯絡資訊
+    %hr
+.form-group
+  %label.control-label
+    聯絡人
+  .col{class: "#{f.error_class :contact_name}"}
+    = f.text_field :contact_name, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :contact_name}"}
+  .col
+    %label.checkbox-inline
+      = f.check_box :contact_declaration_disturb
+      屋主聲明，請仲介勿擾！
+.form-group.group-lg-hr
+.form-group
+  %label.control-label
+    行動電話
+  .col{class: "#{f.error_class :contact_mobile}"}
+    = f.text_field :contact_mobile, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :contact_mobile}"}
+.form-group.group-lg-hr
+.form-group
+  %label.control-label
+    固定電話
+  .col{class: "#{f.error_class :contact_phone}"}
+    = f.text_field :contact_phone, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :contact_phone}"}
+.form-group.group-lg-hr
+.form-group
+  %label.control-label
+    Email
+  .col.email{class: "#{f.error_class :contact_email}"}
+    = f.text_field :contact_email, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :contact_email}"}
+.form-group.group-lg-hr
+    
+    

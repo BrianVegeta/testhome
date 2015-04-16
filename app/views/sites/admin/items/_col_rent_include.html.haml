@@ -1,6 +1,6 @@
 .form-group.include-area
-  %label.col-sm-2.control-label 租金包含
-  .col-sm-8
+  %label.control-label 租金包含
+  .col
     %label.checkbox-inline
       = f.check_box :rent_include_management
       管理費
@@ -25,6 +25,7 @@
     %label.checkbox-inline
       %input{type: :checkbox, id: :include_check_all}  
       全選
+.form-group.group-lg-hr
 
 :javascript
   var $include_area       = $('.include-area');

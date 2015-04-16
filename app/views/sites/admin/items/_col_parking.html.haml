@@ -1,9 +1,10 @@
 .form-group
-  %label.col-sm-2.control-label 車位
-  .col-sm-8
+  %label.control-label 車位
+  .col
     %label.radio-inline
       = f.radio_button :has_parking, true
       有
     %label.radio-inline
       = f.radio_button :has_parking, false
       無
+.form-group.group-lg-hr

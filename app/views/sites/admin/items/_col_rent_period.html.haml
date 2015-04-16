@@ -1,19 +1,17 @@
 .form-group
-  %label.col-sm-2.control-label 
+  %label.control-label 
     %span{style: 'color: red;'} *
     最短租期
-  .col-sm-4
-    .row
-      .col-sm-4
-        - types = Item::RentHome::RENT_PERIOD_TYPES
-        = f.select :rent_period_type, types, {}, {class: 'form-control'}
-      .col-sm-6.rent-period-data-area{style: 'display: none;'}
-        .row
-          .col-sm-6{class: "#{f.error_class :rent_period_number}"}
-            = f.text_field :rent_period_number, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :rent_period_number}"}
-          .col-sm-6
-            - units = Item::RentHome::RENT_PERIOD_UNITS
-            = f.select :rent_period_unit, units, {}, {class: 'form-control'}
+  .col.period-type
+    - types = Item::RentHome::RENT_PERIOD_TYPES
+    = f.select :rent_period_type, types, {}, {class: 'form-control'}
+  .col.period-amount.rent-period-data-area{class: "#{f.error_class :rent_period_number}"}
+    = f.text_field :rent_period_number, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :rent_period_number}"}
+  .col.period-unit.rent-period-data-area
+    - units = Item::RentHome::RENT_PERIOD_UNITS
+    = f.select :rent_period_unit, units, {}, {class: 'form-control'}
+.form-group.group-lg-hr
+  
 
 :javascript
   var $rent_period_data_area    = $('.rent-period-data-area');

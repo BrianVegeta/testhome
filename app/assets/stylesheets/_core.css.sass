@@ -1,0 +1,97 @@
+body
+  background-image: url(image-path('testwallpaper.jpg'))
+  height: 100%
+  font-family: hiragino sans gb,microsoft yahei, sans-serif
+
+#page-outer
+  height: 100%
+
+.app-container
+  margin: 0 auto
+  width: 1190px
+.app-content
+  padding: 56px 14px 15px
+  position: relative
+
+.wrapper
+  margin: 0 auto
+
+  &.wrapper-lg
+    width: 1190px
+    
+  &.wrapper-sm
+    width: 890px
+    @media (min-width: 1236px)
+      width: 1190px
+
+  &:after
+    content: " "
+    display: table
+    clear: both
+
+.profile-canopy
+  height: 200px
+  padding-bottom: 60px
+.profile-canopy-inner
+  position: relative
+  width: 100%
+  z-index: 4
+.profile-canopy-header
+  background-color: #89C9FA !important
+  max-width: 2560px
+  position: relative
+  z-index: 3
+  height: 140px
+.profile-canopy-headerBg  
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  overflow: hidden
+.profile-canopy-navbar
+  background-color: #fff
+  border-bottom: 1px solid #e1e8ed
+  box-sizing: border-box
+  height: 60px
+
+.dashboard
+  width: 290px
+  float: left
+.module
+  border-radius: 6px
+  line-height: 16px
+  margin-bottom: 10px
+  .list-link
+    display: block
+    padding: 8px 12px
+    background-color: #fff
+    border: 1px solid #e1e8ed
+    border-top: 0
+  &:after
+    content: " "
+    display: table
+    clear: both
+  ul
+    padding: 0
+    list-style: none
+    margin: 0
+    &:first-child
+      li
+        &:first-child 
+          .list-link
+            border-top-left-radius: 5px
+            border-top-right-radius: 5px
+            border-top: 1px solid #e1e8ed
+    &:last-child
+      li
+        &:last-child 
+          .list-link
+            border-bottom-right-radius: 5px
+            border-bottom-left-radius: 5px
+
+.content-main-lg
+  float: left
+  margin: 0 10px
+  width: 767px
+

@@ -1,38 +1,38 @@
 .form-group.address-area
-  %label.col-sm-2.control-label 
+  %label.control-label 
     %span{style: 'color: red;'} *
     地址
-  .col-sm-3
-    .row
-      .col-sm-6{class: "#{f.error_class :main_area}"}
-        = f.hidden_field :main_area, class: 'form-control'
-        %input#item_main_area_input.address-select.form-control{data: {errormessage: "#{f.error_message :main_area}"}}
-      .col-sm-6{class: "#{f.error_class :sub_area}"}
-        = f.hidden_field :sub_area, class: 'form-control'
-        %input#item_sub_area_input.address-select.form-control{data: {errormessage: "#{f.error_message :sub_area}"}}
-  .col-sm-2{class: "#{f.error_class :addr_street}"}
+  .col.address-city{class: "#{f.error_class :main_area}"}
+    = f.hidden_field :main_area, class: 'form-control'
+    %input#item_main_area_input.address-select.form-control{data: {errormessage: "#{f.error_message :main_area}"}}
+  .col.address-zone{class: "#{f.error_class :sub_area}"}
+    = f.hidden_field :sub_area, class: 'form-control'
+    %input#item_sub_area_input.address-select.form-control{data: {errormessage: "#{f.error_message :sub_area}"}}
+  .col.address-street{class: "#{f.error_class :addr_street}"}
     = f.text_field :addr_street, class: 'form-control address-select', data: {errormessage: "#{f.error_message :addr_street}"}
-  .col-sm-5
-    .row
-      .col-sm-5
-        .input-group
-          = f.text_field :addr_alley, class: 'form-control'
-          %span.input-group-addon 巷
-          = f.text_field :addr_lane, class: 'form-control'
-          %span.input-group-addon 弄  
-      .col-sm-4{class: "#{f.error_class :addr_no}"}
-        .input-group
-          = f.text_field :addr_no, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :addr_no}"}
-          %span.input-group-addon 號
-      .col-sm-3
-        %label.checkbox-inline
-          = f.check_box :addr_no_is_hidden
-          隱藏門號
+.form-group.group-sm-hr
+.form-group.address-area
+  %label.control-label
+  .col.address-alley
+    .input-group
+      = f.text_field :addr_alley, class: 'form-control'
+      %span.input-group-addon 巷
+      = f.text_field :addr_lane, class: 'form-control'
+      %span.input-group-addon 弄
+  .col.address-no{class: "#{f.error_class :addr_no}"}
+    .input-group
+      = f.text_field :addr_no, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :addr_no}"}
+      %span.input-group-addon 號
+  .col.address-no-hidden
+    %label.checkbox-inline
+      = f.check_box :addr_no_is_hidden
+      隱藏門號
 
-- Area::MAIN_AREA.each_with_index do |main_area, index|
-  .main-area-data{data: {id: "#{index}", value: "#{main_area}"}}
-    - Area::SUB_AREA[index].each_with_index do |sub_area, index|
-      %div{data: {id: "#{index}", value: "#{sub_area}"}}
+  - Area::MAIN_AREA.each_with_index do |main_area, index|
+    .main-area-data{data: {id: "#{index}", value: "#{main_area}"}}
+      - Area::SUB_AREA[index].each_with_index do |sub_area, index|
+        %div{data: {id: "#{index}", value: "#{sub_area}"}}
+.group-lg-hr
 
 :javascript
   
@@ -71,9 +71,11 @@
 
   var getSubArea = function(mainAreaId) {
     var sub_area_data = [];
-    if (mainAreaId == '') {
+    
+    if (mainAreaId === '') {
       return sub_area_data;
     }
+    
     $('.main-area-data[data-id="' + mainAreaId + '"]').children().each(function() {
       var data = {
         id: $(this).data('id'), 
@@ -133,7 +135,7 @@
 
   $main_area_input.on('select2-selecting', function(e) {
     $main_area.val(e.object.id);
-
+    
     $sub_area_input.select2('enable', true);  
     $sub_area_input.select2({
       data:             getSubArea(e.object.id),

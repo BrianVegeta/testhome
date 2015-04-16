@@ -1,0 +1,5 @@
+.form-group
+  %label.control-label 朝向
+  .col.direction
+    = f.select(:direction, Item::DIRECTION.invert, {}, {class: 'form-control'})
+.form-group.group-lg-hr

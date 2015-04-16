@@ -1,0 +1,20 @@
+%h3.over-write
+  圖片
+.item-container
+  .item-gallary
+    - photos.each do |p|
+      .item-photo
+        %img{src: "#{p.file.url(:public)}"}
+
+:css
+  .item-gallary {
+    text-align: center;
+  }
+  .item-gallary img {
+    max-width: 100%;
+    padding: 5px;
+    border: 1px solid #e1e8ed;
+  }
+  .item-gallary .item-photo {
+    margin-top: 10px;
+  }

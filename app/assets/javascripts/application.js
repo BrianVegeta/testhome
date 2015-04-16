@@ -28,6 +28,7 @@
 
 //= require ckeditor-jquery
 //= require jquery.formatCurrency-1.4.0
+//= require fotorama
 
 //= require bootstrap-sprockets
 //= require turbolinks

@@ -23,14 +23,20 @@ class Item < ActiveRecord::Base
 	serialize :place_usage
 
 	#Validates
-	validates :main_area,    	presence: true
-  validates :sub_area,     	presence: true
-  validates :addr_street,  	presence: true
-  validates :addr_alley, 		numericality: { only_integer: true }, unless: 'addr_alley.nil?'
-  validates :addr_lane, 		numericality: { only_integer: true }, unless: 'addr_lane.nil?'
-  validates :addr_no,      	presence: true, numericality: { only_integer: true }
-
-  validates :name, presence: true, length: { in: 6..20 }
+	validates :main_area,    		presence: true
+  validates :sub_area,     		presence: true
+  validates :addr_street,  		presence: true
+  validates :addr_alley, 			numericality: { only_integer: true }, unless: 'addr_alley.nil?'
+  validates :addr_lane, 			numericality: { only_integer: true }, unless: 'addr_lane.nil?'
+  validates :addr_no,      		presence: true, numericality: { only_integer: true }
+	validates :name, 						presence: true, length: { in: 6..20 }
+	validates :contact_name, 		presence: true, length: { in: 2..4 }
+	validates :contact_email, 	format: { with: Devise.email_regexp }, 
+															if: 'contact_email.present?'
+	validates :contact_mobile, 	format: { with: /\+?\(?[0-9]{2,3}\)?-?[0-9]{6,12}/ }, 
+															if: 'contact_mobile.present?'
+	validates :contact_phone, 	format: { with: /\+?\(?[0-9]{2,3}\)?-?[0-9]{6,12}/ },
+															if: 'contact_phone.present?'
 
 
 

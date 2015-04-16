@@ -21,15 +21,6 @@
 		    </div>
 		    <div id="navbar" class="navbar-collapse collapse">
 		      <ul class="nav navbar-nav">
-		        <li>
-		        	<a href="<%= sites_admin_members_path(organization_id: @organization.id) %>">會員管理</a>
-		        </li>
-	        	<li>
-		        	<a href="<%= sites_admin_organsubs_path(organization_id: @organization.id) %>">組織管理</a>
-		        </li>
-		        <li>
-		        	<a href="<%= sites_admin_items_path(organization_id: @organization.id) %>">物件管理</a>
-		        </li>
 		        <li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
 		          <ul class="dropdown-menu" role="menu">
@@ -65,16 +56,57 @@
 		    </div><!--/.nav-collapse -->
 		  </div>
 		</nav>
-		<div style="padding-top: 50px;"></div>
 
-		<div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-        	<input id="this_site_id" type="hidden" value="<%= @organization.id %>">
-          <%= yield %>
-        </div>     
-      </div>  
-    </div>
+		<div id="page-outer">
+	    <div id="page-container">
+	    	<input id="this_site_id" type="hidden" value="<%= @organization.id %>">
+	    	<div class="profile-canopy">
+	    		<div class="profile-canopy-inner">
+	    			<div class="profile-canopy-header">
+	    				<div class="profile-canopy-headerBg">
+					      <img alt="" class="u-hidden" style="transform: none;">
+					    </div>
+	    			</div>
+	    			<div class="profile-canopy-navbar">
+	    				<div class="app-container"></div>
+	    			</div>
+    			</div>
+	    	</div>
+	    	
+	    	<div class="app-content wrapper wrapper-lg">
+	    		<div class="dashboard">
+	    			<div class="dashboard-nav module">
+	    				<ul>
+	    					<li>
+				        	<a class="list-link" href="<%= sites_admin_members_path(organization_id: @organization.id) %>">會員管理</a>
+				        </li>
+			        	<li>
+				        	<a class="list-link" href="<%= sites_admin_organsubs_path(organization_id: @organization.id) %>">組織管理</a>
+				        </li>
+				        <li>
+				        	<a class="list-link" href="<%= sites_admin_items_path(organization_id: @organization.id) %>">物件管理</a>
+				        </li>
+	    					<li>
+	    						<a class="list-link" href="">test</a>
+	    					</li>
+	    					<li>
+	    						<a class="list-link" href="">test</a>
+	    					</li>
+	    					<li>
+	    						<a class="list-link" href="">test</a>
+	    					</li>
+	    				</ul>
+	    			</div>
+		    	</div>
+		    	<div class="content-main-lg">
+	    			<%= yield %>
+		    	</div>
+	    	</div>
+	    	
+
+	    </div>    
+	  </div>
+
 
 	</body>
 </html>

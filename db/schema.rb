@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150407052646) do
+ActiveRecord::Schema.define(version: 20150408151837) do
 
   create_table "adgroups", force: true do |t|
     t.integer  "organization_id"
@@ -645,6 +645,13 @@ ActiveRecord::Schema.define(version: 20150407052646) do
     t.string   "place_capacity"
     t.string   "place_price_type"
     t.string   "manager_type"
+    t.string   "contact_name"
+    t.boolean  "contact_declaration_disturb"
+    t.string   "contact_mobile"
+    t.boolean  "contact_mobile_hidden"
+    t.string   "contact_phone"
+    t.boolean  "contact_phone_hidden"
+    t.string   "contact_email"
   end
 
   add_index "items", ["accessories"], name: "accessories", using: :btree

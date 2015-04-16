@@ -1,0 +1,18 @@
+.form-group
+  %label.control-label 
+    %span{style: 'color: red;'} *
+    總樓層
+  .col.floor
+    .input-group{class: "#{f.error_class :total_floor}"}
+      = f.text_field :total_floor, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :total_floor}"}
+      %span.input-group-addon 樓
+  %label.control-label 
+    %span{style: 'color: red;'} *
+    出租樓層
+  .col.floor
+    .input-group{class: "#{f.error_class :current_floor}"}
+      = f.text_field :current_floor, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :current_floor}"}
+      %span.input-group-addon 樓
+  .col.floor-tip.text-muted
+    %p （0為整棟，-1為地下樓，+1為頂樓加蓋）
+.form-group.group-lg-hr

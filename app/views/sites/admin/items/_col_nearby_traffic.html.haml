@@ -1,24 +1,27 @@
 .form-group
-  %label.col-sm-2.control-label 附近交通
+  %label.control-label 附近交通
   - (1..3).each do |number|
-    .col-sm-3
+    .col.nearby-traffic
       .input-group
         %span.input-group-addon 近
         = f.text_field "nearby_bus_#{number}", class: 'form-control'
         %span.input-group-addon 公車站
+.form-group.group-sm-hr
 .form-group
-  %label.col-sm-2.control-label
+  %label.control-label
   - (1..3).each do |number|
-    .col-sm-3
+    .col.nearby-traffic
       .input-group
         %span.input-group-addon 近
         = f.text_field "nearby_mrt_#{number}", class: 'form-control'
         %span.input-group-addon 捷運站
+.form-group.group-sm-hr
 .form-group
-  %label.col-sm-2.control-label
+  %label.control-label
   - (1..3).each do |number|
-    .col-sm-3
+    .col.nearby-traffic
       .input-group
         %span.input-group-addon 近
         = f.text_field "nearby_station_#{number}", class: 'form-control'
         %span.input-group-addon 火車站
+.form-group.group-lg-hr

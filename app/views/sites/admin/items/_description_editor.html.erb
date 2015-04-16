@@ -1,9 +1,12 @@
 <div class="form-group">
-  <label class="col-sm-2 control-label">廣告標題</label>
-  <div class="col-sm-7">
+  <label class="control-label">廣告標題</label>
+  <div class="col descript">
     <%= f.text_area :descript, id: 'descript_editor' %>
   </div>
 </div>
+<div class="form-group group-lg-hr">
+</div>
+
 
 <script type="text/javascript">
   $('#descript_editor').ckeditor({

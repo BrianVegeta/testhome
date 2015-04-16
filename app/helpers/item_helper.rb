@@ -14,4 +14,33 @@ module ItemHelper
     return string
   end
 
+  def get_address(resource)
+    address = ''
+    address << Area::MAIN_AREA[resource.main_area]
+    address << Area::SUB_AREA[resource.main_area][resource.sub_area]
+    address << "#{resource.addr_street}"
+    address << "#{resource.addr_alley}巷" if resource.addr_alley.present?
+    address << "#{resource.addr_lane}弄" if resource.addr_lane.present?
+    address << "#{resource.addr_no}號"
+
+    return address
+  end
+
+  def get_floor(resource)
+    floor = ''
+
+    if resource.current_floor == '+1'
+      floor << "頂樓加蓋"      
+    elsif resource.current_floor.include? '-'
+      floor << "#{resource.current_floor.gsub('-', 'B')}"  
+    else
+      floor << "#{resource.current_floor}F"  
+    end
+
+    floor << " / #{resource.total_floor}F" if resource.total_floor.present?
+
+    return floor
+      
+  end
+
 end

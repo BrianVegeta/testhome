@@ -1,0 +1,7 @@
+.form-group.address-area
+  %label.col-sm-2.control-label 
+    %span{style: 'color: red;'} *
+    場地租金
+  .col-sm-2
+    - types = Item::RentPlace::PRICE_TYPES.map {|k, v| [v, k] }
+    = f.select :place_price_type, types, {}, {class: 'form-control'}

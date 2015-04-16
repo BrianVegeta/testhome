@@ -1,8 +1,9 @@
 .form-group
-  %label.col-sm-2.control-label 
+  %label.control-label 
     %span{style: 'color: red;'} *
     房屋坪數
-  .col-sm-2
+  .col.plain
     .input-group{class: "#{f.error_class :inner_amount}"}
       = f.text_field :inner_amount, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :inner_amount}"}
       %span.input-group-addon 坪
+.form-group.group-lg-hr

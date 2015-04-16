@@ -1,0 +1,63 @@
+%form.form-horizontal
+  .form-group.info-row
+    .control-label.info-label 租金:
+    .info-content
+      %p.form-control-static
+        = Item::RentPlace::PRICE_TYPES[item.place_price_type.to_sym]
+  .form-group.info-row
+    .control-label.info-label 坪數:
+    .info-content
+      %p.form-control-static
+        = item.land_area_amount
+        = Item::RentLand::AREA_UNITS[item.land_area_unit.to_sym]
+  .form-group.info-row
+    .control-label.info-label 樓層:
+    .info-content
+      %p.form-control-static
+        = get_floor(item)
+  .form-group.info-row
+    .control-label.info-label 類型:
+    .info-content
+      %p.form-control-static
+        = Item::RentPlace::TYPES[item.place_type.to_sym]
+  .form-group.info-row
+    .control-label.info-label 用途:
+    .info-content
+      %p.form-control-static
+        - item.place_usage.each do |usage|
+          = Item::RentPlace::USAGES[usage.to_sym]
+          = (usage == item.place_usage.last) ? '': '、'
+  .form-group.info-row
+    .control-label.info-label 容納:
+    .info-content
+      %p.form-control-static
+        = item.place_capacity.blank? ? '-' : item.place_capacity
+        人
+  .form-group.info-row
+    .control-label.info-label 地址:
+    .info-content
+      %p.form-control-static
+        = get_address(item)
+  .form-group.info-row
+    = render 'info_contact', {item: item}
+
+:css
+  .item-header-info .info-label {
+    color: #66757f;
+    padding-right: 10px;
+    padding-top: 0;
+    width: 20%;
+    float: left;
+  }
+  .item-header-info .info-content {
+    width: 80%;
+    float: left;
+  }
+  .item-header-info .info-content .form-control-static {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .item-header-info .info-row {
+    margin-bottom: 0;
+  }
+

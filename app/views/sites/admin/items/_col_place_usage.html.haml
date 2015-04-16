@@ -3,6 +3,7 @@
     場地用途
   .col-sm-8
     - Item::RentPlace::USAGES.each do |k, v|
+      - checked = @sites_admin_item.place_usage.include? k.to_s
       %label.checkbox-inline
-        = f.check_box :place_usage, {multiple: true}, k, nil
+        = f.check_box :place_usage, {multiple: true, checked: checked}, k, nil
         = "#{v}"

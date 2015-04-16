@@ -1,6 +1,6 @@
 .form-group
-  %label.col-sm-2.control-label 身份要求
-  .col-sm-8
+  %label.control-label 身份要求
+  .col
     %label.checkbox-inline
       = f.check_box :is_student_allow
       學生
@@ -10,3 +10,4 @@
     %label.checkbox-inline
       = f.check_box :is_family_allow
       家庭
+.form-group.group-lg-hr

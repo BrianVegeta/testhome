@@ -65,7 +65,7 @@
 
   var getSubArea = function(mainAreaId) {
     var sub_area_data = [];
-    if (mainAreaId == '') {
+    if (mainAreaId === '') {
       return sub_area_data;
     }
     $('.main-area-data[data-id="' + mainAreaId + '"]').children().each(function() {
@@ -108,12 +108,12 @@
     data:            getSubArea($main_area.val())
   });
   $sub_area_input.select2('val', $sub_area.val());
-  if ($main_area.val() == '') {
+  if ($main_area.val() === '') {
     $sub_area_input.select2('enable', false);
   }
 
 
-  if ($sub_area.val() == '') {
+  if ($sub_area.val() === '') {
     $street_input.select2({
       data:             [],
       formatNoMatches:  '無結果',

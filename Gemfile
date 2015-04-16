@@ -72,3 +72,4 @@ gem 'ckeditor_rails'
 
 gem 'nokogiri'
 gem 'haml'
+gem 'fotoramajs'

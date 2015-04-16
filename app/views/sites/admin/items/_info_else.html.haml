@@ -1,0 +1,15 @@
+%h3.over-write
+  其他資訊
+.item-container
+  %table
+    %tr
+      %th{style: 'vertical-align: top;'} 附近交通：
+      %td
+        - item.nearby_station.each do |key, station|
+          = "#{station}火車站；"
+        %br
+        - item.nearby_bus.each do |key, bus|
+          = "#{bus}公車站；"
+        %br
+        - item.nearby_mrt.each do |key, mrt|
+          = "#{mrt}捷運站；"

@@ -1,6 +1,6 @@
 .form-group.nearby-area
-  %label.col-sm-2.control-label 生活機能
-  .col-sm-8
+  %label.control-label 生活機能
+  .col
     %label.checkbox-inline
       = f.check_box :is_nearby_store
       近便利商店
@@ -19,12 +19,15 @@
     %label.checkbox-inline
       = f.check_box :is_nearby_hospital
       近醫療機構
+  .col
     %label.checkbox-inline
       = f.check_box :is_nearby_nightmarket
       近夜市
     %label.checkbox-inline
       %input{type: :checkbox, id: :nearby_check_all}  
       全選
+.form-group.group-lg-hr
+
 :javascript
   var $nearby_area       = $('.nearby-area');
   var $nearby_check_all  = $('#nearby_check_all');

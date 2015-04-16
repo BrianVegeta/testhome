@@ -25,17 +25,24 @@ module Item::RentPlace
                                           greater_than_or_equal_to: 1,
                                           less_than_or_equal_to: 9999
                                         }, 
-                                        unless: 'parking_amount.nil?'
+                                        if: 'parking_amount.present?'
       form.validates :manager_type,     presence: true
 
-      form.validate :current_floor_validate
+      form.validate :place_floor_validate
       form.validate :place_usage_validation
 
       def place_usage_validation
         usages = Item::RentPlace::USAGES.map {|k, v| k}
         place_usage.each do |usage|
-          return errors.add(:place_usage, '格式錯誤。') unless usages.include? usage
+          return errors.add(:place_usage, '格式錯誤。') unless usages.include? usage.to_sym
         end
+      end
+
+      def place_floor_validate
+        return if current_floor.blank?
+        return if ['-1', '+1'].include? current_floor
+        return if current_floor.match(/^-?[0-9]+$/)
+        errors.add(:current_floor, '格式錯誤。')
       end
 
     end
@@ -85,6 +92,12 @@ module Item::RentPlace
     proxy: '代理人'
   }
 
+  PRICE_TYPES = {
+    on_hours:   '依時段計價',
+    on_tables:  '依桌數計價',
+    on_users:   '依人頭計價'
+  }
+
   def self.permit_params(required_param)
     params = required_param.permit(
       :post_type,
@@ -98,6 +111,10 @@ module Item::RentPlace
       :place_price_type,
       :parking_amount,
       :manager_type,
+
+      :nearby_station_1, :nearby_station_2, :nearby_station_3, 
+      :nearby_mrt_1, :nearby_mrt_2, :nearby_mrt_3, 
+      :nearby_bus_1, :nearby_bus_2, :nearby_bus_3,
 
       :current_floor,
       :name,

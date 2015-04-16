@@ -191,3 +191,13 @@ en:
               not_a_number: '請填數字。'
               greater_than_or_equal_to: "至少大於%{count}。"
               less_than_or_equal_to: "不能大於%{count}。"
+            contact_name:
+              blank: '請填聯絡人名稱。'
+              too_short: "最短%{count}個字。"
+              too_long: "最長%{count}個字。"
+            contact_email:
+              invalid: '填錯了？'
+            contact_mobile:
+              invalid: '填錯了？'
+            contact_phone:
+              invalid: '填錯了？'

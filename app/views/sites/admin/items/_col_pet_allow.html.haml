@@ -1,9 +1,10 @@
 .form-group
-  %label.col-sm-2.control-label 養寵物
-  .col-sm-8
+  %label.control-label 養寵物
+  .col
     %label.radio-inline
       = f.radio_button :is_pet_allow, true
       可
     %label.radio-inline
       = f.radio_button :is_pet_allow, false
       不可
+.form-group.group-lg-hr

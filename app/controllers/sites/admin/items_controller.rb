@@ -1,5 +1,6 @@
 class Sites::Admin::ItemsController < Sites::Admin::ApplicationController
-  before_action :set_sites_admin_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_sites_admin_item,  only: [:show, :edit, :update, :destroy]
+  before_action :set_item_photos,       only: [:show, :edit, :update]
 
   # GET /sites/admin/items
   # GET /sites/admin/items.json
@@ -10,6 +11,7 @@ class Sites::Admin::ItemsController < Sites::Admin::ApplicationController
   # GET /sites/admin/items/1
   # GET /sites/admin/items/1.json
   def show
+    
   end
 
   # GET /sites/admin/items/new
@@ -29,6 +31,8 @@ class Sites::Admin::ItemsController < Sites::Admin::ApplicationController
 
   # GET /sites/admin/items/1/edit
   def edit
+    
+    render 'new_confirm'  if params[:step] == 'confirm'
   end
 
   # POST /sites/admin/items
@@ -37,17 +41,24 @@ class Sites::Admin::ItemsController < Sites::Admin::ApplicationController
     @sites_admin_item = @organization.items.new(sites_admin_item_params)
 
     # raise @sites_admin_item.inspect
-    @sites_admin_item.valid?
+    # @sites_admin_item.valid?
         
-    render :new_fill_form
-    return
+    # render :new_fill_form
+    # return
 
     respond_to do |format|
       if @sites_admin_item.save
-        format.html { redirect_to @sites_admin_item, notice: 'Item was successfully created.' }
+        format.html { 
+                      redirect_to edit_sites_admin_item_path(
+                                    @organization.id, 
+                                    @sites_admin_item.id, 
+                                    step: :confirm
+                                  ),
+                      notice: 'Item was successfully created.' 
+                    }
         format.json { render :show, status: :created, location: @sites_admin_item }
       else
-        format.html { render :new }
+        format.html { render :new_fill_form }
         format.json { render json: @sites_admin_item.errors, status: :unprocessable_entity }
       end
     end
@@ -58,10 +69,17 @@ class Sites::Admin::ItemsController < Sites::Admin::ApplicationController
   def update
     respond_to do |format|
       if @sites_admin_item.update(sites_admin_item_params)
-        format.html { redirect_to @sites_admin_item, notice: 'Item was successfully updated.' }
+        format.html { 
+                      redirect_to edit_sites_admin_item_path(
+                                    @organization.id, 
+                                    @sites_admin_item.id, 
+                                    step: :confirm
+                                  ),
+                      notice: 'Item was successfully updated.' 
+                    }
         format.json { render :show, status: :ok, location: @sites_admin_item }
       else
-        format.html { render :edit }
+        format.html { render :new_confirm }
         format.json { render json: @sites_admin_item.errors, status: :unprocessable_entity }
       end
     end
@@ -103,10 +121,27 @@ class Sites::Admin::ItemsController < Sites::Admin::ApplicationController
       @sites_admin_item = @organization.items.find(params[:id])
     end
 
+    def set_item_photos
+      @item_photos = UploadAndFolder.where(id: @sites_admin_item.photo_ids);
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def sites_admin_item_params
-      model_name = Item::TYPE_TO_MATCH[params.require(:item).permit(:post_type)[:post_type].to_sym][:model]
-      Object::qualified_const_get(model_name).permit_params(params.require(:item))
+      common_params = params.require(:item).permit(
+                                              :post_type, 
+                                              :contact_name,
+                                              :contact_declaration_disturb,
+                                              :contact_mobile,
+                                              :contact_mobile_hidden,
+                                              :contact_phone,
+                                              :contact_phone_hidden,
+                                              :contact_email
+                                            )
+
+      model_name     = Item::TYPE_TO_MATCH[common_params[:post_type].to_sym][:model]
+      by_type_params = Object::qualified_const_get(model_name).permit_params(params.require(:item))
+
+      return common_params.merge by_type_params
     end
 
     def sites_admin_item_photo_params

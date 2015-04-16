@@ -5,7 +5,7 @@
 
 
 = render "form_title"
-= form_for(@sites_admin_item, url: formUrl, :html => { class: 'form-horizontal', :role => "form", autocomplete: 'off' }) do |f|
+= form_for(@sites_admin_item, url: formUrl, :html => { class: 'form-horizontal item-form', :role => "form", autocomplete: 'off' }) do |f|
   - if @sites_admin_item.errors.any?
     #error_explanation
       %h2 
@@ -16,9 +16,10 @@
           %li= message
   = f.hidden_field :post_type
   = render "form_#{Item::TYPE_TO_MATCH[@sites_admin_item.post_type.to_sym][:form].to_s}", {f: f}
+  = render "form_contact", {f: f}
   .form-group
-    %label.col-sm-2.control-label
-    .col-sm-2
+    %label.control-label
+    .col.submit
       = f.submit '送出', class: 'form-control btn-primary'
 
 

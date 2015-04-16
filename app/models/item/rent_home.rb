@@ -6,11 +6,6 @@ module Item::RentHome
     with_options if: :is_rent_home? do |form|
       form.after_initialize :set_rent_home_default
 
-      form.validates :main_area,    presence: true
-      form.validates :sub_area,     presence: true
-      form.validates :addr_street,  presence: true
-      form.validates :addr_no,      presence: true, numericality: { only_integer: true }
-
       form.validates :pattern_room,     presence: true, 
                                         numericality: { only_integer: true, greater_than_or_equal_to: 1 }
       form.validates :pattern_living,   numericality: { only_integer: true }, unless: 'pattern_living.nil?'
@@ -29,7 +24,6 @@ module Item::RentHome
       form.validates :rent_period_number, presence: true, numericality: { only_integer: true }, if: 'rent_period_type == "other"'
       form.validates :rent_period_unit,   presence: true, if: 'rent_period_type == "other"'
 
-      form.validates :name, presence: true, length: { in: 6..20 }
 
 
       form.validate :current_floor_validate
@@ -47,7 +41,7 @@ module Item::RentHome
 
       def current_floor_validate
         return if ['-1', '+1'].include? current_floor
-        return if current_floor.match(/^[0-9]+$/)
+        return if current_floor.match(/^-?[0-9]+$/)
         errors.add(:current_floor, '格式錯誤。')
       end
     end

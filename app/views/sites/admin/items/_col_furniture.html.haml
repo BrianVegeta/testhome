@@ -1,6 +1,6 @@
 .form-group.furniture-area
-  %label.col-sm-2.control-label 提供家具
-  .col-sm-8
+  %label.control-label 提供家具
+  .col
     %label.checkbox-inline
       = f.check_box :has_furniture_bed
       床
@@ -19,6 +19,8 @@
     %label.checkbox-inline
       %input{type: :checkbox, id: :furniture_check_all}
       全選
+.form-group.group-lg-hr
+
 :javascript
   var $furniture_area       = $('.furniture-area');
   var $furniture_check_all  = $('#furniture_check_all');

@@ -1,6 +1,6 @@
 .form-group.devise-area
-  %label.col-sm-2.control-label 提供設備
-  .col-sm-8
+  %label.control-label 提供設備
+  .col
     %label.checkbox-inline
       = f.check_box :has_device_washer
       洗衣機
@@ -28,6 +28,7 @@
     %label.checkbox-inline
       %input{type: :checkbox, id: :devise_check_all}  
       全選
+.form-group.group-lg-hr
 
 :javascript
   var $devise_area       = $('.devise-area');

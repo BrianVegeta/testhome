@@ -1,10 +1,12 @@
 .form-group
-  %label.col-sm-2.control-label 可遷入日
-  .col-sm-2
+  %label.control-label 可遷入日
+  .col.date
     .input-group
       = f.text_field :allow_moved_date, class: 'form-control datepicker readony', readonly: true
       %span.input-group-addon
         %span.glyphicon.glyphicon-calendar{'aria-hidden' => "true"}
+.form-group.group-lg-hr
+
 :css
   input.datepicker.readony {
     background-color: white;

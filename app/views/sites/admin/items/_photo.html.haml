@@ -1,5 +1,5 @@
 .form-group.photo-area
-  %label.col-sm-2.control-label 
+  %label.control-label 
     照片上傳
   .col-sm-7
     .row
@@ -32,10 +32,8 @@
               %span.glyphicon.glyphicon-remove
             .img-frame
               %img{src: "#{photo.file.url(:cover)}"}
-      .col-sm-12
-        %hr
   - @sites_admin_item.photo_ids.each do |id|
-    %input{id: "item_photo_id_#{id}", type: 'hidden', multiple: 'multiple', name: 'item[photo_ids][]'}
+    %input{id: "item_photo_id_#{id}", type: 'hidden', multiple: 'multiple', name: 'item[photo_ids][]', value: "#{id}"}
         
 :javascript
   var $photoArea        = $('.photo-area');
