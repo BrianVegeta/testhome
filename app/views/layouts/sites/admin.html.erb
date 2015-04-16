@@ -60,6 +60,7 @@
 		<div id="page-outer">
 	    <div id="page-container">
 	    	<input id="this_site_id" type="hidden" value="<%= @organization.id %>">
+	    	<!--
 	    	<div class="profile-canopy">
 	    		<div class="profile-canopy-inner">
 	    			<div class="profile-canopy-header">
@@ -72,31 +73,11 @@
 	    			</div>
     			</div>
 	    	</div>
+	    	-->
 	    	
 	    	<div class="app-content wrapper wrapper-lg">
 	    		<div class="dashboard">
-	    			<div class="dashboard-nav module">
-	    				<ul>
-	    					<li>
-				        	<a class="list-link" href="<%= sites_admin_members_path(organization_id: @organization.id) %>">會員管理</a>
-				        </li>
-			        	<li>
-				        	<a class="list-link" href="<%= sites_admin_organsubs_path(organization_id: @organization.id) %>">組織管理</a>
-				        </li>
-				        <li>
-				        	<a class="list-link" href="<%= sites_admin_items_path(organization_id: @organization.id) %>">物件管理</a>
-				        </li>
-	    					<li>
-	    						<a class="list-link" href="">test</a>
-	    					</li>
-	    					<li>
-	    						<a class="list-link" href="">test</a>
-	    					</li>
-	    					<li>
-	    						<a class="list-link" href="">test</a>
-	    					</li>
-	    				</ul>
-	    			</div>
+	    			<%= render 'layouts/sites/admin_dashboard_nav' %>
 		    	</div>
 		    	<div class="content-main-lg">
 	    			<%= yield %>

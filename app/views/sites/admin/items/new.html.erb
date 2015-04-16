@@ -5,8 +5,8 @@
 </div>
 <div class="content-inner">
 	<%= render 'step_bar', locals: {step: params[:step]} %>
-	<div class="row">
-		<div class="col-sm-4 main-cate-area">
+	<div class="cates-board">
+		<div class="cates-col main-cate-area">
 			<div class="list-group">
 				<% Item::CATEGORIES.each_with_index do |(main_cate, sub_cates), index| %>
 					<a href="#" class="list-group-item" data-main-cate="<%= index %>">
@@ -17,7 +17,7 @@
 				<% end %>
 			</div>
 		</div>
-		<div class="col-sm-4 sub-cate-area">
+		<div class="cates-col sub-cate-area">
 			<% Item::CATEGORIES.each_with_index do |(main_cate, sub_cates), index| %>
 				<div class="list-group sub-cate-group-<%= index %>" style="display: none;">
 					<% sub_cates.each_with_index do |(sub_cates_key, sub_sub_cates), sub_cate_index| %>
@@ -35,7 +35,7 @@
 				</div>
 			<% end %>
 		</div>
-		<div class="col-sm-4 sub-sub-cate-area">
+		<div class="cates-col sub-sub-cate-area">
 			<% Item::CATEGORIES.each_with_index do |(main_cate, sub_cates), index| %>
 				<% sub_cates.each_with_index do |(sub_cates_key, sub_sub_cates), sub_cate_index| %>
 					<% if sub_sub_cates.is_a? Hash %>
@@ -76,4 +76,3 @@
 	});
 
 </script>
-<%= link_to "next step", new_sites_admin_item_path(step: :fill_form) %>

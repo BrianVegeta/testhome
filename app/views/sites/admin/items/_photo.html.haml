@@ -1,37 +1,36 @@
-.form-group.photo-area
-  %label.control-label 
+.form-group.photo-area.photo
+  %label.control-label
     照片上傳
-  .col-sm-7
-    .row
-      .col-sm-12
-        .row
-          .col-sm-3
-            %span.btn.btn-success.fileinput-button
-              %i.glyphicon.glyphicon-plus
-              %span 多張上傳
-              %input#site_admin_item_photo_upload{data:{url: "/sites/admin/#{@organization.id}/items/photo_upload.json"}, type: 'file', name: 'photo[file]', multiple: '', accept: 'image/*'}
-          .col-sm-9
-            .progress.photo-progress{style: 'display: none;'}
-              .progress-bar
-      .col-sm-12
-        %hr          
-      .col-sm-12.img-list
-        .img-placeholer{style: "#{(@sites_admin_item.photo_ids.size > 0) ? 'display: none;': ''}"}
-          .img-frame
-            %img{src: "http://images.591.com.tw/index/build/no_logo.gif"}
-        .img-content-template.temp{style: 'display: none;'}
+  .photo-control
+    .btn-control
+      %span.btn.btn-success.fileinput-button
+        %i.glyphicon.glyphicon-plus
+        %span 多張上傳
+        %input#site_admin_item_photo_upload{data:{url: "/sites/admin/#{@organization.id}/items/photo_upload.json"}, type: 'file', name: 'photo[file]', multiple: '', accept: 'image/*'}
+    .process-control
+      .progress.photo-progress{style: 'display: none;'}
+        .progress-bar
+    .tip-control
+      %p 第一張圖片將作為封面，您可以拖曳重新排序。
+      %hr
+  .gallery
+    .img-list
+      .img-placeholer{style: "#{(@sites_admin_item.photo_ids.size > 0) ? 'display: none;': ''}"}
+        .img-frame
+          %img{src: "http://images.591.com.tw/index/build/no_logo.gif"}
+      .img-content-template.temp{style: 'display: none;'}
+        %span.delete
+          %span.glyphicon.glyphicon-remove
+        .img-frame
+          %span.uploading 上傳中...
+          %img{src: "http://images.591.com.tw/index/build/no_logo.gif"}
+      - @sites_admin_item.photo_ids.each do |id|
+        - photo = UploadAndFolder.find(id)
+        .img-content-template.active{data: {id: "#{id}"}}
           %span.delete
             %span.glyphicon.glyphicon-remove
           .img-frame
-            %span.uploading 上傳中...
-            %img{src: "http://images.591.com.tw/index/build/no_logo.gif"}
-        - @sites_admin_item.photo_ids.each do |id|
-          - photo = UploadAndFolder.find(id)
-          .img-content-template.active{data: {id: "#{id}"}}
-            %span.delete
-              %span.glyphicon.glyphicon-remove
-            .img-frame
-              %img{src: "#{photo.file.url(:cover)}"}
+            %img{src: "#{photo.file.url(:cover)}"}
   - @sites_admin_item.photo_ids.each do |id|
     %input{id: "item_photo_id_#{id}", type: 'hidden', multiple: 'multiple', name: 'item[photo_ids][]', value: "#{id}"}
         
@@ -117,12 +116,30 @@
     data.formData = {};
   })
 
+  $('.img-list').sortable({
+    update: function(event, ui) {
+      var $item           = ui.item;
+      var $prevItem       = $item.prev().filter('.active');
+      var $nextItem       = $item.next().filter('.active');
+      var getInputFromId  = function($i) {
+        return $('#item_photo_id_' + $i.data('id'));
+      };
+      var $photoInput     = getInputFromId($item);
+
+      if ($prevItem.length > 0) {
+        $photoInput.detach().insertAfter(getInputFromId($prevItem));
+      } else {
+        $photoInput.detach().insertAfter(getInputFromId($nextItem));
+      }
+    }
+  });
+
 :css
   .img-content-template {
-    display: inline-block;
-    width: 140px;
+    float: left;
+    width: 130px;
     height: 150px;
-    padding: 20px 10px 10px 10px;
+    padding: 20px 5px 5px 5px;
     position: relative;
   }
   .img-content-template .img-frame {
@@ -153,10 +170,10 @@
 
 
   .img-list .img-placeholer {
-    width: 140px;
+    width: 130px;
     height: 140px;
-    padding: 20px 10px 10px 0px; 
-    display: inline-block;
+    padding: 20px 5px 5px 5px;
+    float: left;
   }
   .img-list .img-placeholer .img-frame {
     width: 120px;

@@ -1,0 +1,8 @@
+.dashboard-nav.module
+  %ul
+    %li
+      = link_to '會員管理', sites_admin_members_path(organization_id: @organization.id), class: 'list-link'
+    %li
+      = link_to '組織管理', sites_admin_organsubs_path(organization_id: @organization.id), class: 'list-link'
+    %li
+      = link_to '物件管理', sites_admin_items_path(organization_id: @organization.id), class: 'list-link'
