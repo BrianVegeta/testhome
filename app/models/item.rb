@@ -30,12 +30,12 @@ class Item < ActiveRecord::Base
   validates :addr_lane, 			numericality: { only_integer: true }, unless: 'addr_lane.nil?'
   validates :addr_no,      		presence: true, numericality: { only_integer: true }
 	validates :name, 						presence: true, length: { in: 6..20 }
-	validates :contact_name, 		presence: true, length: { in: 2..4 }
+	validates :contact_name, 		presence: true, length: { in: 2..16 }
 	validates :contact_email, 	format: { with: Devise.email_regexp }, 
 															if: 'contact_email.present?'
-	validates :contact_mobile, 	format: { with: /\+?\(?[0-9]{2,3}\)?-?[0-9]{6,12}/ }, 
+	validates :contact_mobile, 	format: { with: /\(?([0-9]{2,4})\)?([ .-]?)([0-9]{3})\2([0-9]{3,4})/ }, 
 															if: 'contact_mobile.present?'
-	validates :contact_phone, 	format: { with: /\+?\(?[0-9]{2,3}\)?-?[0-9]{6,12}/ },
+	validates :contact_phone, 	format: { with: /\(?([0-9]{2,4})\)?([ .-]?)([0-9]{3})\2([0-9]{3,4})/ }, 
 															if: 'contact_phone.present?'
 
 
@@ -235,20 +235,20 @@ class Item < ActiveRecord::Base
 	}
 
 	TYPE_TO_MATCH = {
-		rent_home_apartment: { model: 'Item::RentHome', form: :rent_home },
-		rent_home_mansion: {   model: 'Item::RentHome', form: :rent_home },
-		rent_home_villa: { 		 model: 'Item::RentHome', form: :rent_home },
-		rent_home_townhouse: { model: 'Item::RentHome', form: :rent_home },
+		rent_home_apartment: { model: 'Item::RentHome', form: :rent_home, view: :rent_home },
+		rent_home_mansion: {   model: 'Item::RentHome', form: :rent_home, view: :rent_home },
+		rent_home_villa: { 		 model: 'Item::RentHome', form: :rent_home, view: :rent_home },
+		rent_home_townhouse: { model: 'Item::RentHome', form: :rent_home, view: :rent_home },
 
-		rent_suit_apartment: { model: 'Item::RentSuit', form: :rent_suit },
-		rent_suit_mansion: { 	 model: 'Item::RentSuit', form: :rent_suit },
-		rent_suit_villa: {     model: 'Item::RentSuit', form: :rent_suit },
-		rent_suit_townhouse: { model: 'Item::RentSuit', form: :rent_suit },
+		rent_suit_apartment: { model: 'Item::RentSuit', form: :rent_suit, view: :rent_home },
+		rent_suit_mansion: { 	 model: 'Item::RentSuit', form: :rent_suit, view: :rent_home },
+		rent_suit_villa: {     model: 'Item::RentSuit', form: :rent_suit, view: :rent_home },
+		rent_suit_townhouse: { model: 'Item::RentSuit', form: :rent_suit, view: :rent_home },
 
-		rent_studio_apartment: { model: 'Item::RentStudio', form: :rent_studio },
-		rent_studio_mansion: { 	 model: 'Item::RentStudio', form: :rent_studio },
-		rent_studio_villa: {     model: 'Item::RentStudio', form: :rent_studio },
-		rent_studio_townhouse: { model: 'Item::RentStudio', form: :rent_studio },
+		rent_studio_apartment: { model: 'Item::RentStudio', form: :rent_studio, view: :rent_home },
+		rent_studio_mansion: { 	 model: 'Item::RentStudio', form: :rent_studio, view: :rent_home },
+		rent_studio_villa: {     model: 'Item::RentStudio', form: :rent_studio, view: :rent_home },
+		rent_studio_townhouse: { model: 'Item::RentStudio', form: :rent_studio, view: :rent_home },
 
 		rent_room_apartment: { model: 'Item::RentStudio', form: :rent_studio },
 		rent_room_mansion: { 	 model: 'Item::RentStudio', form: :rent_studio },

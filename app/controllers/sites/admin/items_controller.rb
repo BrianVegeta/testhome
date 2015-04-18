@@ -67,6 +67,7 @@ class Sites::Admin::ItemsController < Sites::Admin::ApplicationController
   # PATCH/PUT /sites/admin/items/1
   # PATCH/PUT /sites/admin/items/1.json
   def update
+
     respond_to do |format|
       if @sites_admin_item.update(sites_admin_item_params)
         format.html { 
@@ -79,7 +80,7 @@ class Sites::Admin::ItemsController < Sites::Admin::ApplicationController
                     }
         format.json { render :show, status: :ok, location: @sites_admin_item }
       else
-        format.html { render :new_confirm }
+        format.html { render :new_fill_form }
         format.json { render json: @sites_admin_item.errors, status: :unprocessable_entity }
       end
     end
@@ -141,7 +142,9 @@ class Sites::Admin::ItemsController < Sites::Admin::ApplicationController
       model_name     = Item::TYPE_TO_MATCH[common_params[:post_type].to_sym][:model]
       by_type_params = Object::qualified_const_get(model_name).permit_params(params.require(:item))
 
-      return common_params.merge by_type_params
+      item_params = common_params.merge by_type_params
+      item_params[:photo_ids] = [] if item_params[:photo_ids].nil?
+      return item_params
     end
 
     def sites_admin_item_photo_params

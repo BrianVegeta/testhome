@@ -6,8 +6,10 @@
       = item.contact_name
       = item.contact_declaration_disturb.present? ? '(屋主聲明，請仲介勿擾！)': '' 
     %br
-    - item.contact_mobile.blank? ? mobile = '-' : mobile = item.contact_mobile
-    = item.contact_phone.blank? ? mobile : item.contact_phone
+    %h3.over-write
+      - item.contact_mobile.blank? ? mobile = '-' : mobile = item.contact_mobile
+      = item.contact_phone.blank? ? mobile : item.contact_phone
+    .clear
   %hr
   .email
     Email:
@@ -18,21 +20,23 @@
     background-color: #dae9f8;
     border: 1px solid #91B9E0;
     border-radius: 2px;
-    margin: 0px 0px 20px 10px;
-    padding: 5px;
+    margin: 0px 15px 0px 25px;
+    padding: 10px;
     position: relative;
   }
   .info-contact .phone-icon {
-    font-size: 30px;
     position: absolute;
-    top: 5px;
-    left: 5px;
+    top: 10px;
+    left: 10px;
   }
   .info-contact .phone-icon span{ 
     background-color: #37D04B;
     color: white;
     padding: 5px;
     border-radius: 3px;
+    width: 45px;
+    height: 45px;
+    font-size: 35px;
   }
   .info-contact hr {
     margin-top: 5px;
@@ -43,6 +47,6 @@
 
   }
   .info-contact-container {
-    margin-left: 45px;
+    margin-left: 50px;
   }
   

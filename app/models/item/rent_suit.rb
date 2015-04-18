@@ -12,7 +12,7 @@ module Item::RentSuit
       form.validates :addr_no,      presence: true, numericality: { only_integer: true }
 
 
-      form.validates :inner_amount, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 1000}
+      form.validates :inner_amount, presence: true, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 1000}
 
       form.validates :total_floor,    presence: true
       form.validates :current_floor,  presence: true
@@ -36,6 +36,7 @@ module Item::RentSuit
         self.is_pet_allow     = true if self.is_pet_allow.nil?
         self.is_cooking_allow = true if self.is_cooking_allow.nil?
         self.sexual_require   = :both if self.sexual_require.nil?
+        self.has_parking      = false if self.has_parking.nil?
 
         self.allow_moved_date = Time.now.strftime("%Y-%m-%d") if self.allow_moved_date.nil?
       end

@@ -1,0 +1,15 @@
+- nearby = []
+- nearby.push Item::Const::NEARBY[:is_nearby_store]       if item.is_nearby_store
+- nearby.push Item::Const::NEARBY[:is_nearby_mall]        if item.is_nearby_mall
+- nearby.push Item::Const::NEARBY[:is_nearby_park]        if item.is_nearby_park
+- nearby.push Item::Const::NEARBY[:is_nearby_school]      if item.is_nearby_school
+- nearby.push Item::Const::NEARBY[:is_nearby_hospital]    if item.is_nearby_hospital
+- nearby.push Item::Const::NEARBY[:is_nearby_nightmarket] if item.is_nearby_nightmarket
+
+- if nearby.length > 0 
+  .else-list-lg
+    .else-label 生活機能：
+    - nearby.each do |near|
+      .else-checkbox
+        %span.glyphicon.glyphicon-ok.icon
+        %span= near

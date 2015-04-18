@@ -1,6 +1,6 @@
 .form-group
-  %label.col-sm-2.control-label 性別要求
-  .col-sm-8
+  %label.control-label 性別要求
+  .col.sexual
     %label.radio-inline
       = f.radio_button :sexual_require, :both
       皆可
@@ -10,3 +10,4 @@
     %label.radio-inline
       = f.radio_button :sexual_require, :female
       女生
+.form-group.group-lg-hr

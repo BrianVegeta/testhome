@@ -1,0 +1,11 @@
+- type = item.rent_period_type.to_sym
+
+.else-list
+  .else-label 最短租期：
+  - if type != :other
+    .else-content
+      = Item::RentHome::RENT_PERIOD_TYPES.invert[type.to_s]
+  - else
+    .else-content
+      = item.rent_period_number
+      = Item::RentHome::RENT_PERIOD_UNITS.invert[item.rent_period_unit]

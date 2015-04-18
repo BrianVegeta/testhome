@@ -1,0 +1,4 @@
+- if item.direction.present?
+  .else-list
+    .else-label 朝向：
+    .else-content= Item::DIRECTION[item.direction]

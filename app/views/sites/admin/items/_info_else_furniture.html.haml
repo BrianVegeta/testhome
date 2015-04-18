@@ -1,0 +1,14 @@
+- furniture = []
+- furniture.push Item::Const::FURNITURE[:has_furniture_bed]       if item.has_furniture_bed
+- furniture.push Item::Const::FURNITURE[:has_furniture_wardrobe]  if item.has_furniture_wardrobe
+- furniture.push Item::Const::FURNITURE[:has_furniture_sofa]      if item.has_furniture_sofa
+- furniture.push Item::Const::FURNITURE[:has_furniture_desk]      if item.has_furniture_desk
+- furniture.push Item::Const::FURNITURE[:has_furniture_chair]     if item.has_furniture_chair
+
+- if furniture.length > 0 
+  .else-list-lg
+    .else-label 提供傢俱：
+    - furniture.each do |fnt|
+      .else-checkbox
+        %span.glyphicon.glyphicon-ok.icon
+        %span= fnt

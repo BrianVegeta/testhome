@@ -1,0 +1,8 @@
+- identities = []
+- identities.push('學生') if item.is_student_allow
+- identities.push('上班族') if item.is_office_allow
+- identities.push('家庭') if item.is_family_allow
+- if identities.length > 0
+  .else-list
+    .else-label 身份要求：
+    .else-content= identities.join('、')

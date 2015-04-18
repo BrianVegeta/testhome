@@ -21,7 +21,7 @@ module ItemHelper
     address << "#{resource.addr_street}"
     address << "#{resource.addr_alley}巷" if resource.addr_alley.present?
     address << "#{resource.addr_lane}弄" if resource.addr_lane.present?
-    address << "#{resource.addr_no}號"
+    address << "#{resource.addr_no}號" unless resource.addr_no_is_hidden
 
     return address
   end
@@ -41,6 +41,30 @@ module ItemHelper
 
     return floor
       
+  end
+
+  def get_deposit(resource)
+    type = Item::RentHome::DEPOSIT_TYPES.invert[resource.deposit_type.to_sym]
+    if resource.deposit_type.to_sym != :other
+      return type
+    else
+      return number_to_currency(resource.deposit, unit: '')
+    end
+  end
+
+  def get_pattern(resource)
+    pattern = ''
+    if resource.pattern_room.to_i > 0
+      pattern << resource.pattern_room.to_i.to_s << '房'
+      pattern << resource.pattern_living.to_i.to_s << '廳'
+      pattern << resource.pattern_bath.to_i.to_s << '衛'
+      pattern << resource.pattern_balcony.to_i.to_s << '陽台'
+    else
+      pattern << '樓中樓，' if resource.pattern_entresol_has
+      pattern << resource.pattern_balcony.to_i.to_s << '陽台'
+    end
+
+    return pattern
   end
 
 end

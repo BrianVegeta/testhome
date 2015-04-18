@@ -1,11 +1,12 @@
 .form-group.col-partition-material
-  %label.col-sm-2.control-label 
+  %label.control-label 
     隔間材料
-  .col-sm-2
+  .col.material
     - materials = Item::RentStudio::MATERIALS.map { |t| t }
     = f.select :partition_material_types, materials, {}, {class: 'form-control'}
-  .col-sm-2{class: "#{f.error_class :partition_material}"}
+  .col.material{class: "#{f.error_class :partition_material}"}
     = f.text_field :partition_material, class: 'form-control error-tooltip', data: {errormessage: "#{f.error_message :partition_material}"}
+.form-group.group-lg-hr
 
 :javascript
   var $colPartitionMaterial = $('.col-partition-material');

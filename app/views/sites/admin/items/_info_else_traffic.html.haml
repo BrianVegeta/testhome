@@ -1,0 +1,11 @@
+- traffic = []
+- [:nearby_bus, :nearby_mrt, :nearby_station].each do |type|
+  - (1..3).each do |n|
+    - traffic_string = item.send("#{type}_#{n}")
+    - if traffic_string.present? 
+      - traffic_string << Item::Const::TRAFFIC["#{type}".to_sym]
+      - traffic.push "近#{traffic_string}"
+- if traffic.length > 0
+  .else-list-lg
+    附近交通：
+    = traffic.join('； ')

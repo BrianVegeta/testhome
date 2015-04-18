@@ -1,0 +1,12 @@
+- if item.addition_rooms.length > 0
+  .else-list-lg
+    .else-label 其他房間：
+    %table.table.table-striped.addition-rooms
+      - item.addition_rooms.each do |room|
+        %tr
+          %td= "房間#{room.first}"
+          %td= Item::RentStudio::ADDITION_ROOM_USAGES[room.last[:usage].to_sym]
+          %td= "#{room.last[:inner_amount]}坪"
+          %td= "#{room.last[:current_floor]}F"
+          %td= "#{number_to_currency(room.last[:total_price], unit: '', precision: 0)}元/月"
+

@@ -1,4 +1,3 @@
-%h3.over-write
-  特色描述
 .item-container
-  =raw item.descript
+  %h3.over-write 特色描述
+  .item-else.item-description=raw item.descript.present? ? item.descript : '等待添加描述。'

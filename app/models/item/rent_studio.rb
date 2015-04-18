@@ -12,7 +12,7 @@ module Item::RentStudio
       form.validates :addr_no,      presence: true, numericality: { only_integer: true }
 
 
-      form.validates :inner_amount, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 1000}
+      form.validates :inner_amount, presence: true, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 1000}
 
       form.validates :total_floor,    presence: true
       form.validates :current_floor,  presence: true
@@ -79,6 +79,18 @@ module Item::RentStudio
               end
             "
           end
+        end
+
+        numbers.each do |number|
+          eval "
+            def addition_room_#{number}_deleted
+              return true
+            end
+
+            def addition_room_#{number}_deleted=(value)
+              self.addition_rooms.delete(#{number})  
+            end
+          "
         end
 
       end
@@ -155,6 +167,7 @@ module Item::RentStudio
       params = params.merge(required_param.permit("addition_room_#{n}_inner_amount"))
       params = params.merge(required_param.permit("addition_room_#{n}_current_floor"))
       params = params.merge(required_param.permit("addition_room_#{n}_total_price"))
+      params = params.merge(required_param.permit("addition_room_#{n}_deleted"))
       
       price_name = "addition_room_#{n}_total_price".to_sym 
       params[price_name] = params[price_name].gsub(',', '') unless params[price_name].nil?

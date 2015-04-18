@@ -11,7 +11,7 @@ module Item::RentStore
       form.validates :addr_street,  presence: true
       form.validates :addr_no,      presence: true, numericality: { only_integer: true }
 
-      form.validates :inner_amount, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 1000}
+      form.validates :inner_amount, presence: true, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 1000}
 
       form.validates :total_floor,    presence: true
       form.validates :current_floor,  presence: true

@@ -1,0 +1,16 @@
+- devices = []
+- devices.push Item::Const::DEVICES[:has_device_washer]             if item.has_device_washer
+- devices.push Item::Const::DEVICES[:has_device_freezer]            if item.has_device_freezer
+- devices.push Item::Const::DEVICES[:has_device_tv]                 if item.has_device_tv
+- devices.push Item::Const::DEVICES[:has_device_air_conditioning]   if item.has_device_air_conditioning
+- devices.push Item::Const::DEVICES[:has_device_water_heater]       if item.has_device_water_heater
+- devices.push Item::Const::DEVICES[:has_device_net]                if item.has_device_net
+- devices.push Item::Const::DEVICES[:has_device_cable_tv]           if item.has_device_cable_tv
+- devices.push Item::Const::DEVICES[:has_device_natural_gas]        if item.has_device_natural_gas
+- if devices.length > 0 
+  .else-list-lg
+    .else-label 提供設備：
+    - devices.each do |d|
+      .else-checkbox
+        %span.glyphicon.glyphicon-ok.icon
+        %span= d

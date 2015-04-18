@@ -17,7 +17,7 @@ module Item::RentOfficehouse
       form.validates :pattern_bath,     numericality: { only_integer: true }, unless: 'pattern_bath.nil?'
       form.validates :pattern_balcony,  numericality: { only_integer: true }, unless: 'pattern_balcony.nil?'
 
-      form.validates :inner_amount, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 1000}
+      form.validates :inner_amount, presence: true, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 1000}
 
       form.validates :total_floor,    presence: true
       form.validates :current_floor,  presence: true

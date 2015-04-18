@@ -1,14 +1,11 @@
-<div class="form-group">
-  <label class="control-label">廣告標題</label>
-  <div class="col descript">
-    <%= f.text_area :descript, id: 'descript_editor' %>
-  </div>
-</div>
-<div class="form-group group-lg-hr">
-</div>
+.form-group
+  %label.control-label 特色描述
+  .col.descript
+    = f.text_area :descript, id: 'descript_editor'
+.form-group.group-lg-hr
 
 
-<script type="text/javascript">
+:javascript
   $('#descript_editor').ckeditor({
     height: 200,
     toolbar: [
@@ -19,4 +16,3 @@
       { name: 'links', items: [ 'Link', 'Unlink' ] }
     ]
   });
-</script>

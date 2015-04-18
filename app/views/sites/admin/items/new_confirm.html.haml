@@ -1,8 +1,10 @@
-= render 'step_bar', locals: {step: params[:step]}
-.row
-  .col-sm-12
-    = render 'show_item'
-= render 'form'
+.content-header
+  .header-inner
+    %h3.over-write 新增物件
+.content-inner
+  = render 'step_bar', locals: {step: 'confirm'}
+  = link_to '返回修改', edit_sites_admin_item_path(@organization.id, @sites_admin_item.id)
 
-= link_to "prev step", new_sites_admin_item_path(step: :fill_form)
-= link_to "confirm", '#'
+
+%div{style: 'margin-top: 10px;'}
+= render 'show_item'

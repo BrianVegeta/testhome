@@ -1,0 +1,21 @@
+.item-container
+  %h3.over-write 其他資訊
+  .item-else
+    = render 'info_else_management_fee', {item: item}
+    = render 'info_else_rent_period', {item: item}
+    = render 'info_else_cooking', {item: item}
+    = render 'info_else_pet', {item: item}
+    = render 'info_else_identity', {item: item}
+    = render 'info_else_allow_move', {item: item}
+    = render 'info_else_direction', {item: item}
+    = render 'info_else_material', {item: item}
+    .clear
+    %div{style: 'margin-top: 5px;'}
+    = render 'info_else_device', {item: item}
+    = render 'info_else_furniture', {item: item}
+    = render 'info_else_nearby', {item: item}
+    = render 'info_else_traffic', {item: item}
+    = render 'info_else_studio_rooms', {item: item}
+    .clear
+
+    

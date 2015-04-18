@@ -1,27 +1,31 @@
 - item = @sites_admin_item
 - photos = @item_photos
-%div{style: 'margin-top: 10px;'}
-.content-main.content-center
-  .content-header
-    .header-inner
-      %h3.over-write
+- view_name = Item::TYPE_TO_MATCH[@sites_admin_item.post_type.to_sym][:view].to_s
+
+.content-header
+  .header-inner
+    %h3.over-write
+      %small
         = translate_item_type_action item
         = translate_item_type_name item
-  .content-inner
-    .item-header
-      .item-header-photo
-        .fotorama{data: {nav: :thumbs}}
-          - if photos.any?
-            - photos.each do |p|
-              %a{href: "#{p.file.url(:view)}"}
-                %img{src: "#{p.file.url(:thumb)}"}
-          - else 
-            %img{src: "http://rent.591.com.tw/images/index/house/no_photo.png"}
-      .item-header-info
-        = render 'info_header_rent_place.html.haml', {item: item}
-    %hr
-    = render 'info_else', {item: item}
-    %hr
-    = render 'info_description', {item: item}
-    %hr
-    = render 'info_gallary', {photos: photos}
+      = item.name
+.content-inner
+  .item-header
+    .item-header-photo
+      .fotorama{data: {nav: :thumbs}}
+        - if photos.any?
+          - photos.each do |p|
+            %a{href: "#{p.file.url(:view)}"}
+              %img{src: "#{p.file.url(:thumb)}"}
+        - else 
+          %img{src: "http://rent.591.com.tw/images/index/house/no_photo.png"}
+    .item-header-info
+      = render "info_header_#{view_name}", {item: item}
+  %hr
+  = render "info_else_#{view_name}", {item: item}
+  %hr
+  = render 'info_description', {item: item}
+  %hr
+  = render 'info_gallary', {photos: photos}
+  %hr
+  = render 'info_map', {item: item}
