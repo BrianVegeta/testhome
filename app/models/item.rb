@@ -48,6 +48,13 @@ class Item < ActiveRecord::Base
 		self.photo_ids 		= [] if self.photo_ids.nil?
 		self.place_usage 	= [] if self.place_usage.nil?
 	end
+
+	def set_default_contact(user)
+		self.contact_name 	= user.name 	if self.contact_name.nil?
+		self.contact_mobile = user.phone 	if self.contact_mobile.nil?
+		self.contact_phone 	= user.phone2 if self.contact_phone.nil?
+		self.contact_email 	= user.email 	if self.contact_email.nil?
+	end
 	
 	def self.nearby_virtual_attr(array_collection, *types)
 		
@@ -250,15 +257,15 @@ class Item < ActiveRecord::Base
 		rent_studio_villa: {     model: 'Item::RentStudio', form: :rent_studio, view: :rent_home },
 		rent_studio_townhouse: { model: 'Item::RentStudio', form: :rent_studio, view: :rent_home },
 
-		rent_room_apartment: { model: 'Item::RentStudio', form: :rent_studio },
-		rent_room_mansion: { 	 model: 'Item::RentStudio', form: :rent_studio },
-		rent_room_villa: {     model: 'Item::RentStudio', form: :rent_studio },
-		rent_room_townhouse: { model: 'Item::RentStudio', form: :rent_studio },
+		rent_room_apartment: { model: 'Item::RentStudio', form: :rent_studio, view: :rent_home },
+		rent_room_mansion: { 	 model: 'Item::RentStudio', form: :rent_studio, view: :rent_home },
+		rent_room_villa: {     model: 'Item::RentStudio', form: :rent_studio, view: :rent_home },
+		rent_room_townhouse: { model: 'Item::RentStudio', form: :rent_studio, view: :rent_home },
 
-		rent_store_apartment: { model: 'Item::RentStore', form: :rent_store },
-		rent_store_mansion: 	{ model: 'Item::RentStore', form: :rent_store },
-		rent_store_villa: 		{ model: 'Item::RentStore', form: :rent_store },
-		rent_store_townhouse: { model: 'Item::RentStore', form: :rent_store },
+		rent_store_apartment: { model: 'Item::RentStore', form: :rent_store, view: :rent_home },
+		rent_store_mansion: 	{ model: 'Item::RentStore', form: :rent_store, view: :rent_home },
+		rent_store_villa: 		{ model: 'Item::RentStore', form: :rent_store, view: :rent_home },
+		rent_store_townhouse: { model: 'Item::RentStore', form: :rent_store, view: :rent_home },
 
 		rent_office_apartment: 	{ model: 'Item::RentOffice', form: :rent_office },
 		rent_office_mansion: 		{ model: 'Item::RentOffice', form: :rent_office },

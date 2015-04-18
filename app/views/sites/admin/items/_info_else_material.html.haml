@@ -1,9 +1,10 @@
-- if item.partition_material_types.to_sym == :other
-  - partition_material = item.partition_material
-- else
-  - partition_material = item.partition_material_types
+- if item.partition_material.present?
+  - if item.partition_material_types.to_sym == :other
+    - partition_material = item.partition_material
+  - else
+    - partition_material = item.partition_material_types
 
-- if item.partition_material_types != '請選擇'
-  .else-list
-    .else-label 隔間材料：
-    .else-content= partition_material
+  - if item.partition_material_types != '請選擇'
+    .else-list
+      .else-label 隔間材料：
+      .else-content= partition_material

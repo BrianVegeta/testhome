@@ -1,5 +1,6 @@
-- current_date = Time.now.strftime('%Y-%m-%d')
-- allow_date = item.allow_moved_date.strftime('%Y-%m-%d')
-.else-list
-  .else-label 可遷入日：
-  .else-content= allow_date < current_date ? '隨時': allow_date
+- if item.allow_moved_date.present?
+  - current_date = Time.now.strftime('%Y-%m-%d')
+  - allow_date = item.allow_moved_date.strftime('%Y-%m-%d')
+  .else-list
+    .else-label 可遷入日：
+    .else-content= allow_date <= current_date ? '隨時': allow_date

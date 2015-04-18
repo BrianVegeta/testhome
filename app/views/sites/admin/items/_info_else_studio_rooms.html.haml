@@ -1,4 +1,4 @@
-- if item.addition_rooms.length > 0
+- if item.addition_rooms.present? && item.addition_rooms.length > 0
   .else-list-lg
     .else-label 其他房間：
     %table.table.table-striped.addition-rooms

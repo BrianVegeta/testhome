@@ -21,6 +21,7 @@ class Sites::Admin::ItemsController < Sites::Admin::ApplicationController
       render 'new_confirm'
     when 'fill_form'
       @sites_admin_item = @organization.items.new(post_type: params[:type])
+      @sites_admin_item.set_default_contact current_user
 
       render 'new_fill_form'
     else

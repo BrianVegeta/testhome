@@ -1,0 +1,4 @@
+- if item.decorating_level.present?
+  .else-list
+    .else-label 裝潢程度：
+    .else-content= Item::RentStore::DECORATING_LEVELS[item.decorating_level.to_sym]
