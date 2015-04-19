@@ -1,8 +1,9 @@
 .form-group
-  %label.col-sm-2.control-label
+  %label.control-label
     %span{style: 'color: red;'} *
     土地類別
-  .col-sm-2
+  .col
     - types = Item::RentLand::TYPES.map {|k, v| [v, k] }
     = f.select :land_type, types, {}, {class: 'form-control'}
+.form-group.group-lg-hr
     

@@ -1,9 +1,10 @@
 .form-group
-  %label.col-sm-2.control-label 
+  %label.control-label 
     %span{style: 'color: red;'} *
     最多容納
-  .col-sm-2
+  .col.capacity
     .input-group{class: "#{f.error_class :place_capacity}"}
       - data = { errormessage: "#{f.error_message :place_capacity}" }
       = f.text_field :place_capacity, class: 'form-control error-tooltip', maxlength: 7, data: data
       %span.input-group-addon 人
+.form-group.group-lg-hr

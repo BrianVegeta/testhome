@@ -1,8 +1,9 @@
 .form-group
-  %label.col-sm-2.control-label
+  %label.control-label
     %span{style: 'color: red;'} *
     場地類型
-  .col-sm-2{class: "#{f.error_class :place_type}"}
+  .col{class: "#{f.error_class :place_type}"}
     - data = { errormessage: "#{f.error_message :place_type}" }
     - types = Item::RentPlace::TYPES.map {|k, v| [v, k] }
     = f.select :place_type, types, {}, {class: 'form-control error-tooltip', data: data}
+.form-group.group-lg-hr

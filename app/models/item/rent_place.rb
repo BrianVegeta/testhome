@@ -48,7 +48,7 @@ module Item::RentPlace
     end
 
     def set_rent_place_default
-        
+      self.parking_amount = self.parking_amount.to_i
     end
 
     def is_rent_place?

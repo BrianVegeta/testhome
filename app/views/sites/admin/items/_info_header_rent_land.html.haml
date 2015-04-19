@@ -3,47 +3,51 @@
     .control-label.info-label 租金:
     .info-content
       %p.form-control-static
-        = Item::RentPlace::PRICE_TYPES[item.place_price_type.to_sym]
+        = number_to_currency(item.total_price, unit: '', precision: 0)
+        元/月
   .form-group.info-row
-    .control-label.info-label 坪數:
+    .control-label.info-label 押金:
+    .info-content
+      %p.form-control-static
+        = get_deposit(item)
+        
+  .form-group.info-row
+    .control-label.info-label 面積:
     .info-content
       %p.form-control-static
         = item.land_area_amount
         = Item::RentLand::AREA_UNITS[item.land_area_unit.to_sym]
 
   .form-group.info-row
-    .control-label.info-label 樓層:
-    .info-content
-      %p.form-control-static
-        = get_floor(item)
-
-  .form-group.info-row
     .control-label.info-label 類型:
     .info-content
       %p.form-control-static
-        = Item::RentPlace::TYPES[item.place_type.to_sym]
+        = translate_item_type_action item
+        = translate_item_type_name item
+
+  .form-group.info-row
+    .control-label.info-label 類別:
+    .info-content
+      %p.form-control-static
+        = Item::RentLand::TYPES[item.land_type.to_sym]
 
   .form-group.info-row
     .control-label.info-label 用途:
     .info-content
       %p.form-control-static
-        - item.place_usage.each do |usage|
-          = Item::RentPlace::USAGES[usage.to_sym]
-          = (usage == item.place_usage.last) ? '': '、'
+        - land_usages = []
+        - Item::RentLand::USAGES.each do |usage, value|
+          - if item.send(usage.to_s)
+            - land_usages.push value
+        = land_usages.join('、')
 
-  .form-group.info-row
-    .control-label.info-label 容納:
-    .info-content
-      %p.form-control-static
-        = item.place_capacity.blank? ? '-' : item.place_capacity
-        人
 
-  - if item.parking_amount.present?
+  - if has_parking_column?(item)
     .form-group.info-row
       .control-label.info-label 車位:
       .info-content
         %p.form-control-static
-          = "#{item.parking_amount.to_i}位"
+          = item.has_parking ? '有' : '無'
 
   .form-group.info-row
     .control-label.info-label 地址:

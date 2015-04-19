@@ -1,3 +1,4 @@
-.else-list
-  .else-label 開伙：
-  .else-content= item.is_cooking_allow ? '可以' : '不可'
+- if item.is_cooking_allow.present?
+  .else-list
+    .else-label 開伙：
+    .else-content= item.is_cooking_allow ? '可以' : '不可'

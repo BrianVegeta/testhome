@@ -58,10 +58,23 @@ module Item::RentLand
     other:    '其他'
   }
 
+  USAGES = {
+    is_usage_field:               '農作',
+    is_usage_home:                '住宅',
+    is_usage_processing_factory:  '加工廠', 
+    is_usage_company:             '中小企業', 
+    is_usage_tech_factory:        '高科技', 
+    is_usage_factory:             '廠房', 
+    is_usage_warehouse:           '倉庫',
+    is_usage_ad_banner:           '廣告', 
+    is_usage_store:               '開店'
+  }
+  
+
   def self.permit_params(required_param)
     params = required_param.permit(
       :post_type,
-      :main_area, :sub_area, :addr_no, :addr_no_is_hidden,
+      :main_area, :sub_area, :addr_street, :addr_no, :addr_no_is_hidden,
       :land_area_amount, #市內實際使用坪數
       :land_area_unit,
       :land_type,

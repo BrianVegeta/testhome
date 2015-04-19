@@ -23,18 +23,11 @@ module Item::RentParking
       form.validates :name, presence: true, length: { in: 6..20 }
 
 
-      form.validate :current_floor_validate
-
       def set_rent_parking_default
         self.parking_cate = :tower if self.parking_cate.nil?
         self.parking_type = :plane if self.parking_type.nil?
       end
 
-      def current_floor_validate
-        return if ['-1', '+1'].include? current_floor
-        return if current_floor.match(/^[0-9]+$/)
-        errors.add(:current_floor, '格式錯誤。')
-      end
     end
 
     def is_rent_parking?

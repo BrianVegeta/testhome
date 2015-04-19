@@ -1,3 +1,4 @@
-.else-list
-  .else-label 養寵物：
-  .else-content= item.is_pet_allow ? '可以' : '不可'
+- if item.is_pet_allow.present?
+  .else-list
+    .else-label 養寵物：
+    .else-content= item.is_pet_allow ? '可以' : '不可'

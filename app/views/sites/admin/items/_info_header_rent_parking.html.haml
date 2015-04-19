@@ -5,31 +5,17 @@
       %p.form-control-static
         = number_to_currency(item.total_price, unit: '', precision: 0)
         元/月
-
   .form-group.info-row
     .control-label.info-label 押金:
     .info-content
       %p.form-control-static
         = get_deposit(item)
 
-  - if has_pattern?(item)
-    .form-group.info-row
-      .control-label.info-label 格局:
-      .info-content
-        %p.form-control-static
-          = get_pattern(item)
-        
   .form-group.info-row
     .control-label.info-label 坪數:
     .info-content
       %p.form-control-static
         = item.inner_amount
-
-  .form-group.info-row
-    .control-label.info-label 樓層:
-    .info-content
-      %p.form-control-static
-        = get_floor(item)
 
   .form-group.info-row
     .control-label.info-label 類型:
@@ -38,12 +24,25 @@
         = translate_item_type_action item
         = translate_item_type_name item
 
-  - if has_parking_column?(item)
-    .form-group.info-row
-      .control-label.info-label 車位:
-      .info-content
-        %p.form-control-static
-          = item.has_parking ? '有' : '無'
+  .form-group.info-row
+    .control-label.info-label 車位:
+    .info-content
+      %p.form-control-static
+        = Item::RentParking::CATES[item.parking_cate.to_sym]
+        (種類)
+
+  .form-group.info-row
+    .control-label.info-label 車位:
+    .info-content
+      %p.form-control-static
+        = Item::RentParking::TYPES[item.parking_type.to_sym]        
+        (類型)
+
+  .form-group.info-row
+    .control-label.info-label  租期:
+    .info-content
+      %p.form-control-static
+        = "最短 #{get_rent_period(item)}"
 
   .form-group.info-row
     .control-label.info-label 社區:

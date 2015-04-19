@@ -1,0 +1,15 @@
+.item-container
+  %h3.over-write 其他資訊
+  .item-else
+    = render 'info_else_management_fee', {item: item}
+    = render 'info_else_direction', {item: item}
+    = render 'info_else_decorating', {item: item}
+    = render 'info_else_with_lease', {item: item}
+    .clear
+    %div{style: 'margin-top: 5px;'}
+    = render 'info_else_nearby', {item: item}
+    = render 'info_else_traffic', {item: item}
+    = render 'info_else_house_area', {item: item}
+    .clear
+
+    

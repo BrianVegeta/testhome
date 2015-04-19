@@ -1,0 +1,27 @@
+.form-group
+  %label.control-label 
+    %span{style: 'color: red;'} *
+    售金
+  .col.house-price
+    .input-group{class: "#{f.error_class :house_price_ten_thousand}"}
+      = f.text_field :house_price_ten_thousand, class: 'form-control error-tooltip', maxlength: 6, data: {errormessage: "#{f.error_message :house_price_ten_thousand}"}
+      %span.input-group-addon 萬元（請填數字）
+  .col
+    %label.radio-inline
+      = f.radio_button :house_price_include_parking, true
+      含車位價格
+    %label.radio-inline
+      = f.radio_button :house_price_include_parking, false
+      不含車位價格
+  
+.form-group.group-lg-hr
+
+.form-group
+  %label.control-label 
+    車位價格
+  .col.house-price
+    .input-group{class: "#{f.error_class :house_parking_price}"}
+      = f.text_field :house_parking_price, class: 'form-control error-tooltip', maxlength: 6, data: {errormessage: "#{f.error_message :house_parking_price}"}
+      %span.input-group-addon 萬元（請填數字）
+      
+.form-group.group-lg-hr

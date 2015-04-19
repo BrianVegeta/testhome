@@ -1,0 +1,11 @@
+.form-group
+  %label.control-label 
+    %span{style: 'color: red;'} *
+    屋齡
+  .col.house-age{class: "#{f.error_class :house_age}"}
+    = f.text_field :house_age, class: 'form-control error-tooltip', maxlength: 7, data: {errormessage: "#{f.error_message :house_age}"}
+  .col
+    - types = Item::SaleHome::AGE_UNITS.map {|k, v| [v, k] }
+    = f.select :house_age_unit, types, {}, {class: 'form-control'}
+  
+.form-group.group-lg-hr

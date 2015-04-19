@@ -1,8 +1,8 @@
 .form-group.usage-area
-  %label.col-sm-2.control-label 
+  %label.control-label 
     %span{style: 'color: red;'} *
     適合用途
-  .col-sm-8
+  .col
     %label.checkbox-inline
       = f.check_box :is_usage_field
       農作
@@ -24,6 +24,7 @@
     %label.checkbox-inline
       = f.check_box :is_usage_warehouse
       倉庫
+  .col
     %label.checkbox-inline
       = f.check_box :is_usage_ad_banner
       廣告
@@ -33,6 +34,7 @@
     %label.checkbox-inline
       %input{type: :checkbox, id: :usage_check_all}  
       全選
+.form-group.group-lg-hr
 
 :javascript
   var $usage_area       = $('.usage-area');

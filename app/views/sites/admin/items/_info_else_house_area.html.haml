@@ -1,0 +1,16 @@
+- type = item.house_area_unit
+
+- description = []
+- amount = item.house_land_area_amount
+- description.push "土地 #{get_plain_from_area_amount(amount, type)} 坪" if amount.present?
+- amount = item.house_build_area_amount
+- description.push "主建物 #{get_plain_from_area_amount(amount, type)} 坪" if amount.present?
+- amount = item.house_additional_area_amount
+- description.push "附屬建物 #{get_plain_from_area_amount(amount, type)} 坪" if amount.present?
+- amount = item.house_public_area_amount
+- description.push "共用部分 #{get_plain_from_area_amount(amount, type)} 坪" if amount.present?
+
+- if description.length > 0 
+  .else-list-lg
+    .else-label 坪數說明：
+    = description.join('、')

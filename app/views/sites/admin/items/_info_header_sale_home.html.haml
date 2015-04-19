@@ -1,16 +1,19 @@
 %form.form-horizontal
   .form-group.info-row
-    .control-label.info-label 租金:
+    .control-label.info-label 售金:
     .info-content
       %p.form-control-static
-        = number_to_currency(item.total_price, unit: '', precision: 0)
-        元/月
+        = number_to_currency(item.house_price_ten_thousand, unit: '', precision: 0)
+        萬元
+        = item.house_price_include_parking ? '（含車位價格）' : '（不含車位價格）' 
 
+%form.form-horizontal
   .form-group.info-row
-    .control-label.info-label 押金:
+    .control-label.info-label 參考單價:
     .info-content
       %p.form-control-static
-        = get_deposit(item)
+        = number_to_currency(get_reference_house_price_ten_thousand_by_plain(item), unit: '', precision: 2)
+        萬元/坪
 
   - if has_pattern?(item)
     .form-group.info-row
@@ -20,10 +23,12 @@
           = get_pattern(item)
         
   .form-group.info-row
-    .control-label.info-label 坪數:
+    .control-label.info-label 權狀坪數:
     .info-content
       %p.form-control-static
-        = item.inner_amount
+        = get_house_plain(item) 
+        坪
+        = item.house_area_include_parking ? '（含車位面積）' : '（不含車位面積）' 
 
   .form-group.info-row
     .control-label.info-label 樓層:
@@ -38,12 +43,20 @@
         = translate_item_type_action item
         = translate_item_type_name item
 
-  - if has_parking_column?(item)
+  .form-group.info-row
+    .control-label.info-label 屋齡:
+    .info-content
+      %p.form-control-static
+        = item.house_age
+        = Item::SaleHome::AGE_UNITS[item.house_age_unit.to_sym]
+
+  - if item.house_parking_price.present?
     .form-group.info-row
       .control-label.info-label 車位:
       .info-content
         %p.form-control-static
-          = item.has_parking ? '有' : '無'
+          = item.house_parking_price 
+          萬元
 
   .form-group.info-row
     .control-label.info-label 社區:

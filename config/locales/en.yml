@@ -188,6 +188,7 @@ en:
               greater_than_or_equal_to: "至少大於%{count}。"
               less_than_or_equal_to: "不能大於%{count}。"
             parking_amount:
+              not_an_integer: '請填整數。'
               not_a_number: '請填數字。'
               greater_than_or_equal_to: "至少大於%{count}。"
               less_than_or_equal_to: "不能大於%{count}。"
@@ -201,3 +202,43 @@ en:
               invalid: '填錯了？'
             contact_phone:
               invalid: '填錯了？'
+            house_age:
+              blank: '請填屋齡。'
+              not_a_number: '請填數字。'
+              not_an_integer: '請填整數。'
+              greater_than_or_equal_to: "至少大於%{count}。"
+              less_than_or_equal_to: "不能大於%{count}。"
+            house_total_area_amount:
+              blank: '請填房屋總面積。'
+              not_a_number: '請填數字。'
+              greater_than_or_equal_to: "至少大於%{count}。"
+              less_than_or_equal_to: "不能大於%{count}。"
+            house_parking_area_amount:
+              not_a_number: '請填數字。'
+              greater_than_or_equal_to: "至少大於%{count}。"
+              less_than_or_equal_to: "不能大於%{count}。"
+            house_build_area_amount:
+              not_a_number: '請填數字。'
+              greater_than_or_equal_to: "至少大於%{count}。"
+              less_than_or_equal_to: "不能大於%{count}。"
+            house_public_area_amount:
+              not_a_number: '請填數字。'
+              greater_than_or_equal_to: "至少大於%{count}。"
+              less_than_or_equal_to: "不能大於%{count}。"
+            house_additional_area_amount:
+              not_a_number: '請填數字。'
+              greater_than_or_equal_to: "至少大於%{count}。"
+              less_than_or_equal_to: "不能大於%{count}。"
+            house_land_area_amount:
+              not_a_number: '請填數字。'
+              greater_than_or_equal_to: "至少大於%{count}。"
+              less_than_or_equal_to: "不能大於%{count}。"
+            house_price_ten_thousand: 
+              blank: '請填房屋售價。'
+              not_a_number: '請填數字。'
+              greater_than_or_equal_to: "至少大於%{count}。"
+              less_than_or_equal_to: "不能大於%{count}。"
+            house_parking_price:
+              not_a_number: '請填數字。'
+              greater_than_or_equal_to: "至少大於%{count}。"
+              less_than_or_equal_to: "不能大於%{count}。"

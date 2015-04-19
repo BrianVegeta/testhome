@@ -1,0 +1,70 @@
+.form-group.house-area-row
+  %label.control-label 
+    %span{style: 'color: red;'} *
+    登記總面積
+  .col.area-amount{class: "#{f.error_class :house_total_area_amount}"}
+    = f.text_field :house_total_area_amount, class: 'form-control error-tooltip', maxlength: 7, data: {errormessage: "#{f.error_message :house_total_area_amount}"}
+  .col
+    - types = Item::RentLand::AREA_UNITS.map {|k, v| [v, k] }
+    = f.select :house_area_unit, types, {}, {class: 'form-control house-area-unit-select'}
+  .col
+    %label.radio-inline
+      = f.radio_button :house_area_include_parking, true
+      含面積車位
+    %label.radio-inline
+      = f.radio_button :house_area_include_parking, false
+      不含面積車位
+.form-group.group-lg-hr
+
+.form-group.house-area-row
+  %label.control-label 
+    車位面積
+  .col.area-amount{class: "#{f.error_class :house_parking_area_amount}"}
+    = f.text_field :house_parking_area_amount, class: 'form-control error-tooltip', maxlength: 7, data: {errormessage: "#{f.error_message :house_parking_area_amount}"}
+  .col.area-unit 坪
+.form-group.group-lg-hr
+
+.form-group.house-area-row
+  %label.control-label 
+    主建物
+  .col.area-amount{class: "#{f.error_class :house_build_area_amount}"}
+    = f.text_field :house_build_area_amount, class: 'form-control error-tooltip', maxlength: 7, data: {errormessage: "#{f.error_message :house_build_area_amount}"}
+  .col.area-unit 坪
+  .col.tip（權狀書中 " 主建物 " 總面積）
+.form-group.group-lg-hr
+
+.form-group.house-area-row
+  %label.control-label 
+    共有部分
+  .col.area-amount{class: "#{f.error_class :house_public_area_amount}"}
+    = f.text_field :house_public_area_amount, class: 'form-control error-tooltip', maxlength: 7, data: {errormessage: "#{f.error_message :house_public_area_amount}"}
+  .col.area-unit 坪
+  .col.tip（權狀書中 " 共有部分 " 總面積）
+.form-group.group-lg-hr
+
+.form-group.house-area-row
+  %label.control-label 
+    附屬建物
+  .col.area-amount{class: "#{f.error_class :house_additional_area_amount}"}
+    = f.text_field :house_additional_area_amount, class: 'form-control error-tooltip', maxlength: 7, data: {errormessage: "#{f.error_message :house_additional_area_amount}"}
+  .col.area-unit 坪
+  .col.tip（權狀書中 " 附屬建物 " 總面積）
+.form-group.group-lg-hr
+
+.form-group.house-area-row
+  %label.control-label 
+    土地坪數
+  .col.area-amount{class: "#{f.error_class :house_land_area_amount}"}
+    = f.text_field :house_land_area_amount, class: 'form-control error-tooltip', maxlength: 7, data: {errormessage: "#{f.error_message :house_land_area_amount}"}
+  .col.area-unit 坪
+  
+.form-group.group-lg-hr
+
+:javascript
+  var $houseAreaRows        = $('.house-area-row');
+  var $houseAreaUnitSelect  = $('.house-area-unit-select');
+
+  $houseAreaUnitSelect.change(function(e) {
+    var unit = $(this).find('option:selected').text();
+    $houseAreaRows.find('.col.area-unit').text(unit);
+  });  
