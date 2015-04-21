@@ -256,15 +256,15 @@ class Item < ActiveRecord::Base
 		sale_home_villa: 			{ model: 'Item::SaleHome', form: :sale_home, view: :sale_home },
 		sale_home_townhouse: 	{ model: 'Item::SaleHome', form: :sale_home, view: :sale_home },
 
-		sale_studio_apartment: 	{ model: 'Item::SaleStudio', form: :sale_studio },
-		sale_studio_mansion: 		{ model: 'Item::SaleStudio', form: :sale_studio },
-		sale_studio_villa: 			{ model: 'Item::SaleStudio', form: :sale_studio },
-		sale_studio_townhouse: 	{ model: 'Item::SaleStudio', form: :sale_studio },
+		sale_studio_apartment: 	{ model: 'Item::SaleHome', form: :sale_home, view: :sale_home },
+		sale_studio_mansion: 		{ model: 'Item::SaleHome', form: :sale_home, view: :sale_home },
+		sale_studio_villa: 			{ model: 'Item::SaleHome', form: :sale_home, view: :sale_home },
+		sale_studio_townhouse: 	{ model: 'Item::SaleHome', form: :sale_home, view: :sale_home },
 
-		sale_store_apartment: { model: 'Item::SaleStore', form: :sale_store },
-		sale_store_mansion: 	{ model: 'Item::SaleStore', form: :sale_store },
-		sale_store_villa: 		{ model: 'Item::SaleStore', form: :sale_store },
-		sale_store_townhouse: { model: 'Item::SaleStore', form: :sale_store },
+		sale_store_apartment: { model: 'Item::SaleStore', form: :sale_store, view: :sale_store },
+		sale_store_mansion: 	{ model: 'Item::SaleStore', form: :sale_store, view: :sale_store },
+		sale_store_villa: 		{ model: 'Item::SaleStore', form: :sale_store, view: :sale_store },
+		sale_store_townhouse: { model: 'Item::SaleStore', form: :sale_store, view: :sale_store },
 
 		sale_office_apartment: 	{ model: 'Item::SaleOffice', form: :sale_office },
 		sale_office_mansion: 		{ model: 'Item::SaleOffice', form: :sale_office },

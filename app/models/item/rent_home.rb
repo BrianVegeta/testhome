@@ -110,6 +110,7 @@ module Item::RentHome
     params[:management_fees]  = params[:management_fees].gsub(',', '')
     return params
   end
+
   
   
 end
