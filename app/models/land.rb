@@ -1,3 +1,0 @@
-class	Land < Item
-	
-end

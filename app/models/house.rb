@@ -1,3 +1,0 @@
-class House < Item
-	
-end

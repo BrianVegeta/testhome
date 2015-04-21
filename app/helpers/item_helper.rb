@@ -73,8 +73,8 @@ module ItemHelper
     if resource.pattern_room.to_i > 0
       room = resource.pattern_room.to_i.to_s
       living = resource.pattern_living.to_i.to_s
-      bath = resource.pattern_bath.to_i.to_s
       balcony = resource.pattern_balcony.to_i.to_s
+      bath = resource.pattern_bath.to_i.to_s
 
       pattern = "#{room}房 #{living}廳 #{bath}衛 #{balcony}陽台"
     else
