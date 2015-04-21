@@ -24,15 +24,18 @@ module ItemHelper
     address << "#{resource.addr_street}"
     if resource.addr_alley.present?
       address << resource.addr_alley
-      address << '巷'
+      string = '巷'
+      address << string
     end
     if resource.addr_lane.present?
       address << resource.addr_lane
-      address << '弄'  
+      string = '弄'
+      address << string
     end
-    if unless resource.addr_no_is_hidden
+    unless resource.addr_no_is_hidden
       address << resource.addr_no
-      address << '號'
+      string = '號'
+      address << string
     end
 
     return address
@@ -42,7 +45,8 @@ module ItemHelper
     floor = ''
 
     if resource.current_floor == '+1'
-      floor << "頂樓加蓋"      
+      string = "頂樓加蓋"
+      floor << string
     elsif resource.current_floor.include? '-'
       floor << "#{resource.current_floor.gsub('-', 'B')}"  
     else
@@ -67,13 +71,14 @@ module ItemHelper
   def get_pattern(resource)
     pattern = ''
     if resource.pattern_room.to_i > 0
-      pattern << resource.pattern_room.to_i.to_s << '房'
-      pattern << resource.pattern_living.to_i.to_s << '廳'
-      pattern << resource.pattern_bath.to_i.to_s << '衛'
-      pattern << resource.pattern_balcony.to_i.to_s << '陽台'
+      room = resource.pattern_room.to_i.to_s
+      living = resource.pattern_living.to_i.to_s
+      bath = resource.pattern_bath.to_i.to_s
+      balcony = resource.pattern_balcony.to_i.to_s
+
+      pattern = "#{room}房 #{living}廳 #{bath}衛 #{balcony}陽台"
     else
-      pattern << '樓中樓，' if resource.pattern_entresol_has
-      pattern << resource.pattern_balcony.to_i.to_s << '陽台'
+      pattern = "#{resource.pattern_entresol_has ? '樓中樓，' : ''} #{resource.pattern_balcony.to_i.to_s}陽台"
     end
 
     return pattern
