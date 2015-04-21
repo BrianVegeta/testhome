@@ -23,13 +23,16 @@ module ItemHelper
     address << Area::SUB_AREA[resource.main_area][resource.sub_area]
     address << "#{resource.addr_street}"
     if resource.addr_alley.present?
-      address << "#{resource.addr_alley}巷" 
+      address << resource.addr_alley
+      address << '巷'
     end
     if resource.addr_lane.present?
-      address << "#{resource.addr_lane}弄"  
+      address << resource.addr_lane
+      address << '弄'  
     end
     if unless resource.addr_no_is_hidden
-      address << "#{resource.addr_no}號"
+      address << resource.addr_no
+      address << '號'
     end
 
     return address
